@@ -18,6 +18,16 @@ export class ConfigService {
     }
   }
 
+  removeToken(): Observable<boolean> {
+    try {
+      localStorage.removeItem(this.tokenKey);
+      return of(true); // Mengembalikan Observable yang mengirimkan nilai boolean true
+    } catch (error) {
+      return of(false); // Mengembalikan Observable yang mengirimkan nilai boolean false jika terjadi kesalahan
+    }
+  }
+
+
   getToken(): any | null {
     return localStorage.getItem(this.tokenKey);
   }

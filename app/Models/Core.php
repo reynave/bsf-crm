@@ -32,6 +32,13 @@ class Core extends Model
         }
         return   $data;
     }
+
+    function header(){
+        $jwtObj = explode('.', service('request')->getHeaderLine('Token'));
+        $user = base64_decode($jwtObj[1]); 
+        return    json_decode($user , true);
+    }
+
    
     function accountId() {
         return "S01";

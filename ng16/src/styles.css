@@ -1,1 +1,17 @@
-/* You can add global styles to this file, and also import other style files */
+/* Show it is fixed to the top */
+body { 
+    padding-top: 4.5rem;
+}
+
+.floating_footer{
+    position: fixed;
+    bottom: 3%;
+    right:  8%; 
+}
+
+footer{
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+}

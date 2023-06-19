@@ -48,29 +48,31 @@ class Login extends BaseController
             "post" => $post,
             "note" => ""
         ];
-        if ($post && filter_var($post['model']['email'], FILTER_VALIDATE_EMAIL)) {
+        if ($post && filter_var($post['email'], FILTER_VALIDATE_EMAIL)) {
 
-            $email = $post['model']['email'];
-            // $pass = $post['model']['passw'];
-            $pass = '$pbkdf2-sha512$25000$ghBC6J2zFoJw7l0rBSBESA$27pVjn3WFC4qTQKvl0Vh/2nfJ/UfESABcbcniXsrTy5Dsx88eBXM7U7ErLbokMJBujunD4934f.4Og1v2treug';
-            $serialNumber = $post['model']['serialNumber'];
+            $email = $post['email']; 
+            $pass = $post['password'];;
+            $serialNumber = $post['serialNumber'];
             
-            $id = model('Core')->select("id", "res_users", "login='$email' and password = '$pass' ");
+            $id = model('Core')->select("id", "x_mobile_users", "x_email = '$email' AND x_password = '$pass' AND x_serial_number = '$serialNumber' ");
             if ($id) {
 
                 $key = $_ENV['SECRETKEY'];
                 $payload = [ 
-                    "account" =>  $this->db->query("SELECT id, name FROM res_partner WHERE id = '" . $id . "' ")->getResultArray()[0],
+                    "account" =>  $this->db->query("SELECT id, x_name FROM x_mobile_users WHERE id = '" . $id . "' ")->getResultArray()[0],
                     'iat' => time() . microtime(),
                     'nbf' => strtotime(date("Y-m-d H:i:s")),
                 ];
                 $jwt = JWT::encode($payload, $key, 'HS256');
 
-                $this->db->table("res_users_log")->insert([
+                $this->db->table("x_mobile_users_auth")->insert([
                     "create_uid" => $id, 
                     "create_date" =>  date("Y-m-d H:i:s"),
                     "write_uid" => $id, 
                     "write_date" => date("Y-m-d H:i:s"),
+                    "x_mobile_users_id" => $this->request->getIPAddress(),
+                    "x_ip" => $id,
+                    "x_token" => $jwt,  
                 ]);
 
                 $data = array(
@@ -83,7 +85,7 @@ class Login extends BaseController
                 $data = array(
                     "post" => $post,
                     "error" => true,
-                    "post" => "Wrong password or email",
+                    "note" => "Wrong password or email",
                 );
             }
         }

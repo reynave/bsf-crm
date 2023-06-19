@@ -53,7 +53,8 @@ abstract class BaseController extends Controller
 
         // Preload any models, libraries, etc, here.
 
-        $this->request = \Config\Services::request();
+        $this->request = \Config\Services::request();  
+     
         $this->db = \Config\Database::connect();
     }
 }

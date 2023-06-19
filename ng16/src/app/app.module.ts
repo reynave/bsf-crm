@@ -12,6 +12,9 @@ import { ActivityComponent } from './activity/activity.component';
 import { NotfoundComponent } from './notfound/notfound.component';
 import { HeaderComponent } from './global/header/header.component';
 import { ReloginComponent } from './login/relogin/relogin.component';
+import { ActivityDetailComponent } from './activity/activity-detail/activity-detail.component';
+import { ActivityScheduleComponent } from './activity/activity-schedule/activity-schedule.component';
+import { HeaderBackComponent } from './global/header-back/header-back.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +24,10 @@ import { ReloginComponent } from './login/relogin/relogin.component';
     ActivityComponent,
     NotfoundComponent,
     HeaderComponent,
-    ReloginComponent
+    ReloginComponent,
+    ActivityDetailComponent,
+    ActivityScheduleComponent,
+    HeaderBackComponent
   ],
   imports: [
     BrowserModule,

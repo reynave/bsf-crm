@@ -28,24 +28,22 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private configService: ConfigService,
   ) { }
-  ngOnInit(): void {
-    this.model.email = "lindahamilton2506@gmail.com";
-    this.model.passw = "123123";
-    this.model.serialNumber = environment.production ? "": "123123";
+  ngOnInit(): void { 
+    this.model.serialNumber = environment.production ? "": environment.serialNumber;
     
   }
 
   onSubmit() {
     this.loading = true;
     this.note = "Loading..!";
-    const hash = CryptoJS.MD5(CryptoJS.enc.Latin1.parse(this.model['passw']));
+    const hash = CryptoJS.MD5(CryptoJS.enc.Latin1.parse(btoa(this.model['passw'])));
     const md5 = hash.toString(CryptoJS.enc.Hex);
-
-    this.model['passw'] = md5;
+ ;
 
     const body = {
-      model: this.model,
-      serialNumber: "serialNumber123",
+      serialNumber :  this.model.serialNumber,
+      email: this.model['email'], 
+      password : md5,
       player_id: "player_id45553434",
 
     }

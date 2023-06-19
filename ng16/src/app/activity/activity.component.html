@@ -1,8 +1,25 @@
-<app-header></app-header>
+<app-header-back></app-header-back>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-12">
-           sdfsdf
+        <div class="col-12" *ngFor="let x of items">
+     
+            <div class="border p-1 mb-2" [routerLink]="[ '/activity/detail', x.id ]">
+                <div>
+                    {{x.x_schedule_date | date:'MMM d, y'}}
+                </div>
+                <div>
+                    {{x.route_name}}
+                </div>
+                <div>
+                    {{x.x_summary}}
+                </div>
+            </div>
         </div>
     </div>
+</div>
+
+<div class="floating_footer">
+    <a  [routerLink]="[ '/activity/schedule' ]"class="display-1">
+        <i class="bi bi-plus-circle-fill"></i>
+    </a>
 </div>

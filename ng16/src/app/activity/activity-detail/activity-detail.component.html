@@ -1,0 +1,84 @@
+<nav class="navbar bg-body-tertiary fixed-top" aria-label="Light offcanvas navbar">
+    <div class="container-fluid">
+        <a class="navbar-brand" (click)="back()"><i class="bi bi-arrow-left"></i> Back</a>
+        <button class="navbar-toggler" type="button" (click)="remove()" >
+            <i class="bi bi-trash3-fill"></i>
+        </button>
+    </div>
+</nav>
+ 
+
+<form (ngSubmit)="onSubmit()" #heroForm="ngForm">
+    <div class="container-fluid " style="margin-bottom: 90px;">
+        <div class="row">
+            <div class="col-12 ">
+                <div class="mb-2">
+                    <label for="x_route_line_id" class="form-label">x_route_line_id</label>
+                    <div class="form-control">{{item.route_name}}</div>
+                </div>
+                <div class="mb-2">
+                    <label for="x_activity_type_id" class="form-label">x_activity_type_id</label>
+                    <select class="form-control" [(ngModel)]="model.x_activity_type_id" name="x_activity_type_id"
+                        #x_activity_type_id="ngModel">
+                        <option value=""></option>
+                    </select>
+                </div>
+
+
+                <div class="mb-2">
+                    <label for="x_customer_id" class="form-label">x_customer_id</label>
+                    <select class="form-control" [(ngModel)]="model.x_customer_id" name="x_customer_id"
+                        #x_activity_type_id="ngModel">
+                        <option value=""></option>
+                    </select>
+                </div>
+
+                <div class="mb-2">
+                    <label class="form-label">Coordinate</label>
+                    <div class="input-group">
+                        <div class="form-control">{{model.x_cust_latitude}} &nbsp;</div>
+                        <div class="form-control">{{model.x_cust_longitude}} &nbsp;</div>
+                        <button class="btn btn-outline-secondary" type="button"><i class="bi bi-geo-alt"></i></button>
+                    </div>
+                </div>
+
+                <div class="mb-2">
+                    <label for="x_schedule_date" class="form-label">schedule Date</label>
+                    <div class="input-group">
+                        <input type="date" class="form-control" [(ngModel)]="model.x_schedule_date"
+                            name="x_schedule_date" id="x_schedule_date">
+                        <input type="time" class="form-control" [(ngModel)]="model.x_schedule_time"
+                            name="x_schedule_time" id="x_schedule_time">
+                    </div>
+                </div>
+
+                <div class="mb-2">
+                    <label for="x_schedule_date" class="form-label">x_summary</label>
+
+                    <textarea class="form-control" [(ngModel)]="model.x_summary" name="x_summary"
+                        id="x_summary"></textarea>
+
+                </div>
+
+
+            </div>
+            <div class="col-12 ">
+                <div class="lh-sm">
+                    <code> {{model | json}}</code>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-white border shadow-sm">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="d-grid py-1">
+                        <button class="btn btn-primary">Save and Update</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</form>
