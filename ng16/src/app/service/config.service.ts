@@ -27,5 +27,11 @@ export class ConfigService {
       'Content-Type': 'application/json', 
       'Token': this.getToken(),
     });
-  } 
+  }
+  
+  account(){
+    const jwtObj = this.getToken().split("."); 
+
+    return JSON.parse(atob(jwtObj[1]));
+  }
 }

@@ -11,6 +11,7 @@ import { HomeComponent } from './home/home.component';
 import { ActivityComponent } from './activity/activity.component';
 import { NotfoundComponent } from './notfound/notfound.component';
 import { HeaderComponent } from './global/header/header.component';
+import { ReloginComponent } from './login/relogin/relogin.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { HeaderComponent } from './global/header/header.component';
     HomeComponent,
     ActivityComponent,
     NotfoundComponent,
-    HeaderComponent
+    HeaderComponent,
+    ReloginComponent
   ],
   imports: [
     BrowserModule,

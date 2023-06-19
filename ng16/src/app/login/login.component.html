@@ -3,8 +3,7 @@
         <div class="row">
             <div class="col-12">
                 <form (ngSubmit)="onSubmit()" #myForm="ngForm" autocomplete="off">
-                    <div class="form-group mb-3">
-    
+                    <div class="form-group mb-3">  
                         <input type="email" class="form-control " id="floatingInput" placeholder="name@example.com" required
                             [(ngModel)]="model.email" name="email" #email="ngModel" email autocomplete="false">
                         <div>
@@ -15,8 +14,7 @@
                         <input type="password" class="form-control  " id="floatingPassword" placeholder="Password" required
                             [(ngModel)]="model.passw" name="passw" #passw="ngModel" autocomplete="false">
                         <div>
-                            <small [hidden]="passw.valid || passw.pristine" class="text-danger"> Password is required
-                            </small>
+                            <small [hidden]="passw.valid || passw.pristine" class="text-danger"> Password is required  </small>
                         </div>
                     </div>
                     <div class="d-grid"> 

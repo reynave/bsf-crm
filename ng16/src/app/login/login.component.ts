@@ -9,6 +9,7 @@ export class Login {
   constructor(
     public email: string,
     public passw: string,
+    public serialNumber : string,
   ) { }
 
 }
@@ -18,7 +19,7 @@ export class Login {
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  model: any = new Login('', '');
+  model: any = new Login('', '','');
   loading: boolean = false;
   api: string = environment.api;
   note: string = "";
@@ -28,7 +29,10 @@ export class LoginComponent implements OnInit {
     private configService: ConfigService,
   ) { }
   ngOnInit(): void {
-
+    this.model.email = "lindahamilton2506@gmail.com";
+    this.model.passw = "123123";
+    this.model.serialNumber = environment.production ? "": "123123";
+    
   }
 
   onSubmit() {
@@ -47,7 +51,7 @@ export class LoginComponent implements OnInit {
     }
     console.log(body);
 
-    this.http.post<any>(this.api + 'login/index', body).subscribe(
+    this.http.post<any>(this.api + 'login/auth', body).subscribe(
       data => {
         this.loading = false;
         console.log(data);
