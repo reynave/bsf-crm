@@ -108,7 +108,22 @@ export class ActivityDetailComponent implements OnInit {
     }
   }
   onSubmit() {
-
+    const body = {
+      id: this.id,
+      model : this.model
+    }
+    this.http.post<any>(this.api + 'activities/onSubmit', body, {
+      headers: this.configService.headers(),
+    }).subscribe(
+      data => {
+        console.log(data);
+       // history.back();
+      },
+      e => {
+        console.log(e);
+        this.note = "Error Server!";
+      },
+    );
   }
   back() {
     history.back();

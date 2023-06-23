@@ -1,6 +1,6 @@
 /* Show it is fixed to the top */
 body { 
-    padding-top: 4.5rem;
+    padding-top: 3.5rem;
 }
 
 .floating_footer{
@@ -8,10 +8,29 @@ body {
     bottom: 3%;
     right:  8%; 
 }
-
+nav.fixed-top{
+    z-index: 99;
+}
 footer{
     position: fixed;
     bottom: 0px;
     left: 0px;
     width: 100%;
+}
+
+.container-fluid{
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.btn {
+     margin-bottom: 0px;
+}
+
+.card .card-body { 
+    padding: 1rem;
+}
+
+.card label { 
+     margin-bottom: 0px; 
+     margin-left:0px; 
 }

@@ -23,7 +23,9 @@ export class ActivityComponent implements OnInit {
   ngOnInit(){
     this.httpGet();
   }
-
+  back(){
+    history.back();
+  }
   httpGet(){  
     this.http.get<any>(this.api + 'activities/index', {
       headers : this.configService.headers(),
