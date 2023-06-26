@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { ActivationStart, RouterModule, Routes } from '@angular/router';
 
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
@@ -9,6 +9,7 @@ import { ReloginComponent } from './login/relogin/relogin.component';
 import { NotfoundComponent } from './notfound/notfound.component';
 import { ActivityDetailComponent } from './activity/activity-detail/activity-detail.component';
 import { ActivityScheduleComponent } from './activity/activity-schedule/activity-schedule.component';
+import { ActivityHistoryComponent } from './activity/activity-history/activity-history.component';
 
 const routes: Routes = [
   { path:"", component:HomeComponent, data: { active: "home" },  canActivate:[authGuard] },
@@ -19,8 +20,10 @@ const routes: Routes = [
 
   { path:"activity", component:ActivityComponent , data: { active: "activity" },  canActivate:[authGuard]},
   { path:"activity/schedule", component:ActivityScheduleComponent , data: { active: "activity" },  canActivate:[authGuard]},
+  { path:"activity/history", component:ActivityHistoryComponent , data: { active: "activity" },  canActivate:[authGuard]},
+ 
   { path:"activity/detail/:id", component:ActivityDetailComponent , data: { active: "activity" },  canActivate:[authGuard]},
-  
+ 
   { path: "**", component: NotfoundComponent, data: { active: "404" },  canActivate:[]  }, 
 ];
 

@@ -74,4 +74,8 @@ export class ActivityScheduleComponent implements OnInit {
     );
   }
 
+  back(){
+    history.back();
+  }
+
 }

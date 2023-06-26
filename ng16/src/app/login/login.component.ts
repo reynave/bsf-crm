@@ -22,6 +22,7 @@ export class LoginComponent implements OnInit {
   model: any = new Login('', '','');
   loading: boolean = false;
   api: string = environment.api;
+  env : any = environment;
   note: string = "";
   constructor(
     private http: HttpClient,
@@ -29,7 +30,7 @@ export class LoginComponent implements OnInit {
     private configService: ConfigService,
   ) { }
   ngOnInit(): void { 
-    this.model.serialNumber = environment.production ? "": environment.serialNumber;
+    this.model.serialNumber = environment.production ? "": environment.serialNumber; 
     
   }
 
@@ -37,8 +38,7 @@ export class LoginComponent implements OnInit {
     this.loading = true;
     this.note = "Loading..!";
     const hash = CryptoJS.MD5(CryptoJS.enc.Latin1.parse(btoa(this.model['passw'])));
-    const md5 = hash.toString(CryptoJS.enc.Hex);
- ;
+    const md5 = hash.toString(CryptoJS.enc.Hex); 
 
     const body = {
       serialNumber :  this.model.serialNumber,

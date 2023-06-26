@@ -52,9 +52,11 @@ class Login extends BaseController
 
             $email = $post['email']; 
             $pass = $post['password'];;
-            $serialNumber = $post['serialNumber'];
-            
-            $id = model('Core')->select("id", "x_mobile_users", "x_email = '$email' AND x_password = '$pass' AND x_serial_number = '$serialNumber' ");
+            $serialNumber = "";
+            if($post['serialNumber'] != false){
+               // $serialNumber = " AND x_serial_number = '$serialNumber' ";
+            }
+            $id = model('Core')->select("id", "x_mobile_users", "x_email = '$email' AND x_password = '$pass' $serialNumber ");
             if ($id) {
 
                 $key = $_ENV['SECRETKEY'];

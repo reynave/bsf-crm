@@ -5,127 +5,113 @@
                 <a class="navbar-brand h2" (click)="back()"><i class="bi bi-arrow-left"></i></a>
             </div>
             <div class="col-10 align-self-center text-center  ">
-                <h5 class="p-0 m-0"> Today </h5>
+                <h5 class="p-0 m-0  ms-3"> Today <img [hidden]="!loading" src="./assets/gif/icons8-loading.gif"> </h5>
             </div>
             <div class="col-1 align-self-center text-center ">
-                <button class="navbar-toggler text-danger" type="button" (click)="remove()" >
-                    <i class="bi bi-trash3-fill "></i>
+                <button class="navbar-toggler text-danger" type="button" (click)="remove()">
+                    <i class="bi bi-trash3-fill "></i> 
                 </button>
             </div>
-            
+
         </div>
     </div>
 </nav>
 
-<!-- <nav class="navbar bg-body-tertiary fixed-top" aria-label="Light offcanvas navbar">
-    <div class="container-fluid">
-        <a class="navbar-brand" (click)="back()"><i class="bi bi-arrow-left"></i> Back</a>
-        <button class="navbar-toggler" type="button" (click)="remove()" >
-            <i class="bi bi-trash3-fill"></i>
-        </button>
-    </div>
-</nav>
-  -->
+ 
 
-<form (ngSubmit)="onSubmit()" #heroForm="ngForm" class="mt-4">
-    <div class="container-fluid">
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-3">
+
+                <div class="card-body ">
+                    <div class="mb-2">
+                        <small>Customer Information</small>
+                    </div>
+                    <strong>{{item.x_customer}}</strong>
+                    <div class="lh-sm mb-2">
+                        <small>{{item.x_route_name}}</small>
+                    </div>
+                    <div class="mb-2">
+                        <label>Schedule Date :</label>
+                        <div class="lh-1">
+                            <small>{{item.x_schedule_date | date:'d MMM y'}}</small>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<div class="bg-white py-1 border-top">
+    <iframe width="100%" height="250" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
+        [src]="'https://maps.google.com/maps?q='+item.x_cust_latitude+','+item.x_cust_longitude+'&hl=id&z=13&output=embed' | safe ">
+    </iframe>
+</div>
+
+<div class="container-fluid  bg-white border-bottom mb-3">
+    <div class="row g-1">
+
+        <div class="col text-center">
+            <div><strong><i class="bi bi-check-circle"></i> CHECK IN</strong> </div>
+            <div>
+                <label>{{item.x_check_in_date | date}}, {{item.x_check_in_time}}</label>
+            </div>
+        </div>
+
+        <div class="col text-center">
+            <div><strong> CHECK OUT</strong> </div>
+            <div>
+                <label>{{item.x_check_out_date | date}}, {{item.x_check_out_time}}</label>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container-fluid mb-6">
+    <div class="row">
+        <div class="col-12 ">
+
+            <div class="mb-2 d-grid">
+                <div>
+                    <label for="x_summary" class="form-label">Photo</label>
+                </div>
+                <img [src]="item.x_photo_url" class="w-100 p-1 bg-white border" *ngIf="item.x_photo_url">
+                <button type="button" class="btn btn-warning rounded-pill" (click)="takePhoto()"><strong
+                        class="bi bi-camera-fill mx-1"></strong> Take Photo</button>
+  
+            </div>
+
+            <div class="mb-2">
+                <label for="x_summary" class="form-label">Summary / Note</label>
+                <textarea class="form-control" rows="5" [(ngModel)]="model.x_summary" name="x_summary"
+                    id="x_summary"></textarea>
+            </div>
+  
+        </div>
+
+    </div>
+</div>
+
+<footer class="bg-white border-top shadow-sm">
+    <div class="container">
         <div class="row">
             <div class="col-12">
-                <div class="card mb-3">
+                <div class="d-grid py-2">
+                    <button class="btn btn-success rounded-pill" (click)="getGeo()"
+                        *ngIf="item.x_activity_status  == 'OPEN'">Check In</button>
 
-                    <div class="card-body ">
-                        <div class="mb-2">
-                            <small>Customer Information</small>
-                        </div>
-                        <strong>{{item.x_customer}}</strong>
-                        <div class="lh-sm">
-                            <small>{{item.x_route_name}}</small>
-                        </div>
-                        <div class="mb-2">
-                            <small>Schdule Date : </small>
-                        </div>
+                    <button class="btn btn-info rounded-pill" (click)="getGeo()"
+                        *ngIf="item.x_activity_status  == 'CHECKIN'">Check Out</button>
 
-                        <div class="mb-2">
-                            <label>Schedule Date</label>
-                            <div>
-                                <small>{{item.x_schedule_date | date:'d MMM y'}}</small>
-                            </div>
-                        </div>
-
-                    </div>
                 </div>
-            </div>
-        </div>
 
-    </div>
-
-   
-    <div class="bg-white py-1 border-top"> 
-        <iframe width="100%" height="250" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
-            src="https://maps.google.com/maps?q=-6.146341,106.905822&hl=id&z=13&output=embed">
-        </iframe> 
-    </div>
-    <div class="container-fluid  bg-white border-bottom">
-        <div class="row g-1">
-            <div class="col text-center">
-                <div><strong><i class="bi bi-check"></i> CHECK IN</strong> </div>
-                <div>
-                    <label>-6.146341, 106.905822</label>
-                </div>
-            </div>
-
-            <div class="col text-center">
-                <div><strong>  CHECK OUT</strong> </div>
-                <div>
-                    <label>___ , ___</label>
-                </div>
             </div>
         </div>
     </div>
-
-
-    <div class="container-fluid mb-6">
-        <div class="row">
-
-
-            <div class="col-12 ">
- 
-                <!-- <div class="mb-2">
-                    <label for="x_schedule_date" class="form-label">schedule Date</label>
-                    <div class="input-group">
-                        <input type="date" class="form-control" [(ngModel)]="model.x_schedule_date"
-                            name="x_schedule_date" id="x_schedule_date">
-                        <input type="time" class="form-control" [(ngModel)]="model.x_schedule_time"
-                            name="x_schedule_time" id="x_schedule_time">
-                    </div>
-                </div> -->
-
-                <div class="mb-2">
-                    <label for="x_summary" class="form-label">Summary</label> 
-                    <textarea class="form-control" rows="5" [(ngModel)]="model.x_summary" name="x_summary"  id="x_summary"></textarea> 
-                </div>
-
-                <div class="mb-2">
-                    <div>
-                        <label for="x_summary" class="form-label">Photo</label>
-                    </div>
-                    <img src="https://picsum.photos/id/401/600/600" class="w-100 p-1 bg-white border">
-                </div> 
-            </div>
-            
-        </div>
-    </div>
-
-    <footer class="bg-white border-top shadow-sm">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="d-grid py-2">
-                        <button class="btn btn-success rounded-pill">Check In</button>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </footer>
-</form>
+</footer>

@@ -41,7 +41,7 @@ class Core extends Model
 
    
     function accountId() {
-        return "S01";
+        return self::header() != false ? self::header()['account']['id'] : ""; 
     }
 
 
@@ -92,5 +92,18 @@ class Core extends Model
         foreach ($children as $child) {
             self::deleteNode($child['id']);
         }
+    }
+
+    function cam_to_img($data, $output_file, $filename = "")
+    {
+        $data =  str_replace("data:image/png;base64,","",$data);
+
+        $data = base64_decode($data);
+        $signname = strtolower($filename);
+        $signname = str_replace(" ", "-", $signname);
+
+        file_put_contents($output_file . $signname . '.png', $data);
+
+        return $output_file . $signname . '.png';
     }
 }

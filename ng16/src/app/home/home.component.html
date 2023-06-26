@@ -1,8 +1,43 @@
 <app-header></app-header>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-12">
-            <a [routerLink]="[ '/activity' ]">Activty</a>
+        <div class="col-12 my-5">
+            <div class="d-grid">
+                <a [routerLink]="[ '/activity' ]" class="btn btn-lg btn-primary">Activty</a>
+            </div>
         </div>
+
+
+        <div class="col-12 my-2">
+            <div class="d-grid">
+                <a (click)="portal1()" class="btn btn-lg btn-dark">Test Call Products</a>
+            </div> 
+            <code class="mt-1">
+                {{note}}
+            </code>
+        </div>
+        <div class="col-12 my-2">
+            <div class="d-grid">
+                <a (click)="cam()" class="btn btn-lg btn-info">Test Camera Allowed</a>
+            </div>
+        </div>
+
+        <div class="col-12 my-2">
+            <div class="d-grid">
+                <a (click)="gps()" class="btn btn-lg btn-warning">Test GPS Allowed</a>
+            </div>
+            <code class="mt-1">
+                {{gpsInfo | json}}
+            </code> 
+        </div>
+      
+
+        <div class="col-12">
+            <div class="lh-1 my-3 alert alert-light">
+                <code> {{env | json}}</code>
+            </div>
+        </div>
+
+
     </div>
 </div>

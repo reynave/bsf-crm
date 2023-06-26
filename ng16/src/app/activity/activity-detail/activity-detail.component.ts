@@ -4,44 +4,20 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfigService } from 'src/app/service/config.service';
+import { NgZone } from '@angular/core';
 
+declare let navigator: any;
+declare let Camera: any;
 
 export class Model {
-
-
   constructor(
     public x_activity_type_id: string,
-    public x_cust_latitude: string,
-    public x_cust_longitude: string,
-    public x_distance: string,
-    public x_headerid: string,
-    public x_photo_url: string,
-    public x_res_id: string,
-    public x_res_model_id: string,
-    public x_res_name: string,
-    public x_visit_reason: string,
-    public x_not_visit_reason: string,
-    public x_visit_code: string,
-    public x_schedule_date: any,
-    public x_schedule_time: string,
-    public x_visited_longitude: string,
-    public x_visited_latitude: string,
-    public x_is_visited: string,
-
-    public x_customer_id: string,
-    public x_plan_time: any,
-    public x_route_id: any,
-    public x_summary: string,
-
-    public x_actual_date: any,
-    public x_actual_time: string,
     public x_note: string,
-    public x_route_line_id: string,
-
-
+    public x_summary: string,
   ) { }
 
 }
+
 @Component({
   selector: 'app-activity-detail',
   templateUrl: './activity-detail.component.html',
@@ -51,35 +27,36 @@ export class ActivityDetailComponent implements OnInit {
   loading: boolean = false;
   api: string = environment.api;
   note: string = "";
-  model: any = new Model("", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
+  model: any = new Model("", "", "");
   id: string = "";
   item: any = [];
   active = 1;
-
+  geoData: any = [];
   constructor(
     private http: HttpClient,
     private router: Router,
     private activeRoute: ActivatedRoute,
     private configService: ConfigService,
+    private ngZone: NgZone
   ) { }
 
   ngOnInit(): void {
     this.id = this.activeRoute.snapshot.params['id'];
     this.httpGet();
   }
+
   httpGet() {
+    this.loading = true;
     this.http.get<any>(this.api + 'activities/detail/' + this.id, {
       headers: this.configService.headers(),
     }).subscribe(
       data => {
+        this.loading = false;
         console.log(data);
         this.item = data['item'];
+        this.model.x_activity_type_id = data['item']['x_activity_type_id'];
         this.model.x_note = data['item']['x_note'];
         this.model.x_summary = data['item']['x_summary'];
-        this.model.x_schedule_date = data['item']['x_schedule_date'];
-        this.model.x_schedule_time = data['item']['x_schedule_time'];
-        this.model.x_route_line_id = data['item']['x_route_line_id'];
-
       },
       e => {
         console.log(e);
@@ -107,17 +84,20 @@ export class ActivityDetailComponent implements OnInit {
       );
     }
   }
-  onSubmit() {
+
+  checkIn() {
     const body = {
       id: this.id,
-      model : this.model
+      model: this.model,
+      geoData: this.geoData
     }
-    this.http.post<any>(this.api + 'activities/onSubmit', body, {
+    console.log(body);
+    this.http.post<any>(this.api + 'activities/checkIn', body, {
       headers: this.configService.headers(),
     }).subscribe(
       data => {
         console.log(data);
-       // history.back();
+        this.httpGet();
       },
       e => {
         console.log(e);
@@ -125,8 +105,113 @@ export class ActivityDetailComponent implements OnInit {
       },
     );
   }
+
+  checkOut() {
+    const body = {
+      id: this.id,
+      model: this.model,
+      geoData: this.geoData
+    }
+    console.log(body);
+    this.http.post<any>(this.api + 'activities/checkOut', body, {
+      headers: this.configService.headers(),
+    }).subscribe(
+      data => {
+        console.log(data);
+        this.back();
+      },
+      e => {
+        console.log(e);
+        this.note = "Error Server!";
+      },
+    );
+  }
+
+  getGeo() {
+    let self = this;
+    var onSuccess = function (position: any) {
+      console.log('Latitude: ' + position.coords.latitude + '\n' +
+        'Longitude: ' + position.coords.longitude + '\n' +
+        'Altitude: ' + position.coords.altitude + '\n');
+      self.geoData = {
+        lat: position.coords.latitude,
+        long: position.coords.longitude,
+        timestamp: position.timestamp,
+      };
+      if (self.item.x_activity_status == 'OPEN') {
+        self.checkIn();
+      } else {
+        self.checkOut();
+      }
+
+    };
+
+    function onError(error: any) {
+      console.log('code: ' + error.code + '\n' + 'message: ' + error.message + '\n');
+      //self.checkIn();
+      alert("GPS ERROR, PLEASE SET PERMISSION!");
+    }
+    navigator.geolocation.getCurrentPosition(onSuccess, onError);
+  }
+
   back() {
     history.back();
   }
 
+
+  takePhoto() {
+    const options = {
+      destinationType: Camera.DestinationType.DATA_URL,
+      quality: 50,
+      encodingType: Camera.EncodingType.JPEG,
+      correctOrientation: true,
+    };
+    let self = this;
+
+    navigator.camera.getPicture(this.cameraSuccess, this.cameraError, options);
+
+  }
+
+  images: string = "";
+  initPhoto: boolean = false;
+  cameraSuccess = (imagesData: any) => {
+    this.initPhoto = true;
+    this.loading = false;
+    this.ngZone.run(() => {
+      this.images = 'data:image/png;base64,' + imagesData;
+      this.saveImages()
+    });
+
+  }
+
+  cameraError = (e: any) => {
+    console.log('error Camera', e);
+    this.initPhoto = false;
+  }
+
+  saveImages() {
+   // this.initPhoto = true;
+    if (this.initPhoto == true) {
+      this.loading = true;
+      const body = {
+        id : this.id,
+        base64Images: this.images,
+        //base64Images : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAADj0lEQVR4nO2XXUhTYRjHX7woqPuu6s4+2ZVu03AaarqJ84M0SKICi6ACiYgsMEtUsgaBTILa2Xaim0xNc1Zgku6sD/NrfpsfQzMhsek0O7tx2xPvu7mdLbedHS266IU/55znPef9/57n/WBD6F9sOrFxjzbWeJaKNRVTYlMhfv4rxtXRr7ZTYkZNiRkHJWaAI/ysxv3hxsjqXY5W9q9cwdeIzG8hiKLERoNGwoC2dALoYRbo707QD7Ggq7QAjlMSphm/F2ocpXllSmleAaV5eSIiAE2s8QzOVvdoFmibC+jPdtDVz7vvbS7QP5xdr8apMACwrsgApMwHKr/HSS+6DXXqGaCkjBcAx7X5PWBIawHXtXI/OfPOgVOWQ8QFcMiy29cScrJ4AWilDKursngNddXTJGO91emL3bEAHd/hD1B0E5xHjhFzq0ThB2CVKtxgCdmVEQPoa7+5S17QB/So3QcQ1w7Ok5fcwpl7zLFGRYlw4uUIMS9oGYZRUZK3b02Wq+Q3BUsuH4RhASh5J+jr5gHHtfndYIh/6h00ULgCmpg0KL1QBpqYo7AokXP734auQKzpNFmEj+d8886Rjp4jFZk4fD0oAIGQKmBMlBRoDg5Zzo/w21DCNGMTbck40IMs0AtOctVWTOEtCK3xenDIckMChFLYdfDs0PA2SmyspuJM3EMIKKkJbhSPQXb3st8i4yu58QukGAb4b8uKbhuotLNw+54FLtZMw/F262+DpndZ4WDjIJG8yxo0ltE5D8lNvUS8AcosLKhm7HB1/GfQrA48HwB0t4EI3weLyTtmhAFMsg4YWnVsGiC9Y1oYwLTdAeNscABc4v0N/UTr5d4o9scAlDwlGGCCdcCgZwokrRaIUjUSSVstEcUEA6hm7HB+dJUMsq/e7J1bfB9JTBBAyRQLhSNucywpN7M3lohiggCUm5z3Ta8BpcBDZ8sA8joXXEL2/EZKa5sk5hl1H128AYpeDNi2AiCz2wrJzWYCUKh5vcwbQK1uLOd16NT3wd4n7yClbZIcuVyRzD3mWFVV+vC/iritUt/2PtTiyuy1QUrLoNcglIrv13YiIe1BTWPZ5ab+pcA1gaUwfQ1pKq//5MJljzjz/y2g7UQI4f+FIoSQBCGUiBBKRQjJEUIKfGR4JPco1fOOxPMN/nYHEth2cQw2KzyWoIbpd3MqIEMIpXAyDqwA7sPvrFcAfxuyAr8A50v6ENvkmUMAAAAASUVORK5CYII="
+      }
+      console.log(body);
+      this.http.post<any>(this.api + 'activities/takePhoto', body, {
+        headers: this.configService.headers(),
+      }).subscribe(
+        data => {
+          console.log(data);
+          this.loading = false;
+          this.item['x_photo_url'] = data['x_photo_url'];
+        },
+        e => {
+          console.log(e);
+          this.note = "Error Server!";
+        },
+      );
+    }
+  }
 }

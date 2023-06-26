@@ -5,7 +5,7 @@
                 <a class="navbar-brand h2" (click)="back()"><i class="bi bi-arrow-left"></i></a>
             </div>
             <div class="col-7 align-self-center  ">
-                <h5 class="p-0 m-0"> Activites schedule</h5>
+                <h5 class="p-0 m-0  ms-3"> Activites schedule</h5>
             </div>
             <div class="col-4 text-end  ">
                 <a [routerLink]="[ '/activity/history', ]" class="btn btn-info rounded-pill">History</a>
@@ -19,15 +19,27 @@
         <div class="row">
             <div class="col-12">
 
-                <div class="card mb-3" *ngFor="let x of items" [routerLink]="[ '/activity/detail/',x.id ]">
-                    <div class="card-body ">
-                        <strong>{{x.x_customer}}</strong>
-                        <div class="lh-sm">
+                <div class="card mb-3  border-{{x.x_activity_status == 'OPEN' ? 'info border-3' : '' }} " *ngFor="let x of items" [routerLink]="[ '/activity/detail/',x.id ]">
+                    <div class="card-body">
+                         
+                        <div class="row g-0">
+                            <div class="col-9">
+                                <strong>{{x.x_customer}}</strong> 
+                            </div>
+                            <div class="col-3 text-end">
+                                <span class="badge bg-secondary">{{x.x_activity_status}}</span>
+                            </div>
+                        </div>
+                        
+                        
+                        
+                        <div class="lh-sm mb-2">
                             <small>{{x.x_route_name}}</small>
                         </div>
-                        <div>
-                            <small>Schdule Date : {{x.x_schedule_date | date:'d MMM y'}}</small>
-                        </div>
+                        <div class="lh-sm">
+                            <label>Schdule Date : {{x.x_schedule_date | date:'d MMM y'}}</label>
+                        </div> 
+                        
                     </div>
                 </div>
 

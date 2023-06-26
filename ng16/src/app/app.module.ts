@@ -15,6 +15,8 @@ import { ReloginComponent } from './login/relogin/relogin.component';
 import { ActivityDetailComponent } from './activity/activity-detail/activity-detail.component';
 import { ActivityScheduleComponent } from './activity/activity-schedule/activity-schedule.component';
 import { HeaderBackComponent } from './global/header-back/header-back.component';
+import { ActivityHistoryComponent } from './activity/activity-history/activity-history.component';
+import { SafePipe } from './service/safe.pipe';
 
 @NgModule({
   declarations: [
@@ -27,14 +29,16 @@ import { HeaderBackComponent } from './global/header-back/header-back.component'
     ReloginComponent,
     ActivityDetailComponent,
     ActivityScheduleComponent,
-    HeaderBackComponent
+    HeaderBackComponent,
+    ActivityHistoryComponent,
+    SafePipe
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgbModule,
     HttpClientModule,
-    FormsModule
+    FormsModule, 
   ],schemas: [
     CUSTOM_ELEMENTS_SCHEMA
   ],
