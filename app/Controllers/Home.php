@@ -8,12 +8,18 @@ class Home extends BaseController
     {
         $data = [
             "error" => false,
+            "datetime" => date("Y-m-d H:i:s")
         ];
         return $this->response->setJSON($data);
     }
+
+    public function welcome()
+    {
+        return view('welcome_message');
+    }
     public function test($id="")
     {
-        $query = $this->db->query("SELECT * FROM x_sales_activity ". ($id != "" ? "Where id = '$id' " : "" ));
+        $query = $this->db->query("SELECT * FROM product_template LIMIT 20 ");
         $results = $query->getResultArray();
 
         $data = [
