@@ -44,4 +44,8 @@ export class ConfigService {
 
     return JSON.parse(atob(jwtObj[1]));
   }
+
+  accountId(){
+    return this.account()['account']['id'];
+  }
 }

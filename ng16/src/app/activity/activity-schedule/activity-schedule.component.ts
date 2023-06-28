@@ -7,10 +7,9 @@ import { ConfigService } from 'src/app/service/config.service';
 
 export class Model { 
   constructor( 
-    public x_route_id: string,
-    public x_name: string, 
+    public x_route_id: string, 
     public x_schedule_date: any, 
-    
+    public x_salesperson_id: string, 
   ) {} 
 }
 
@@ -24,11 +23,11 @@ export class ActivityScheduleComponent implements OnInit {
   loading: boolean = false;
   api: string = environment.api;
   note: string = "";
-  model  : any = new Model("","",this.date.getFullYear()+'-'+("0" + (this.date.getMonth() + 1)).slice(-2)+'-'+this.date.getDate() );
+  model  : any = new Model("",this.date.getFullYear()+'-'+("0" + (this.date.getMonth() + 1)).slice(-2)+'-'+this.date.getDate(), "" );
   id : string = "";
   item : any = []; 
   x_route :any = [];
-
+  x_mobile_users : any = [];
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -38,6 +37,7 @@ export class ActivityScheduleComponent implements OnInit {
 
   }
   ngOnInit(): void {
+    this.model.x_salesperson_id = this.configService.accountId();
     this.selectActivitySchedule();
   }
   selectActivitySchedule(){  
@@ -46,6 +46,7 @@ export class ActivityScheduleComponent implements OnInit {
     }).subscribe(
       data => { 
         console.log(data);  
+        this.x_mobile_users  = data['x_mobile_users'];
         this.x_route  = data['x_route'];
       },
       e => {

@@ -1,7 +1,19 @@
 /* Show it is fixed to the top */
+:root{
+    --mobile-width: 500px;
+}
 body { 
     padding-top: 3.5rem;
 }
+.mobile-first{ 
+    max-width: var(--mobile-width);
+    margin: 0 auto;
+ 
+}
+/* .fixed-top{
+    max-width: var(--mobile-width);
+    margin: 0 auto;
+} */
 
 .floating_footer{
     position: fixed;
@@ -34,5 +46,6 @@ footer{
      margin-bottom: 0px; 
      margin-left:0px; 
 }
-
- 
+small{
+    font-size: 0.8rem;
+}

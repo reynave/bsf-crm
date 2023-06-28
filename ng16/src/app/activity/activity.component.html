@@ -36,9 +36,25 @@
                         <div class="lh-sm mb-2">
                             <small>{{x.x_route_name}}</small>
                         </div>
-                        <div class="lh-sm">
-                            <label>Schdule Date : {{x.x_schedule_date | date:'d MMM y'}}</label>
-                        </div> 
+                       
+                        <div class="row">
+                            <div class="col">
+                                <div class="lh-sm">
+                                    <small>Schdule Date </small>
+                                </div> 
+                                <div class="lh-sm">
+                                    <label>{{x.x_schedule_date | date:'d MMM y'}}</label>
+                                </div> 
+                            </div>
+                            <div class="col">
+                                <div class="lh-sm">
+                                    <small>Created Date</small>
+                                </div> 
+                                <div class="lh-sm">
+                                    <label>{{x.create_date | date:'medium'}}</label>
+                                </div> 
+                            </div>
+                        </div>
                         
                     </div>
                 </div>

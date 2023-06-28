@@ -32,9 +32,12 @@
                             id="x_schedule_date" [(ngModel)]="model.x_schedule_date" required>
                     </div>
                     <div class="mb-2">
-                        <label for="x_name" class="form-label">x_name</label>
-                        <input type="text" class="form-control " name="x_name" id="x_name"
-                            [(ngModel)]="model.x_name" required>
+                        <label for="x_name" class="form-label">x_salesperson_id</label>
+
+                        <select class="form-control" [(ngModel)]="model.x_salesperson_id">
+                            <option *ngFor="let n of x_mobile_users" [value]="n.x_employee_id"> {{n.x_name}}</option>
+                        </select> 
+                       
                     </div>
                     <div class="mb-2">
                         <label for="x_route_id" class="form-label">x_route_id</label>
@@ -45,6 +48,12 @@
                     </div>
                 </div>
             </div> 
+        </div>
+        <div class="col-12">
+            <small>Dev mode :</small>
+            <div>
+                <code>{{model | json}}</code>
+            </div>
         </div>
     </div>
 </div>

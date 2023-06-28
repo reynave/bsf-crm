@@ -10,10 +10,9 @@ class Activities extends BaseController
     public function index()
     {
 
-        $q = "SELECT a.x_route_name, a.x_customer, a.x_schedule_date, a.x_activity_status, s.x_name ,a.x_salesperson_id, a.id
-        FROM x_sales_activity as a
-         JOIN x_sales_activity_schedule as s on s.id = a.x_sales_activity_schedule_id
-        WHERE  a.x_salesperson_id = '" . model('Core')->header()['account']['id'] . "' order by id DESC ";
+        $q = "SELECT x_route_name, x_customer, x_schedule_date, x_activity_status,  x_salesperson_id, id, create_date
+        FROM x_sales_activity  
+        WHERE  x_salesperson_id = '" . model('Core')->header()['account']['id'] . "' order by id DESC ";
 
         $query = $this->db->query($q);
         $results = $query->getResultArray();
@@ -58,10 +57,16 @@ class Activities extends BaseController
     {
         $route = $this->db->query("SELECT id, x_area_id, x_name FROM x_route order by x_name ASC ");
         $x_route = $route->getResultArray();
+
+        $mobile_users = $this->db->query("SELECT id, x_employee_id, x_name FROM x_mobile_users order by x_name ASC ");
+        $x_mobile_users = $mobile_users->getResultArray();
+       
         $data = [
-            "error" => false,
-            "x_route" => $x_route,
+            "error"             => false,
+            "x_route"           => $x_route,
+            "x_mobile_users"    => $x_mobile_users, 
         ];
+
         return $this->response->setJSON($data);
     }
 
@@ -83,9 +88,9 @@ class Activities extends BaseController
                 "write_uid" => $id,
                 "write_date" => date("Y-m-d H:i:s"),
                 "x_schedule_date" => $post['model']['x_schedule_date'],
-                "x_salesperson_id" => $id,
+                "x_salesperson_id" => $post['model']['x_salesperson_id'],
                 "x_route_id" => $post['model']['x_route_id'],
-                "x_name" => $post['model']['x_name'],
+                "x_name" => model("Core")->select("x_name","x_mobile_users","id = '". $post['model']['x_salesperson_id']. "' "),
             ]);
 
             $x_sales_activity_schedule_id = model("Core")->select("id", "x_sales_activity_schedule", " x_salesperson_id= '$id' order by create_date DESC");
@@ -111,6 +116,8 @@ class Activities extends BaseController
                     "x_salesperson_id" => model("Core")->accountId(),
                     "x_sales_person" => model("Core")->accountId(),
                     "x_route_id" => $post['model']['x_route_id'],
+                   // "x_branch_id" => $row['x_branch_id'],
+                    
 
                 ]);
             }

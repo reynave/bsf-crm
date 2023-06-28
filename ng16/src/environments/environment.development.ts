@@ -1,6 +1,6 @@
 export const environment = {
     version : "V1 development",
     production: false,
-    api:"http://systemapk.bsfar.com:41021/api/v1/",
+    api:"http://localhost/app/bsf/public/",
     serialNumber : "WEB2023",
 };
