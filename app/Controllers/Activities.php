@@ -7,10 +7,10 @@ use Faker\Factory;
 class Activities extends BaseController
 {
 
-    public function index()
+    function index()
     {
 
-        $q = "SELECT x_route_name, x_customer, x_schedule_date, x_activity_status,  x_salesperson_id, id, create_date
+        $q = "SELECT x_route_name,  x_schedule_date, x_activity_status,  x_salesperson_id, id, create_date, x_customer_name
         FROM x_sales_activity  
         WHERE  x_salesperson_id = '" . model('Core')->header()['account']['id'] . "' order by id DESC ";
 
@@ -46,10 +46,10 @@ class Activities extends BaseController
         FROM x_sales_activity   
         WHERE id= '" . $id . "' ");
         $results = $query->getResultArray()[0];
+        $results['x_photo_url'] = $results['x_photo_url'] != "" ? base_url().$results['x_photo_url']  :"";
         $data = [
             "error" => false,
             "item" => $results,
-
         ];
         return $this->response->setJSON($data);
     }
@@ -60,11 +60,11 @@ class Activities extends BaseController
 
         $mobile_users = $this->db->query("SELECT id, x_employee_id, x_name FROM x_mobile_users order by x_name ASC ");
         $x_mobile_users = $mobile_users->getResultArray();
-       
+
         $data = [
-            "error"             => false,
-            "x_route"           => $x_route,
-            "x_mobile_users"    => $x_mobile_users, 
+            "error" => false,
+            "x_route" => $x_route,
+            "x_mobile_users" => $x_mobile_users,
         ];
 
         return $this->response->setJSON($data);
@@ -83,14 +83,14 @@ class Activities extends BaseController
         if ($post) {
             $id = model('Core')->header()['account']['id'];
             $this->db->table("x_sales_activity_schedule")->insert([
-                "create_uid" => $id,
-                "create_date" => date("Y-m-d H:i:s"),
-                "write_uid" => $id,
-                "write_date" => date("Y-m-d H:i:s"),
+                // "create_uid" => $id,
+                // "create_date" => date("Y-m-d H:i:s") . ".0000",
+                //"write_uid" => $id,
+                //"write_date" => date("Y-m-d H:i:s") . ".0000",
                 "x_schedule_date" => $post['model']['x_schedule_date'],
                 "x_salesperson_id" => $post['model']['x_salesperson_id'],
                 "x_route_id" => $post['model']['x_route_id'],
-                "x_name" => model("Core")->select("x_name","x_mobile_users","id = '". $post['model']['x_salesperson_id']. "' "),
+                "x_name" => model("Core")->select("x_name", "x_mobile_users", "id = '" . $post['model']['x_salesperson_id'] . "' "),
             ]);
 
             $x_sales_activity_schedule_id = model("Core")->select("id", "x_sales_activity_schedule", " x_salesperson_id= '$id' order by create_date DESC");
@@ -99,25 +99,26 @@ class Activities extends BaseController
             foreach ($x_route_line->getResultArray() as $row) {
                 $faker = Factory::create();
                 $this->db->table("x_sales_activity")->insert([
-                    "create_uid" => $id,
-                    "create_date" => date("Y-m-d H:i:s"),
-                    "write_uid" => $id,
-                    "write_date" => date("Y-m-d H:i:s"),
+                    //  "create_uid" => $id,
+                     "create_date" => date("Y-m-d H:i:s") . ".0000",
+                    // "write_uid" => $id,
+                     "write_date" => date("Y-m-d H:i:s") . ".0000",
                     "x_customer_id" => $row['x_partner_id'],
-                    "x_customer" => $faker->name,
-                    //$row['x_name'],
-                    "x_route_name" => $row['x_name'] . " " . $row['x_street'] . " " . $row['x_street'] . " " . $row['x_street_2'] . " " . $row['x_city'] . " " . $row['x_zip'],
+                    "x_customer_name" => $row['x_customer_name'] == "" ? $faker->name : $row['x_customer_name'],
+                    "x_customer_no" => $row['x_customer_no'],
+
+                    "x_route_name" => $row['x_name'] . " " . $row['x_street'] . " " . $row['x_street_2'] . " " . $row['x_city'] . " " . $row['x_zip'],
                     "x_cust_latitude" => $row['x_latitude'],
                     "x_cust_longitude" => $row['x_longitude'],
 
                     "x_activity_status" => "OPEN",
                     "x_sales_activity_schedule_id" => $x_sales_activity_schedule_id,
                     "x_schedule_date" => $post['model']['x_schedule_date'],
-                    "x_salesperson_id" => model("Core")->accountId(),
-                    "x_sales_person" => model("Core")->accountId(),
+                    "x_salesperson_id" => $post['model']['x_salesperson_id'],
+                    "x_salesperson" => model("Core")->select("x_name","x_mobile_users","x_employee_id = '".$post['model']['x_salesperson_id']."' "),
                     "x_route_id" => $post['model']['x_route_id'],
-                   // "x_branch_id" => $row['x_branch_id'],
-                    
+                    //"x_res_name" => $row['x_branch_id'],
+
 
                 ]);
             }
@@ -152,7 +153,7 @@ class Activities extends BaseController
                 "x_summary" => $post['model']['x_summary'],
                 "x_visited_longitude" => $post['geoData']['long'],
                 "x_visited_latitude" => $post['geoData']['lat'],
-                "x_check_in_date" => date("Y-m-d H:i:s"),
+                "x_check_in_date" => date("Y-m-d H:i:s") . ".0000",
                 "x_check_in_time" => date("H:i:s"),
                 "x_is_visited" => true,
             ], "id = '" . $post['id'] . "' AND  x_salesperson_id = '$id' ");
@@ -246,13 +247,17 @@ class Activities extends BaseController
             "post" => $post,
         );
         if ($post) {
-           
+
             $data = [
                 "error" => false,
-                "photo" =>  $post['base64Images'] != false ? model("Core")->cam_to_img($post['base64Images'], "./uploads/activity/", date("YmdHis")) : "",
-             
+                "photo" => $post['base64Images'] != false ? model("Core")->cam_to_img($post['base64Images'], "./uploads/activity/", date("YmdHis")) : "",
+
                 "post" => $post,
-            ];
+            ]; 
+            $this->db->table("x_sales_activity")->update([
+                "x_photo_url" => $data['photo'], 
+            ], "id = '" . $post['id'] . "'  ");
+            
         }
         return $this->response->setJSON($data);
     }

@@ -104,6 +104,7 @@ nbproject/
 build/
 nbbuild/
 dist/
+download/
 nbdist/
 nbactions.xml
 nb-configuration.xml

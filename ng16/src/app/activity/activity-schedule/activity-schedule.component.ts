@@ -23,7 +23,7 @@ export class ActivityScheduleComponent implements OnInit {
   loading: boolean = false;
   api: string = environment.api;
   note: string = "";
-  model  : any = new Model("",this.date.getFullYear()+'-'+("0" + (this.date.getMonth() + 1)).slice(-2)+'-'+this.date.getDate(), "" );
+  model  : any = new Model("",this.date.getFullYear()+'-'+("0" + (this.date.getMonth() + 1)).slice(-2)+'-'+("0" + (this.date.getDate() + 1)).slice(-2), "" );
   id : string = "";
   item : any = []; 
   x_route :any = [];
