@@ -1,5 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="io.cordova.hellocordova" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="io.cordova.hellocordova" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" 
+xmlns:android="http://schemas.android.com/apk/res/android" 
+xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>BSF CRM</name>
     <description>Sales Activity Schedule</description>
     <author email="dev@cordova.apache.org" href="https://cordova.apache.org">
@@ -14,5 +16,8 @@
     <platform name="android">
         <allow-intent href="market:*" /> 
         <icon density="xhdpi" height="96" src="res/icon/icon-96-xhdpi.png" width="96" /> 
+        <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application">
+            <application android:usesCleartextTraffic="true" />
+        </edit-config>
     </platform>
 </widget>

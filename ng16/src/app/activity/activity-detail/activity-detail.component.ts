@@ -205,7 +205,8 @@ export class ActivityDetailComponent implements OnInit {
         data => {
           console.log(data);
           this.loading = false;
-          this.item['x_photo_url'] = data['x_photo_url'];
+         // this.item['x_photo_url'] = data['x_photo_url'];
+          this.httpGet();
         },
         e => {
           console.log(e);
