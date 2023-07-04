@@ -17,6 +17,8 @@ import { ActivityScheduleComponent } from './activity/activity-schedule/activity
 import { HeaderBackComponent } from './global/header-back/header-back.component';
 import { ActivityHistoryComponent } from './activity/activity-history/activity-history.component';
 import { SafePipe } from './service/safe.pipe';
+import { ProductComponent } from './product/product.component';
+import { ProductDetailComponent } from './product/product-detail/product-detail.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,9 @@ import { SafePipe } from './service/safe.pipe';
     ActivityScheduleComponent,
     HeaderBackComponent,
     ActivityHistoryComponent,
-    SafePipe
+    SafePipe,
+    ProductComponent,
+    ProductDetailComponent
   ],
   imports: [
     BrowserModule,

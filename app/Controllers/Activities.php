@@ -84,16 +84,16 @@ class Activities extends BaseController
             $id = model('Core')->header()['account']['id'];
             $this->db->table("x_sales_activity_schedule")->insert([
                 // "create_uid" => $id,
-                // "create_date" => date("Y-m-d H:i:s") . ".0000",
+                 "create_date" => date("Y-m-d H:i:s") . ".0000",
                 //"write_uid" => $id,
-                //"write_date" => date("Y-m-d H:i:s") . ".0000",
+                "write_date" => date("Y-m-d H:i:s") . ".0000",
                 "x_schedule_date" => $post['model']['x_schedule_date'],
                 "x_salesperson_id" => $post['model']['x_salesperson_id'],
                 "x_route_id" => $post['model']['x_route_id'],
                 "x_name" => model("Core")->select("x_name", "x_mobile_users", "id = '" . $post['model']['x_salesperson_id'] . "' "),
             ]);
 
-            $x_sales_activity_schedule_id = model("Core")->select("id", "x_sales_activity_schedule", " x_salesperson_id= '$id' order by create_date DESC");
+            $x_sales_activity_schedule_id = model("Core")->select("id", "x_sales_activity_schedule", " true ORDER BY id DESC");
 
             $x_route_line = $this->db->query("SELECT * FROM x_route_line where x_route_id = '" . $post['model']['x_route_id'] . "' ");
             foreach ($x_route_line->getResultArray() as $row) {
