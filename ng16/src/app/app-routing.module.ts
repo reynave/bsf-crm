@@ -12,6 +12,7 @@ import { ActivityScheduleComponent } from './activity/activity-schedule/activity
 import { ActivityHistoryComponent } from './activity/activity-history/activity-history.component';
 import { ProductComponent } from './product/product.component';
 import { ProductDetailComponent } from './product/product-detail/product-detail.component';
+import { ProductListComponent } from './product/product-list/product-list.component';
 
 const routes: Routes = [
   { path:"", component:HomeComponent, data: { active: "home" },  canActivate:[authGuard] },
@@ -26,6 +27,7 @@ const routes: Routes = [
   { path:"activity/detail/:id", component:ActivityDetailComponent , data: { active: "activity" },  canActivate:[authGuard]},
  
   { path:"product", component:ProductComponent , data: { active: "product" },  canActivate:[authGuard]},
+  { path:"product/list", component:ProductListComponent , data: { active: "product" },  canActivate:[authGuard]},
   { path:"product/detail/:id", component:ProductDetailComponent , data: { active: "product" },  canActivate:[authGuard]},
 
 

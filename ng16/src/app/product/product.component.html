@@ -16,32 +16,14 @@
     <div class="container-fluid py-4">
         <div class="row">
             <div class="col-12">
-
-                <div class="card mb-3">
-                    <div class="card-body">
-
-                        <ul class="list-group">
-                            <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg"
-                                *ngFor="let x of items" [routerLink]="[ '/product/detail/',x.id ]">
-                                <div class="d-flex align-items-center">
-                                   
-
-                                    <div class="d-flex flex-column">
-                                        <code class="text-xs">{{x.default_code}}</code>
-                                        <h6 class="mb-1 text-dark text-sm"> {{x.name}}</h6> 
-                                        <span class="text-xs">{{x.type}}</span>
-                                        
-                                    </div>
-                                </div>
-                                <div
-                                    class="d-flex align-items-center text-danger text-gradient text-sm font-weight-bold">
-                                    Rp {{x.list_price | number}}
-                                </div>
-                            </li>
-
-                        </ul>
-
-  
+                <div class="form-group">
+                    <div class="mb-2"><b>Search Product base on NAME </b></div>
+                    <input type="text" class="form-control form-control-lg mb-2" [(ngModel)]="search" placeholder="min 3 char">
+                    <div class="mb-2" *ngIf="this.search.length<3">
+                        <small>Min 3 character</small>
+                    </div>
+                    <div class="d-grid my-4">
+                        <button type="button" (click)="onSearch()" [disabled]="this.search.length<3" class="btn btn-lg btn-success">SEARCH <i class="bi bi-arrow-right"></i></button>
                     </div>
                 </div>
 

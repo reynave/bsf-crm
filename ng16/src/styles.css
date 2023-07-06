@@ -49,3 +49,12 @@ footer{
 small{
     font-size: 0.8rem;
 }
+.datatable-no-head thead {
+    display:none !important;
+  }
+
+.list-item div.dataTables_wrapper div.dataTables_filter input {
+    margin-left: 0px !important; 
+    display: block  !important; 
+    width: 83vw  !important; 
+}

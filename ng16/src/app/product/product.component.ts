@@ -14,6 +14,8 @@ export class ProductComponent implements OnInit {
   api: string = environment.api;
   note: string = "";
   items : any = [];
+  
+  search : string = "";
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -39,6 +41,15 @@ export class ProductComponent implements OnInit {
       },
     );
   }
+  onSearch(){
+    if(this.search.length >= 3){
+      const body = {
+        search : this.search
+      }
+      this.router.navigate(['product/list'],{queryParams:body});
+    }
+  }
+
   back(){
     history.back();
   }

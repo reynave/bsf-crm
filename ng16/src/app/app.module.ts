@@ -19,6 +19,8 @@ import { ActivityHistoryComponent } from './activity/activity-history/activity-h
 import { SafePipe } from './service/safe.pipe';
 import { ProductComponent } from './product/product.component';
 import { ProductDetailComponent } from './product/product-detail/product-detail.component';
+import { ProductListComponent } from './product/product-list/product-list.component';
+import { DataTablesModule } from 'angular-datatables';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,8 @@ import { ProductDetailComponent } from './product/product-detail/product-detail.
     ActivityHistoryComponent,
     SafePipe,
     ProductComponent,
-    ProductDetailComponent
+    ProductDetailComponent,
+    ProductListComponent
   ],
   imports: [
     BrowserModule,
@@ -43,6 +46,7 @@ import { ProductDetailComponent } from './product/product-detail/product-detail.
     NgbModule,
     HttpClientModule,
     FormsModule, 
+    DataTablesModule
   ],schemas: [
     CUSTOM_ELEMENTS_SCHEMA
   ],
