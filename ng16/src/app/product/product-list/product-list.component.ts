@@ -48,11 +48,18 @@ export class ProductListComponent implements OnInit {
             let price = new Intl.NumberFormat().format(full['list_price']);
             let a = `
             <a href="#/product/detail/${full['id']}">
-             <div>${data}</div>
-             <div class="row">
-              <div class="col text-monospace text-info">${full['default_code']}</div>
-              <div class="col text-end text-primary">Rp ${price}</div>
-             </div>
+                <div >${data}</div>
+                <div class="row">
+                    <div class="col text-monospace text-info">${full['default_code']}</div>
+                    <div class="col text-end text-primary">Rp ${price}</div>
+                </div>
+                <div class="row">
+                <div class="col">
+                <span class="badge badge-sm bg-${full['qty_available'] > 0 ? "success":"light" }">${full['qty_available'] > 0 ? "Avaiable":"Not Avaiable" }</span>
+              </div>
+                  <div class="col text-end"> <small>Qty : ${full['qty_available'] < 0 ? 0 :full['qty_available'] }<small>  </div>
+                 
+                </div>
              </a>`;
             return a;
           }

@@ -18,7 +18,7 @@
             <div class="col-12">
                 <div class="form-group">
                     <div class="mb-2"><b>Search Product base on NAME </b></div>
-                    <input type="text" class="form-control form-control-lg mb-2" [(ngModel)]="search" placeholder="min 3 char">
+                    <input type="text" class="form-control form-control-lg mb-2" [(ngModel)]="search" (keyup.enter)="onSearch()" placeholder="min 3 char">
                     <div class="mb-2" *ngIf="this.search.length<3">
                         <small>Min 3 character</small>
                     </div>

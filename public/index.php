@@ -65,7 +65,7 @@ $app->setContext($context);
 header('Access-Control-Allow-Origin: *');
 header("Access-Control-Allow-Headers: Token, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method");
 header("Access-Control-Allow-Methods: GET, POST, PUT, OPTIONS");
-header('Content-Type: application/json');
+//header('Content-Type: application/json');
 $method = $_SERVER['REQUEST_METHOD'];
 if ($method == "OPTIONS") {
     die();

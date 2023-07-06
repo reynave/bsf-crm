@@ -1,8 +1,11 @@
-<nav class="fixed-top py-2">
+<nav class="fixed-top py-2 bg-white shadow-sm">
     <div class="container-fluid">
         <div class="row g-1">
             <div class="col-1 align-self-center  ">
                 <a class="navbar-brand h2 " (click)="back()"><i class="bi bi-arrow-left"></i></a>
+            </div>
+            <div class="col-11 align-self-center">
+                <small>Search Product "<b>{{search}}</b>", total <b>{{total}}</b></small>
             </div>
 
         </div>
@@ -15,9 +18,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="card mb-4">
-                    <div class="card-header mb-0 pb-0">
-                        <small>Search Product base on <b>{{search}}</b>, total <b>{{total}}</b></small>
-                    </div>
+                     
                     <div class="card-body">
                         <div class="list-item">
                             <table datatable [dtOptions]="dtOptions" class="table w-100 datatable-no-head"></table>

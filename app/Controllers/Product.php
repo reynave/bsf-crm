@@ -30,20 +30,27 @@ class Product extends BaseController
             "data" => [], 
         ];
 
-        if (isset($post['search']) && strlen($post['search']) > 3) {
+        if (isset($post['search']) && strlen($post['search']) > 2) {
             $status  = true;
             $search = str_replace(["'",'"',"\'"],"",$post['search']);
         }
 
         if ($status) {
  
-            $where = "WHERE NAME LIKE '%" . $search . "%'";
+            $where = "WHERE p.name LIKE '%" . strtoupper($search). "%'";
 
 
-            $query = $this->db->query("SELECT *  FROM product_template  $where ");
+            $query = $this->db->query("SELECT p.id, s.product_id, p.name, p.list_price, p.default_code, 
+                s.quantity,s.reserved_quantity,
+                coalesce(s.quantity - s.reserved_quantity,0 ) as qty_Available
+                FROM product_template AS p
+                LEFT JOIN stock_quant AS s ON  s.product_id = p.id
+                $where
+            ");
+
             $items = $query->getResultArray();
 
-            $total = $this->db->query("SELECT count(id) FROM product_template  $where ");
+            $total = $this->db->query("SELECT count(p.id) FROM product_template  as p $where ");
             $total = (int) $total->getResultArray()[0]['count'];
 
             $data = [
