@@ -5,10 +5,13 @@
                 <a class="navbar-brand h2" (click)="back()"><i class="bi bi-arrow-left"></i></a>
             </div>
             <div class="col-10 align-self-center text-center ">
-                <h5 class="p-0 m-0  ms-3">Schedule Activites</h5>
+                <h5 class="p-0 m-0  ms-3">Schedule {{noteSelect}}</h5>
             </div>
-            <div class="col-1 text-end  ">
-                <!-- <a [routerLink]="[ '/activity/history', ]" class="btn btn-info rounded-pill">History</a> -->
+            <div class="col-1 text-end align-self-center ">
+                <a class="h4" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom"
+                    aria-controls="offcanvasBottom">
+                    <i class="bi bi-calendar-range"></i>
+                </a>
             </div>
         </div>
     </div>
@@ -21,33 +24,34 @@
         <div class="row">
             <div class="col-12">
 
-                <div class="card mb-2  " *ngFor="let x of items" [routerLink]="[ '/activity' ]" [queryParams]="{id:x.id}">
+                <div class="card mb-2  " *ngFor="let x of items" [routerLink]="[ '/activity' ]"
+                    [queryParams]="{id:x.id}">
                     <div class="card-body">
-                         
-                  
-                       
+
+
+
                         <div class="row">
                             <div class="col-12 mb-2">
-                                <strong>{{x.x_salesperson}}</strong> 
-                            </div> 
+                                <strong>{{x.x_salesperson}}</strong>
+                            </div>
                             <div class="col">
                                 <div class="lh-sm">
                                     <small>Schedule Date </small>
-                                </div> 
+                                </div>
                                 <div class="lh-sm">
                                     <label>{{x.x_schedule_date | date:'d MMM y'}}</label>
-                                </div> 
+                                </div>
                             </div>
                             <div class="col">
                                 <div class="lh-sm">
                                     <small>x_route_id</small>
-                                </div> 
+                                </div>
                                 <div class="lh-sm">
                                     <label>{{x.x_route_id}}</label>
-                                </div> 
+                                </div>
                             </div>
                         </div>
-                        
+
                     </div>
                 </div>
 
@@ -61,4 +65,55 @@
     <a [routerLink]="[ '/activity/schedule' ]" class="display-1">
         <i class="bi bi-plus-circle-fill"></i>
     </a>
+</div>
+
+
+<div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasBottomLabel">Select Ranges Date</h5>
+
+        <a data-bs-dismiss="offcanvas" aria-label="Close"><i class="bi bi-x-lg"></i></a>
+    </div>
+    <div class="offcanvas-body small">
+        <div class="row border-bottom" (click)="selectDate='0'" >
+            <div class="col-10">
+                <h6 for="dateToday">Today</h6>
+            </div>
+            <div class="col-2 text-end align-self-center">
+                <input type="radio" name="selectDate" value="0" [(ngModel)]="selectDate" id="dateToday">
+            </div>
+        </div>
+        <div class="row border-bottom mt-2" (click)="selectDate='1'" >
+            <div class="col-10">
+                <h6 for="date7day">Yesterday and in the Schedule</h6>
+            </div>
+            <div class="col-2 text-end align-self-center">
+                <input type="radio" name="selectDate" value="1" [(ngModel)]="selectDate" id="date7day">
+            </div>
+        </div>
+        <div class="row border-bottom mt-2" (click)="selectDate='7'" >
+            <div class="col-10">
+                <h6 for="date7day">Last 7 Days</h6>
+            </div>
+            <div class="col-2 text-end align-self-center">
+                <input type="radio" name="selectDate" value="7" [(ngModel)]="selectDate" id="date7day">
+            </div>
+        </div>
+        <div class="row border-bottom mt-2" (click)="selectDate='30'">
+            <div class="col-10">
+                <h6 for="date30day">Last 30 Days</h6>
+            </div>
+            <div class="col-2 text-end align-self-center">
+                <input type="radio" name="selectDate" value="30" [(ngModel)]="selectDate" id="date30day">
+            </div>
+        </div>
+
+
+
+    </div>
+    <div class="offcanvas-bottom ">
+        <div class="d-grid p-2">
+            <button type="button" class="btn btn-success" data-bs-dismiss="offcanvas" (click)="updateDate()">Update</button>
+        </div>
+    </div>
 </div>

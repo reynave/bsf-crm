@@ -14,6 +14,7 @@ export class ScheduleActivitiesComponent implements OnInit {
   api: string = environment.api;
   note: string = "";
   items : any = [];
+  noteSelect : string  = "Today";
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -26,14 +27,16 @@ export class ScheduleActivitiesComponent implements OnInit {
   back(){
     history.back();
   }
-  httpGet(){  
+  httpGet(data : any = []){  
     this.http.get<any>(this.api + 'activities/schedules', {
       headers : this.configService.headers(),
+      params : data,
     }).subscribe(
       data => {
         this.loading = false;
         this.items = data['items'];
         console.log(data); 
+        this.noteSelect  = data['noteSelect'];
       },
       e => {
         console.log(e);
@@ -60,6 +63,21 @@ export class ScheduleActivitiesComponent implements OnInit {
         this.note = "Error Server!";
       },
     );
+  }
+
+  selectDate : string = "0";
+  updateDate(){
+    console.log(this.selectDate);
+    const body = {
+      selectDate : this.selectDate,
+      type : 'range',
+    } 
+    this.httpGet(body);
+    // this.router.navigate(['scheduleAcivities'],{queryParams:body}).then(
+    //   ()=>{
+       
+    //   }
+    // )
   }
 }
 

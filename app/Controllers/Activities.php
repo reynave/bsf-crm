@@ -16,9 +16,9 @@ class Activities extends BaseController
 
         $q = "SELECT x_route_name,  x_schedule_date, x_activity_status,  x_salesperson_id, id, create_date, x_customer_name, x_is_visited
         FROM x_sales_activity  
-        WHERE  x_salesperson_id = '" . model('Core')->header()['account']['id'] . "'   $where 
+        WHERE TRUE   $where 
         order by id DESC ";
-
+// x_salesperson_id = '" . model('Core')->header()['account']['id'] . "'
         $query = $this->db->query($q);
         $results = $query->getResultArray();
         $data = [
@@ -26,7 +26,7 @@ class Activities extends BaseController
             "error" => false,
             "items" => $results,
             "get"=> $this->request->getVar(),
-            "header" => model('Core')->header(),
+          //  "header" => model('Core')->header(),
         ];
         return $this->response->setJSON($data);
     }
@@ -275,10 +275,22 @@ class Activities extends BaseController
     }
 
     function schedules(){
+
+        //$account = "x_salesperson_id = '" . model('Core')->header()['account']['id'] . "'  AND ";
+        $account = "";
+        $post = $this->request->getVar();
+        $range  = 0;
+        if( isset($post['type'])){
+            if( $post['type'] == 'range'){
+                $range = $post['selectDate'];
+            } 
+        }
+     
+
         $q = "SELECT *
         FROM x_sales_activity_schedule  
-        WHERE  x_salesperson_id = '" . model('Core')->header()['account']['id'] . "'  AND 
-        x_schedule_date >= date(now()) - 1
+        WHERE  $account 
+        x_schedule_date >= date(now()) - $range
         ORDER BY id DESC ";
 
         $query = $this->db->query($q);
@@ -287,6 +299,7 @@ class Activities extends BaseController
             "q" => $q,
             "error" => false,
             "items" => $results, 
+            "noteSelect" => ($range > 0 ? "last $range days" : "Today" ),
         ];
         return $this->response->setJSON($data);
     }
