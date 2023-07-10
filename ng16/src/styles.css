@@ -1,62 +1,74 @@
 /* Show it is fixed to the top */
-:root{
+:root {
     --mobile-width: 500px;
 }
-body { 
+
+body {
     padding-top: 3.5rem;
 }
-.mobile-first{ 
+
+.mobile-first {
     max-width: var(--mobile-width);
     margin: 0 auto;
- 
+
 }
+
 /* .fixed-top{
     max-width: var(--mobile-width);
     margin: 0 auto;
 } */
 
-.floating_footer{
+.floating_footer {
     position: fixed;
     bottom: 3%;
-    right:  8%; 
+    right: 8%;
 }
-nav.fixed-top{
+
+nav.fixed-top {
     z-index: 99;
 }
-footer{
+
+footer {
     position: fixed;
     bottom: 0px;
     left: 0px;
     width: 100%;
 }
 
-.container-fluid{
+.container-fluid {
     padding-left: 20px;
     padding-right: 20px;
 }
+
 .btn {
-     margin-bottom: 0px;
+    margin-bottom: 0px;
 }
 
-.card .card-body { 
+.card .card-body {
     padding: 1rem;
 }
 
-.card label { 
-     margin-bottom: 0px; 
-     margin-left:0px; 
+.card label {
+    margin-bottom: 0px;
+    margin-left: 0px;
 }
-small{
+
+small {
     font-size: 0.8rem;
 }
-.datatable-no-head thead {
-    display:none !important;
-  }
 
-.list-item div.dataTables_wrapper div.dataTables_filter input {
-    margin-left: 0px !important; 
-    display: block  !important; 
-    width: 83vw  !important; 
+.datatable-no-head thead {
+    display: none !important;
 }
 
- 
+@media screen and (max-width: 500px) {
+    .list-item div.dataTables_wrapper div.dataTables_filter input {
+        margin-left: 0px !important;
+        display: block !important;
+        width: 83vw !important;
+    }
+}
+
+.modal-footer { 
+    justify-content: normal !important;
+}

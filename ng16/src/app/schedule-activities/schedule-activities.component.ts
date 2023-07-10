@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { ConfigService } from 'src/app/service/config.service';
 
 @Component({
-  selector: 'app-activity',
-  templateUrl: './activity.component.html',
-  styleUrls: ['./activity.component.css']
+  selector: 'app-schedule-activities',
+  templateUrl: './schedule-activities.component.html',
+  styleUrls: ['./schedule-activities.component.css']
 })
-export class ActivityComponent implements OnInit { 
+export class ScheduleActivitiesComponent implements OnInit { 
   loading: boolean = false;
   api: string = environment.api;
   note: string = "";
@@ -18,7 +18,6 @@ export class ActivityComponent implements OnInit {
     private http: HttpClient,
     private router: Router,
     private configService: ConfigService,
-    private activeRouter: ActivatedRoute,
   ){ }
 
   ngOnInit(){
@@ -28,10 +27,8 @@ export class ActivityComponent implements OnInit {
     history.back();
   }
   httpGet(){  
-    console.log(this.activeRouter.snapshot.queryParams);
-    this.http.get<any>(this.api + 'activities/index', {
+    this.http.get<any>(this.api + 'activities/schedules', {
       headers : this.configService.headers(),
-      params : this.activeRouter.snapshot.queryParams
     }).subscribe(
       data => {
         this.loading = false;
@@ -65,3 +62,4 @@ export class ActivityComponent implements OnInit {
     );
   }
 }
+

@@ -4,46 +4,35 @@
             <div class="col-1 align-self-center  ">
                 <a class="navbar-brand h2" (click)="back()"><i class="bi bi-arrow-left"></i></a>
             </div>
-            <div class="col-10 align-self-center  text-center ">
-                <h5 class="p-0 m-0  ms-3"> Activites</h5>
+            <div class="col-10 align-self-center text-center ">
+                <h5 class="p-0 m-0  ms-3">Schedule Activites</h5>
             </div>
-            <div class="col-4 text-end  ">
+            <div class="col-1 text-end  ">
                 <!-- <a [routerLink]="[ '/activity/history', ]" class="btn btn-info rounded-pill">History</a> -->
             </div>
         </div>
     </div>
 </nav>
 
+
+
 <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
     <div class="container-fluid py-4">
         <div class="row">
             <div class="col-12">
 
-                <div class="card mb-3  border-{{x.x_activity_status == 'OPEN' ? 'success border-3' : '' }} border-{{x.x_activity_status == 'CHECKIN' ? 'info border-3' : '' }}" *ngFor="let x of items" [routerLink]="[ '/activity/detail/',x.id ]">
+                <div class="card mb-2  " *ngFor="let x of items" [routerLink]="[ '/activity' ]" [queryParams]="{id:x.id}">
                     <div class="card-body">
                          
-                        <div class="row g-0">
-                            <div class="col-9">
-                                <strong>{{x.x_customer_name}}</strong> 
-                            </div>
-                            <div class="col-3 text-end">
-                                <span *ngIf="x.x_is_visited != 'f' " class="badge bg-secondary">{{x.x_activity_status}}</span>
- 
-                                <span *ngIf="x.x_is_visited == 'f' " class="badge bg-danger">Not Visit</span>
-
-                            </div>
-                        </div>
-                        
-                        
-                        
-                        <div class="lh-sm mb-2">
-                            <small>{{x.x_route_name}}</small>
-                        </div>
+                  
                        
                         <div class="row">
+                            <div class="col-12 mb-2">
+                                <strong>{{x.x_salesperson}}</strong> 
+                            </div> 
                             <div class="col">
                                 <div class="lh-sm">
-                                    <small>Schdule Date </small>
+                                    <small>Schedule Date </small>
                                 </div> 
                                 <div class="lh-sm">
                                     <label>{{x.x_schedule_date | date:'d MMM y'}}</label>
@@ -51,10 +40,10 @@
                             </div>
                             <div class="col">
                                 <div class="lh-sm">
-                                    <small>Created Date</small>
+                                    <small>x_route_id</small>
                                 </div> 
                                 <div class="lh-sm">
-                                    <label>{{x.create_date | date:'medium'}}</label>
+                                    <label>{{x.x_route_id}}</label>
                                 </div> 
                             </div>
                         </div>

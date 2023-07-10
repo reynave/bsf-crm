@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfigService } from 'src/app/service/config.service';
 import { NgZone } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 declare let navigator: any;
 declare let Camera: any;
@@ -14,6 +15,9 @@ export class Model {
     public x_activity_type_id: string,
     public x_note: string,
     public x_summary: string,
+    public x_visit_reason: string, 
+     public x_not_visit_reason: string, 
+    
   ) { }
 
 }
@@ -27,7 +31,7 @@ export class ActivityDetailComponent implements OnInit {
   loading: boolean = false;
   api: string = environment.api;
   note: string = "";
-  model: any = new Model("", "", "");
+  model: any = new Model("", "", "","","");
   id: string = "";
   item: any = [];
   active = 1;
@@ -37,7 +41,8 @@ export class ActivityDetailComponent implements OnInit {
     private router: Router,
     private activeRoute: ActivatedRoute,
     private configService: ConfigService,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    private modalService: NgbModal
   ) { }
 
   ngOnInit(): void {
@@ -68,12 +73,14 @@ export class ActivityDetailComponent implements OnInit {
   remove() {
     const body = {
       id: this.id,
+      model : this.model
     }
-    if (confirm("Remove this activity?")) {
+    if (confirm("is not visit this activity?")) {
       this.http.post<any>(this.api + 'activities/remove', body, {
         headers: this.configService.headers(),
       }).subscribe(
         data => {
+          this.modalService.dismissAll();
           console.log(data);
           history.back();
         },
@@ -89,7 +96,7 @@ export class ActivityDetailComponent implements OnInit {
     const body = {
       id: this.id,
       model: this.model,
-      geoData: this.geoData
+      geoData: this.geoData, 
     }
     console.log(body);
     this.http.post<any>(this.api + 'activities/checkIn', body, {
@@ -97,6 +104,7 @@ export class ActivityDetailComponent implements OnInit {
     }).subscribe(
       data => {
         console.log(data);
+        this.takePhoto();
         this.httpGet();
       },
       e => {
@@ -118,7 +126,7 @@ export class ActivityDetailComponent implements OnInit {
     }).subscribe(
       data => {
         console.log(data);
-        this.back();
+        this.takePhoto();
       },
       e => {
         console.log(e);
@@ -159,6 +167,8 @@ export class ActivityDetailComponent implements OnInit {
   }
 
 
+  images: string = "";
+  initPhoto: boolean = false;
   takePhoto() {
     const options = {
       destinationType: Camera.DestinationType.DATA_URL,
@@ -170,10 +180,7 @@ export class ActivityDetailComponent implements OnInit {
 
     navigator.camera.getPicture(this.cameraSuccess, this.cameraError, options);
 
-  }
-
-  images: string = "";
-  initPhoto: boolean = false;
+  } 
   cameraSuccess = (imagesData: any) => {
     this.initPhoto = true;
     this.loading = false;
@@ -187,6 +194,7 @@ export class ActivityDetailComponent implements OnInit {
   cameraError = (e: any) => {
     console.log('error Camera', e);
     this.initPhoto = false;
+    this.modalService.dismissAll();
   }
 
   saveImages() {
@@ -205,7 +213,7 @@ export class ActivityDetailComponent implements OnInit {
         data => {
           console.log(data);
           this.loading = false;
-         // this.item['x_photo_url'] = data['x_photo_url'];
+          this.modalService.dismissAll();
           this.httpGet();
         },
         e => {
@@ -215,4 +223,11 @@ export class ActivityDetailComponent implements OnInit {
       );
     }
   }
+
+
+  openFullscreen(content: any) {
+		this.modalService.open(content, { fullscreen: true });
+	}
+
+  
 }

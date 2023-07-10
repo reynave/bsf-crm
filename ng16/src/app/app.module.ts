@@ -20,7 +20,8 @@ import { SafePipe } from './service/safe.pipe';
 import { ProductComponent } from './product/product.component';
 import { ProductDetailComponent } from './product/product-detail/product-detail.component';
 import { ProductListComponent } from './product/product-list/product-list.component';
-import { DataTablesModule } from 'angular-datatables';
+import { DataTablesModule } from 'angular-datatables'; 
+import { ScheduleActivitiesComponent } from './schedule-activities/schedule-activities.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { DataTablesModule } from 'angular-datatables';
     SafePipe,
     ProductComponent,
     ProductDetailComponent,
-    ProductListComponent
+    ProductListComponent, 
+    ScheduleActivitiesComponent
   ],
   imports: [
     BrowserModule,
