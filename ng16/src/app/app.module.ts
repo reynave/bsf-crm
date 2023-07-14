@@ -22,6 +22,7 @@ import { ProductDetailComponent } from './product/product-detail/product-detail.
 import { ProductListComponent } from './product/product-list/product-list.component';
 import { DataTablesModule } from 'angular-datatables'; 
 import { ScheduleActivitiesComponent } from './schedule-activities/schedule-activities.component';
+import { ActivityInsertComponent } from './activity/activity-insert/activity-insert.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,7 @@ import { ScheduleActivitiesComponent } from './schedule-activities/schedule-acti
     ProductComponent,
     ProductDetailComponent,
     ProductListComponent, 
-    ScheduleActivitiesComponent
+    ScheduleActivitiesComponent, ActivityInsertComponent
   ],
   imports: [
     BrowserModule,

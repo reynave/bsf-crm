@@ -14,6 +14,7 @@ import { ProductComponent } from './product/product.component';
 import { ProductDetailComponent } from './product/product-detail/product-detail.component';
 import { ProductListComponent } from './product/product-list/product-list.component';
 import { ScheduleActivitiesComponent } from './schedule-activities/schedule-activities.component';
+import { ActivityInsertComponent } from './activity/activity-insert/activity-insert.component';
 
 const routes: Routes = [
   { path:"", component:HomeComponent, data: { active: "home" },  canActivate:[authGuard] },
@@ -25,6 +26,8 @@ const routes: Routes = [
   { path:"scheduleAcivities", component:ScheduleActivitiesComponent , data: { active: "scheduleAcivities" },  canActivate:[authGuard]},
   
   { path:"activity", component:ActivityComponent , data: { active: "activity" },  canActivate:[authGuard]}, 
+  { path:"activity/insert", component:ActivityInsertComponent , data: { active: "activity" },  canActivate:[authGuard]},
+ 
   { path:"activity/schedule", component:ActivityScheduleComponent , data: { active: "activity" },  canActivate:[authGuard]},
   { path:"activity/history", component:ActivityHistoryComponent , data: { active: "activity" },  canActivate:[authGuard]},
   { path:"activity/detail/:id", component:ActivityDetailComponent , data: { active: "activity" },  canActivate:[authGuard]},

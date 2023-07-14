@@ -1,6 +1,7 @@
 export const environment = {
     version : "V1 Staging",
-    production: false,
-    api:"http://192.168.1.111/app/bsf/public/",
+    production: false, 
+    api:"http://systemapk.bsfar.com:41021/api/v1/",
     serialNumber : false,
+    cam : false,
 };

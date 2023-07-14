@@ -3,4 +3,5 @@ export const environment = {
     production: true, 
     api:"http://systemapk.bsfar.com:41021/api/v1/",
     serialNumber : false,
+    cam : true,
 };
