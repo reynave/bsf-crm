@@ -46,8 +46,9 @@ export class ProductListComponent implements OnInit {
           data: 'name',
           render: function (data: any, type: any, full: any) {
             let price = new Intl.NumberFormat().format(full['list_price']);
+            let url = full['qty_available'] > 0 ?  "#/product/detail/"+full['id'] :"javascript:;";
             let a = `
-            <a href="#/product/detail/${full['id']}">
+            <a href="${url}">
                 <div >${data}</div>
                 <div class="row">
                     <div class="col text-monospace text-info">${full['default_code']}</div>

@@ -6,39 +6,40 @@ import { ConfigService } from 'src/app/service/config.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: 'app-product-detail',
-  templateUrl: './product-detail.component.html',
-  styleUrls: ['./product-detail.component.css']
+  selector: 'app-order',
+  templateUrl: './order.component.html',
+  styleUrls: ['./order.component.css']
 })
-export class ProductDetailComponent implements OnInit {
+export class OrderComponent implements OnInit {
   loading: boolean = false;
   api: string = environment.api;
   note: string = "";
-  item : any = [];
-  id : string = "";
+  item: any = [];
+  id: string = "";
+  total: number = 0;
+  detail: any = [];
+
   constructor(
     private http: HttpClient,
     private router: Router,
-    private configService: ConfigService, 
+    private configService: ConfigService,
     private activeRoute: ActivatedRoute,
     private modalService: NgbModal
-  ){ }
-
-
+  ) { }
 
   ngOnInit(): void {
-    this.id = this.activeRoute.snapshot.params['id'];
     this.httpGet();
   }
 
-  httpGet(){  
-    this.http.get<any>(this.api + 'product/detail/'+this.id, {
-      headers : this.configService.headers(),
+  httpGet() {
+    this.loading = true;
+    this.http.get<any>(this.api + 'order', {
+      headers: this.configService.headers(),
     }).subscribe(
       data => {
         this.loading = false;
         this.item = data['item'];
-        console.log(data); 
+        console.log(data);
       },
       e => {
         console.log(e);
@@ -46,31 +47,29 @@ export class ProductDetailComponent implements OnInit {
       },
     );
   }
-  qty : number = 1;
-  addToCard(){
-    const body = {
-      id: this.id,
-      item : this.item,
-      qty : this.qty,
-    }
-    this.http.post<any>(this.api + 'product/addToCard', body, {
-      headers : this.configService.headers(),
-    }).subscribe(
-      data => {
-        this.loading = false; 
-        console.log(data); 
-        this.modalService.dismissAll(); 
-      },
-      e => {
-        console.log(e);
-        this.note = "Error Server!";
-      },
-    );
-  }
-  back(){
+
+  back() {
     history.back();
   }
-  open(content: any) {
-		this.modalService.open(content, { fullscreen: true });
-	}
+
+  open(content: any, item: any) {
+    this.detail = [];
+    this.modalService.open(content, { fullscreen: true });
+    this.loading = true;
+    this.http.get<any>(this.api + 'order/detail/' + item['id'], {
+      headers: this.configService.headers(),
+    }).subscribe(
+      data => {
+        this.loading = false;
+        console.log(data);
+        this.detail = data['detail']; 
+      },
+      e => {
+        console.log(e);
+        this.note = "Error Server!";
+      },
+    );
+
+
+  }
 }

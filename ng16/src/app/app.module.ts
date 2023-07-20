@@ -23,6 +23,9 @@ import { ProductListComponent } from './product/product-list/product-list.compon
 import { DataTablesModule } from 'angular-datatables'; 
 import { ScheduleActivitiesComponent } from './schedule-activities/schedule-activities.component';
 import { ActivityInsertComponent } from './activity/activity-insert/activity-insert.component';
+import { CartComponent } from './cart/cart.component';
+import { OrderComponent } from './order/order.component';
+import { CustomerModalComponent } from './modal/customer-modal/customer-modal.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +44,7 @@ import { ActivityInsertComponent } from './activity/activity-insert/activity-ins
     ProductComponent,
     ProductDetailComponent,
     ProductListComponent, 
-    ScheduleActivitiesComponent, ActivityInsertComponent
+    ScheduleActivitiesComponent, ActivityInsertComponent, CartComponent, OrderComponent, CustomerModalComponent
   ],
   imports: [
     BrowserModule,

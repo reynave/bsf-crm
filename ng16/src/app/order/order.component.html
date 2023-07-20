@@ -1,0 +1,101 @@
+<nav class="fixed-top py-2 bg-white shadow-sm">
+    <div class="container-fluid">
+        <div class="row g-1">
+            <div class="col-1 align-self-center  ">
+                <a class="navbar-brand h2 " (click)="back()"><i class="bi bi-arrow-left"></i></a>
+            </div>
+            <div class="col-10 align-self-center text-center">
+                <b>ORDER</b>
+            </div>
+
+        </div>
+    </div>
+</nav>
+
+<main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+
+    <div class="row">
+        <div class="col-12">
+            <div class="border bg-white shadow p-3 " *ngFor="let x of item" (click)="open(content,x)">
+                <div class="row g-0  mb-2">
+                    <div class="col-9">
+                        <small> Order Date : {{x.x_order_date | date:"medium"}}</small>
+                    </div>
+                    <div class="col-3 text-end">
+                        <span class="badge bg-secondary">{{x.x_submit}}</span>
+                    </div>
+                    <div class="col-12">
+                        <strong>{{x.name}}</strong>
+                    </div>
+                </div>
+
+
+                <div class="lh-sm mb-2">
+                    <div class="mb-1">
+                        <small>{{x.street}}</small>
+                    </div>
+                </div>
+
+                <div class="row g-1">
+
+                    <div class="col ">
+                        <div>
+                            <small>Total Items</small>
+                        </div>
+                        <div>
+                            <b>{{x.totalItem | number}}</b>
+                        </div>
+                    </div>
+                    <div class="col text-end">
+                        <div>
+                            <small>Total Amount</small>
+                        </div>
+                        <div>
+                            <b>Rp {{x.totalAmount | number}}</b>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</main>
+
+
+<ng-template #content let-modal>
+
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-12 text-end">
+                <a (click)="modal.dismiss()">Close</a>
+            </div>
+        </div>
+        <div class="row  border-bottom py-4" *ngFor="let x of detail">
+            <div class="col-12">
+                <div>
+                    <strong>{{x.x_name}}</strong>
+                </div>
+
+            </div>
+
+            <div class="col text-end">
+                <small>Unit Price</small>
+                <div><b>Rp {{x.x_unitprice | number}}</b></div>
+            </div>
+            <div class="col text-end">
+                <small>Qty</small>
+                <div> <b>{{x.x_qty | number }}</b></div>
+            </div>
+            <div class="col text-end" [hidden]="!x.x_discount">
+                <small>Discount</small>
+                <div> <b>Rp {{x.x_discount| number}}</b></div>
+            </div>
+            <div class="col text-end">
+                <small>Subtotal</small>
+                <div> <b>Rp {{x.x_subtotal| number}}</b></div>
+            </div>
+        </div>
+    </div>
+
+</ng-template>

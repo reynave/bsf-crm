@@ -22,22 +22,22 @@ class Product extends BaseController
     public function datatable()
     {
         $post = $this->request->getVar();
-        $status = false; 
+        $status = false;
         $data = [
             "error" => true,
-            "post" => $post, 
+            "post" => $post,
             "datetime" => date("Y-m-d H:i:s"),
-            "data" => [], 
+            "data" => [],
         ];
 
         if (isset($post['search']) && strlen($post['search']) > 2) {
-            $status  = true;
-            $search = str_replace(["'",'"',"\'"],"",$post['search']);
+            $status = true;
+            $search = str_replace(["'", '"', "\'"], "", $post['search']);
         }
 
         if ($status) {
- 
-            $where = "WHERE p.name LIKE '%" . strtoupper($search). "%'";
+
+            $where = "WHERE p.name LIKE '%" . strtoupper($search) . "%'";
 
 
             $query = $this->db->query("SELECT p.id, s.product_id, p.name, p.list_price, p.default_code, 
@@ -61,7 +61,7 @@ class Product extends BaseController
                 "data" => $items,
 
             ];
-        } 
+        }
         return $this->response->setJSON($data);
     }
 
@@ -77,6 +77,48 @@ class Product extends BaseController
             "item" => $item[0],
 
         ];
+        return $this->response->setJSON($data);
+    }
+
+    function addToCard()
+    {
+        $json = file_get_contents('php://input');
+        $post = json_decode($json, true);
+        $data = [
+            "error" => true,
+            "post" => $post,
+        ];
+        if ($post) {
+            $id = model("Core")->select("id", "x_customer_po", "x_submit = 0 and x_salesperson_id = '" . model("Core")->accountId() . "' ");
+            if (!$id) {
+                $this->db->table("x_customer_po")->insert([
+                    "x_salesperson_id" => model("Core")->accountId(),
+                    "x_order_date" => date("Y-m-d H:i:s"),
+                    "create_date" => date("Y-m-d H:i:s"),
+                    "write_date" => date("Y-m-d H:i:s"),
+                    "x_submit" => 0,
+                ]);
+                $id = model("Core")->select("id", "x_customer_po", "x_submit = 0 and x_salesperson_id = '" . model("Core")->accountId() . "' order by create_date DESC");
+                ;
+            }
+
+            $this->db->table("x_customer_po_line")->insert([
+                "x_customer_po_line_id" => $id,
+                "x_product" => $post['item']['id'],
+                "x_name" => $post['item']['name'],
+                "x_unitprice" => $post['item']['list_price'],
+                "x_subtotal" => $post['item']['list_price'] *  $post['qty'],
+                
+                "x_qty" => $post['qty'],
+                "create_date" => date("Y-m-d H:i:s"),
+                "write_date" => date("Y-m-d H:i:s"),
+            ]);
+
+            $data = [
+                "error" => false,
+                "post" => $post,
+            ];
+        }
         return $this->response->setJSON($data);
     }
 

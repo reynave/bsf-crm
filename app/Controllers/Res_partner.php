@@ -10,31 +10,31 @@ class Res_partner extends BaseController
         $total = $this->db->query("SELECT count(id) as total FROM res_partner  $where ");
         $total = (int) $total->getResultArray()[0]['total'];
         $data = [
-            "error" => false, 
-            "total" =>  $total,
+            "error" => false,
+            "total" => $total,
             "datetime" => date("Y-m-d H:i:s"),
         ];
-        return $this->response->setJSON($data); 
+        return $this->response->setJSON($data);
     }
 
     public function searchCustomer()
     {
         $post = $this->request->getVar();
-        $status = false; 
+        $status = false;
         $data = [
             "error" => true,
-            "post" => $post, 
+            "post" => $post,
             "datetime" => date("Y-m-d H:i:s"),
-            "data" => [], 
+            "data" => [],
         ];
 
         if (isset($post['name']) && strlen($post['name']) > 2) {
-            $status  = true;
-            $name = strtoupper(str_replace(["'",'"',"\'"],"",$post['name']));
+            $status = true;
+            $name = strtoupper(str_replace(["'", '"', "\'"], "", $post['name']));
         }
 
         if ($status) {
-            $where = " WHERE active = true AND customer_rank > 0  AND name like '%". $name ."%' ";
+            $where = " WHERE active = true AND customer_rank > 0  AND name like '%" . $name . "%' ";
 
             $q = "SELECT id, name,  street, x_latitude, x_longitude
             FROM res_partner  $where";
@@ -51,9 +51,9 @@ class Res_partner extends BaseController
                 "post" => $post,
                 "total" => $total,
                 "datetime" => date("Y-m-d H:i:s"),
-                "res_partner" => $items, 
+                "res_partner" => $items,
             ];
-        } 
+        }
         return $this->response->setJSON($data);
     }
 
@@ -72,4 +72,31 @@ class Res_partner extends BaseController
         return $this->response->setJSON($data);
     }
 
+    function modal()
+    {
+        $json = file_get_contents('php://input');
+        $post = json_decode($json, true);
+
+        $data = [
+            "error" => true,
+            "post" => $post,
+            "datetime" => date("Y-m-d H:i:s"),
+            "data" => [],
+        ];
+
+        if ($post && $post['requestFrom'] == "cart") {
+
+            $this->db->table("x_customer_po")->update([ 
+             //   "x_customer_id" => $post['customer']['id'],
+                "x_customer" => $post['customer']['id'],
+            ]," id = ".$post['id']);
+
+            $data = [
+                "error" => false,
+                "post" => $post,
+                "datetime" => date("Y-m-d H:i:s"),
+            ];
+        }
+        return $this->response->setJSON($data);
+    }
 }

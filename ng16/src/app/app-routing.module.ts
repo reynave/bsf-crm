@@ -15,6 +15,9 @@ import { ProductDetailComponent } from './product/product-detail/product-detail.
 import { ProductListComponent } from './product/product-list/product-list.component';
 import { ScheduleActivitiesComponent } from './schedule-activities/schedule-activities.component';
 import { ActivityInsertComponent } from './activity/activity-insert/activity-insert.component';
+import { CartComponent } from './cart/cart.component';
+import { OrderComponent } from './order/order.component';
+import { CustomerModalComponent } from './modal/customer-modal/customer-modal.component';
 
 const routes: Routes = [
   { path:"", component:HomeComponent, data: { active: "home" },  canActivate:[authGuard] },
@@ -36,6 +39,10 @@ const routes: Routes = [
   { path:"product/list", component:ProductListComponent , data: { active: "product" },  canActivate:[authGuard]},
   { path:"product/detail/:id", component:ProductDetailComponent , data: { active: "product" },  canActivate:[authGuard]},
 
+  { path:"modal/customer", component:CustomerModalComponent , data: { active: "customer" },  canActivate:[authGuard]},
+ 
+  { path:"cart", component:CartComponent , data: { active: "cart" },  canActivate:[authGuard]},
+  { path:"order", component:OrderComponent , data: { active: "order" },  canActivate:[authGuard]},
 
   { path: "**", component: NotfoundComponent, data: { active: "404" },  canActivate:[]  }, 
 ];
