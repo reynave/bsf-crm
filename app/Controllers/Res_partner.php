@@ -87,7 +87,7 @@ class Res_partner extends BaseController
         if ($post && $post['requestFrom'] == "cart") {
 
             $this->db->table("x_customer_po")->update([ 
-             //   "x_customer_id" => $post['customer']['id'],
+                "x_customer_id" => $post['customer']['id'],
                 "x_customer" => $post['customer']['id'],
             ]," id = ".$post['id']);
 

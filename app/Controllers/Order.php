@@ -12,11 +12,13 @@ class Order extends BaseController
             "item" => [],
             "x_salesperson_id" => model("Core")->accountId(),
         ];
- 
+        $where = "cpo.x_salesperson_id = ".model("Core")->accountId() ;
+        $where = " TRUE " ;
+        
         $q = "SELECT cpo.* , p.name,  p.street
             FROM x_customer_po as cpo
-            LEFT JOIN res_partner as p on p.id = cpo.x_customer
-            WHERE cpo.x_salesperson_id = ".model("Core")->accountId() . " order by cpo.write_date";
+            LEFT JOIN res_partner as p on p.id = cpo.x_customer_id
+            WHERE $where  order by cpo.write_date";
 
         $db = $this->db->query($q);
         $db = $db->getResultArray();

@@ -89,16 +89,18 @@ class Product extends BaseController
             "post" => $post,
         ];
         if ($post) {
-            $id = model("Core")->select("id", "x_customer_po", "x_submit = 0 and x_salesperson_id = '" . model("Core")->accountId() . "' ");
+           // $where = "and x_salesperson_id = '" . model("Core")->accountId() . "' ";
+           $where = "";
+            $id = model("Core")->select("id", "x_customer_po", "x_submit = 0  $where");
             if (!$id) {
                 $this->db->table("x_customer_po")->insert([
-                    "x_salesperson_id" => model("Core")->accountId(),
+                   // "x_salesperson_id" => model("Core")->accountId(),
                     "x_order_date" => date("Y-m-d H:i:s"),
                     "create_date" => date("Y-m-d H:i:s"),
                     "write_date" => date("Y-m-d H:i:s"),
                     "x_submit" => 0,
                 ]);
-                $id = model("Core")->select("id", "x_customer_po", "x_submit = 0 and x_salesperson_id = '" . model("Core")->accountId() . "' order by create_date DESC");
+                $id = model("Core")->select("id", "x_customer_po", "x_submit = 0  $where  order by create_date DESC");
                 ;
             }
 

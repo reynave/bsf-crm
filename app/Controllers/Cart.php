@@ -15,20 +15,22 @@ class Cart extends BaseController
             "total" => 0,
             "x_salesperson_id" => model("Core")->accountId(),
         ];
-
-        $id = model("Core")->select("id", "x_customer_po", "x_submit = 0 AND x_salesperson_id = '" . model("Core")->accountId() . "' ");
+        $where = "";
+        //$where = "AND x_salesperson_id = '" . model("Core")->accountId() . "' ";
+        
+        $id = model("Core")->select("id", "x_customer_po", "x_submit = 0  $where ");
         if ($id) {  
             $q = "SELECT  * 
             FROM x_customer_po_line
             where x_customer_po_line_id =  $id ";
 
             $db = $this->db->query($q);
-            $db = $db->getResultArray();
+            $item = $db->getResultArray();
 
-            $a = $this->db->query("SELECT  sum(x_subtotal)
+            $total = $this->db->query("SELECT  sum(x_subtotal)
                 FROM x_customer_po_line
-                where x_customer_po_line_id = 1");
-            $a = $a->getResultArray()[0]['sum'];
+                where x_customer_po_line_id = $id");
+            $total = $total->getResultArray()[0]['sum'];
 
             $customer = [
                 "id" => 0,
@@ -46,10 +48,10 @@ class Cart extends BaseController
             $data = [
                 "error" => false, 
                 "datetime" => date("Y-m-d H:i:s"),
-                "item" =>  $db,
+                "item" =>  $item,
                 "customer" => $customer,
                 "id" =>  $id,
-                "total" => (int)$a,
+                "total" => (int)$total,
                 "x_salesperson_id" => model("Core")->accountId(),
             ];
         }
