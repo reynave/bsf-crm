@@ -1,55 +1,112 @@
 <app-header></app-header>
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-12 my-5">
-            <div class="d-grid mb-3">
-                <a [routerLink]="[ '/scheduleAcivities' ]" class="btn btn-lg btn-info">Schedule Acivities</a>
-            </div>
-            <div class="d-grid mb-3">
-                <a [routerLink]="[ '/activity' ]" class="btn btn-lg btn-primary">Activty</a>
-            </div>
-            <div class="d-grid mb-3">
-                <a [routerLink]="[ '/product' ]" class="btn btn-lg btn-success">Product</a>
-            </div>
 
-            <div class="d-grid mb-3">
-                <a [routerLink]="[ '/cart' ]" class="btn btn-lg btn-info">Cart</a>
-            </div>
-            <div class="d-grid mb-3">
-                <a [routerLink]="[ '/order' ]" class="btn btn-lg btn-warning">Order</a>
-            </div>
-        </div> 
+<div class="main1">
 
-        <div class="col-12 my-2">
-            <div class="d-grid">
-                <a (click)="portal1()" class="btn btn-lg btn-dark">Test Call Products</a>
-            </div> 
-            <code class="mt-1">
-                {{note}}
-            </code>
-        </div>
-        <div class="col-12 my-2">
-            <div class="d-grid">
-                <a (click)="cam()" class="btn btn-lg btn-info">Test Camera Allowed</a>
+    <div class="container-fluid">
+        <div class="row g-3 mb-3">
+            <div class="col-4">
+                <div class=" bg-white rounded shadow-sm text-center" [routerLink]="[ '/scheduleAcivities' ]">
+                    <div class="lh-1 py-2">
+                        <h1> <i class="bi bi-calendar3"></i></h1>
+                        <small>
+                            Schedule
+                        </small>
+                    </div>
+                </div>
             </div>
-        </div>
-
-        <div class="col-12 my-2">
-            <div class="d-grid">
-                <a (click)="gps()" class="btn btn-lg btn-warning">Test GPS Allowed</a>
+            <div class="col-4">
+                <div class=" bg-white rounded shadow-sm text-center" [routerLink]="[ '/activity' ]">
+                    <div class="lh-1 py-2">
+                        <h1> <i class="bi bi-pin-map"></i> </h1>
+                        <small>Activty</small>
+                    </div>
+                </div>
             </div>
-            <code class="mt-1">
-                {{gpsInfo | json}}
-            </code> 
-        </div>
-      
-
-        <div class="col-12">
-            <div class="lh-1 my-3 alert alert-light">
-                <code> {{env | json}}</code>
+            <div class="col-4">
+                <div class=" bg-white rounded shadow-sm text-center" [routerLink]="[ '/product' ]">
+                    <div class="lh-1 py-2">
+                        <h1> <i class="bi bi-box2"></i> </h1>
+                        <small>
+                            Product
+                        </small>
+                    </div>
+                </div>
             </div>
         </div>
+        <div class="row g-3 mb-5">
+            <div class="col-4">
+                <div class=" bg-white rounded shadow-sm text-center" [routerLink]="[ '/cart' ]">
+                    <div class="lh-1 py-2">
+                        <h1> <i class="bi bi-cart3"></i> </h1>
+                        <small>
+                            Cart
+                        </small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class=" bg-white rounded shadow-sm text-center" [routerLink]="[ '/order' ]">
+                    <div class="lh-1 py-2">
+                        <h1> <i class="bi bi-truck"></i> </h1>
 
+                        <small>
+                            Order
+                        </small>
+                    </div>
+                </div>
+            </div>
 
+        </div>
+
+        <div class="row g-3 ">
+            <div class="col-12">
+                <small>Development Only</small>
+            </div>
+            <div class="col-4">
+                <div class=" bg-white rounded shadow-sm text-center" (click)="portal1()">
+                    <div class="lh-1 py-2">
+                        <h2> <i class="bi bi-filetype-json"></i> </h2>
+                        <small>
+                            <a >Test Call API Server</a>
+                        </small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class=" bg-white rounded shadow-sm text-center"  (click)="cam()">
+                    <div class="lh-1 py-2">
+                        <h2> <i class="bi bi-camera2"></i> </h2>
+
+                        <small>
+                            <a >Test Camera Allowed</a>
+                        </small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class=" bg-white rounded shadow-sm text-center" (click)="gps()">
+                    <div class="lh-1 py-2">
+                        <h2> <i class="bi bi-braces-asterisk"></i> </h2>
+
+                        <small>
+                            <a >Test GPS Allowed</a>
+                        </small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="bg-light rounded p-2">
+                    {{note}} {{gpsInfo | json}}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="lh-1 my-3 alert bg-light">
+                    <code> {{env | json}}</code>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

@@ -7,7 +7,7 @@
   <base href="./">
   <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' 'unsafe-eval'; script-src * 'unsafe-inline' 'unsafe-eval'; connect-src * 'unsafe-inline'; img-src * data: blob: 'unsafe-inline'; frame-src *; style-src * 'unsafe-inline';">
      
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no;">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet"/>
@@ -21,8 +21,11 @@
 <body class="g-sidenav-show  bg-gray-100">
  <div class="mobile-first">
   <app-root>
-    <div class="my-5 text-center">
-      <img src="./assets/gif/loadingIntro.gif" width="60%">
+    <div class="m-5 text-center">
+      <img src="./assets/gif/giphy-loading.gif" width="60%">
+      <div class="lh-1">
+        <small>Always do your best. <br>What you plant now, you will harvest later.</small>
+      </div>
     </div>
   </app-root>
  </div>
@@ -30,6 +33,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script> 
   <script src="cordova.js"></script>
   <script>
+    document.addEventListener('gesturestart', (event) => { event.preventDefault(); }, false);
     (function () {
       'use strict';
       window.addEventListener = function () {

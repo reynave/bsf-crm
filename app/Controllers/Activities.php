@@ -52,7 +52,9 @@ class Activities extends BaseController
         FROM x_sales_activity   
         WHERE id= '" . $id . "' ");
         $results = $query->getResultArray()[0];
-        $results['x_photo_url'] = $results['x_photo_url'] != "" ? base_url() . $results['x_photo_url'] : "";
+        $results['x_photo_url_check_in'] = $results['x_photo_url_check_in'] != "" ? base_url() . $results['x_photo_url_check_in'] : "";
+        $results['x_photo_url_check_out'] = $results['x_photo_url_check_out'] != "" ? base_url() . $results['x_photo_url_check_out'] : "";
+        
         $data = [
             "error" => false,
             "item" => $results,
@@ -170,7 +172,7 @@ class Activities extends BaseController
                 "x_cust_longitude" => $post['customer']['x_longitude'],
 
                 "x_activity_status" => "OPEN",
-            //    "x_sales_activity_schedule_id" => 0,
+                "x_sales_activity_schedule_id" => $post['model']['x_sales_activity_schedule_id'],
                 "x_schedule_date" => $post['model']['schedule_date'],
                 "x_salesperson_id" => $id,
                 "x_salesperson" => model("Core")->select("x_name", "x_mobile_users", "x_employee_id = '" . $id . "' "),
@@ -314,13 +316,13 @@ class Activities extends BaseController
                 "photo" => $post['base64Images'] != false ? model("Core")->cam_to_img($post['base64Images'], "./uploads/activity/", date("YmdHis")) : "",
                 "post" => $post,
             ];
-            if ($post['x_activity_status'] == 'CHECKIN') {
+            if ($post['status'] == 'CHECKIN') {
                 $this->db->table("x_sales_activity")->update([
-                    "x_photo_url_check_out" => $data['photo'],
+                    "x_photo_url_check_in" => $data['photo'],
                 ], "id = '" . $post['id'] . "'  ");
             } else {
                 $this->db->table("x_sales_activity")->update([
-                    "x_photo_url_check_in" => $data['photo'],
+                    "x_photo_url_check_out" => $data['photo'],
                 ], "id = '" . $post['id'] . "'  ");
             }
 
@@ -342,12 +344,22 @@ class Activities extends BaseController
             }
         }
 
-
+        
         $q = "SELECT *
         FROM x_sales_activity_schedule  
         WHERE  $account 
-        x_schedule_date >= date(now()) - $range
+        x_schedule_date >= date(now()) - $range AND x_schedule_date <= date(now())
         ORDER BY id DESC ";
+     
+        if(isset($post['selectDate']) &&  $post['selectDate'] == 'a'){
+            $q = "SELECT *
+            FROM x_sales_activity_schedule  
+            WHERE  $account 
+            x_schedule_date >= date(now())
+            ORDER BY id DESC ";
+        }
+         
+       
 
         $query = $this->db->query($q);
         $results = $query->getResultArray();
@@ -357,6 +369,27 @@ class Activities extends BaseController
             "items" => $results,
             "noteSelect" => ($range > 0 ? "last $range days" : "Today"),
         ];
+        return $this->response->setJSON($data);
+    }
+
+    function fnRemove() {
+         //x_check_in_date
+        //x_check_in_time
+        $json = file_get_contents('php://input');
+        $post = json_decode($json, true);
+        $data = [
+            "error" => true,
+            "post" => $post,
+        ];
+        if ($post) {
+            $this->db->table("x_sales_activity")->delete([
+                "id" => $post['item']['id'], 
+            ]);
+            $data = [
+                "error" => false,
+                "post" => $post,
+            ];
+        }
         return $this->response->setJSON($data);
     }
 }

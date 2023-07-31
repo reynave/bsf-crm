@@ -14,6 +14,7 @@ export class ActivityComponent implements OnInit {
   api: string = environment.api;
   note: string = "";
   items : any = [];
+  id : string = "";
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -22,6 +23,7 @@ export class ActivityComponent implements OnInit {
   ){ }
 
   ngOnInit(){
+    this.id = this.activeRouter.snapshot.queryParams['id'];
     this.httpGet();
   }
   back(){
@@ -63,5 +65,25 @@ export class ActivityComponent implements OnInit {
         this.note = "Error Server!";
       },
     );
+  }
+
+  fnRemove(x :any){ 
+    const body ={ 
+      item : x
+    }
+    if(confirm("Delete this activity?")){
+      this.http.post<any>(this.api + 'activities/fnRemove', body, {
+        headers : this.configService.headers(),
+      }).subscribe(
+        data => {
+          this.loading = false;  
+          this.httpGet();
+        },
+        e => {
+          console.log(e);
+          this.note = "Error Server!";
+        },
+      );
+    }
   }
 }

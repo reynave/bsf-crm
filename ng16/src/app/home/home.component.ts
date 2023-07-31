@@ -74,6 +74,7 @@ export class HomeComponent implements OnInit {
   }
 
   cameraError = (e: any) => {
+    this.note = 'Error Camera ';
     console.log('error Camera', e); 
   }
 

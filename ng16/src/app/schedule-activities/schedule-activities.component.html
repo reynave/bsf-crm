@@ -75,8 +75,16 @@
         <a data-bs-dismiss="offcanvas" aria-label="Close"><i class="bi bi-x-lg"></i></a>
     </div>
     <div class="offcanvas-body small">
-        <div class="row border-bottom" (click)="selectDate='0'" >
-            <div class="col-10">
+        <div class="row border-bottom" (click)="selectDate='a'" >
+            <div class="col-10 align-self-center">
+                <h6 for="allSchedule">Today and Next Schedule </h6>
+            </div>
+            <div class="col-2 text-end align-self-center">
+                <input type="radio" name="selectDate" value="a" [(ngModel)]="selectDate" id="allSchedule">
+            </div>
+        </div>
+        <div class="row border-bottom mt-2" (click)="selectDate='0'" >
+            <div class="col-10 align-self-center">
                 <h6 for="dateToday">Today</h6>
             </div>
             <div class="col-2 text-end align-self-center">
@@ -84,15 +92,15 @@
             </div>
         </div>
         <div class="row border-bottom mt-2" (click)="selectDate='1'" >
-            <div class="col-10">
-                <h6 for="date7day">Yesterday and in the Schedule</h6>
+            <div class="col-10 align-self-center">
+                <h6 for="date7day">Yesterday</h6>
             </div>
             <div class="col-2 text-end align-self-center">
                 <input type="radio" name="selectDate" value="1" [(ngModel)]="selectDate" id="date7day">
             </div>
         </div>
         <div class="row border-bottom mt-2" (click)="selectDate='7'" >
-            <div class="col-10">
+            <div class="col-10 align-self-center">
                 <h6 for="date7day">Last 7 Days</h6>
             </div>
             <div class="col-2 text-end align-self-center">
@@ -100,7 +108,7 @@
             </div>
         </div>
         <div class="row border-bottom mt-2" (click)="selectDate='30'">
-            <div class="col-10">
+            <div class="col-10 align-self-center">
                 <h6 for="date30day">Last 30 Days</h6>
             </div>
             <div class="col-2 text-end align-self-center">

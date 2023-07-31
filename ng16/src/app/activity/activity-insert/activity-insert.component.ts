@@ -10,6 +10,8 @@ export class Model {
     public schedule_date: any,
     public customerId: string,
     public x_salesperson_id: string,
+    public x_sales_activity_schedule_id: string,
+    
   ) { }
 }
 
@@ -25,7 +27,7 @@ export class ActivityInsertComponent implements OnInit {
   api: string = environment.api;
   note: string = "";
   searchCustomer: string = "";
-  model: any = new Model(this.date.getFullYear() + '-' + ("0" + (this.date.getMonth() + 1)).slice(-2) + '-' + ("0" + (this.date.getDate() + 1)).slice(-2), "", "");
+  model: any = new Model(this.date.getFullYear() + '-' + ("0" + (this.date.getMonth() + 1)).slice(-2) + '-' + ("0" + (this.date.getDate())).slice(-2), "", "","");
   id: string = "";
   item: any = [];
   res_partner: any = [];
@@ -42,6 +44,7 @@ export class ActivityInsertComponent implements OnInit {
   ngOnInit(): void {
     this.httpGet();
     this.model.x_salesperson_id = this.configService.accountId();
+    this.model.x_sales_activity_schedule_id = this.activeRoute.snapshot.queryParams['activityScheduleId'];
   }
   httpGet() {
     this.http.get<any>(this.api + 'Res_partner', {
