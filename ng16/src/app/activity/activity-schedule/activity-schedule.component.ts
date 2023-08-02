@@ -23,7 +23,7 @@ export class ActivityScheduleComponent implements OnInit {
   loading: boolean = false;
   api: string = environment.api;
   note: string = "";
-  model  : any = new Model("",this.date.getFullYear()+'-'+("0" + (this.date.getMonth() + 1)).slice(-2)+'-'+("0" + (this.date.getDate() + 1)).slice(-2), "" );
+  model  : any = new Model("",this.date.getFullYear()+'-'+("0" + (this.date.getMonth() + 1)).slice(-2)+'-'+("0" + (this.date.getDate() )).slice(-2), "" );
   id : string = "";
   item : any = []; 
   x_route :any = [];
@@ -41,8 +41,9 @@ export class ActivityScheduleComponent implements OnInit {
     this.selectActivitySchedule();
   }
   selectActivitySchedule(){  
-    this.http.get<any>(this.api + 'activities/selectActivitySchedule', {
-      headers : this.configService.headers(),
+    this.model.x_route_id = "";
+    this.http.get<any>(this.api + 'activities/selectActivitySchedule/'+this.model.x_salesperson_id, {
+      headers : this.configService.headers(), 
     }).subscribe(
       data => { 
         console.log(data);  

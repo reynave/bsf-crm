@@ -16,57 +16,72 @@
     </div>
 </nav>
 
-
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-12">
-
-
-            <div class="card my-4">
-
-                <div class="card-body ">
-
-                    <div class="mb-2">
-                        <label for="x_schedule_date" class="form-label">x_schedule_date</label>
-                        <input type="date" class="form-control " name="x_schedule_date"
-                            id="x_schedule_date" [(ngModel)]="model.x_schedule_date" required>
-                    </div>
-                    <div class="mb-2">
-                        <label for="x_name" class="form-label">x_salesperson_id</label>
-
-                        <select class="form-control" [(ngModel)]="model.x_salesperson_id">
-                            <option *ngFor="let n of x_mobile_users" [value]="n.x_employee_id"> {{n.x_name}}</option>
-                        </select> 
-                       
-                    </div>
-                    <div class="mb-2">
-                        <label for="x_route_id" class="form-label">x_route_id</label>
-                        <select class="form-control" name="route" id="route" [(ngModel)]="model.x_route_id" required>
-                            <option value="" [hidden]="model.x_route_id"> - </option>
-                            <option [value]="x.id" *ngFor="let x of x_route">{{x.x_name}}</option>
-                        </select>
-                    </div>
-                </div>
-            </div> 
-        </div>
-        <div class="col-12">
-            <small>Dev mode :</small>
-            <div>
-                <code>{{model | json}}</code>
-            </div>
-        </div>
-    </div>
-</div>
-
-<footer class="bg-white border-top shadow-sm">
+<form (ngSubmit)="onSubmit()" #heroForm="ngForm">
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
-                <div class="d-grid  py-2">
-                    <button type="button" class="btn btn-lg btn-primary" (click)="onSubmit()">SUBMIT</button>
-                </div>
 
+
+                <div class="card my-4">
+
+                    <div class="card-body ">
+
+                        <div class="mb-2">
+                            <label for="x_schedule_date" class="form-label">x_schedule_date</label>
+                            <input type="date" class="form-control " name="x_schedule_date" id="x_schedule_date"
+                                #x_schedule_date="ngModel" [(ngModel)]="model.x_schedule_date" required>
+
+                            <div [hidden]="x_schedule_date.valid || x_schedule_date.pristine" class="text-danger fs-6">
+                                x_schedule_date is required
+                            </div>
+                        </div>
+                        <div class="mb-2">
+                            <label for="x_name" class="form-label">x_salesperson_id</label>
+
+                            <select class="form-control" [(ngModel)]="model.x_salesperson_id" name="x_salesperson_id"   #x_salesperson_id="ngModel"
+                                (change)="selectActivitySchedule()">
+                                <option *ngFor="let n of x_mobile_users" [value]="n.x_employee_id"> {{n.x_name}}
+                                </option>
+                            </select>
+                            <div [hidden]="x_salesperson_id.valid || x_salesperson_id.pristine" class="text-danger fs-6">
+                                x_salesperson_id is required
+                            </div>
+                        </div>
+                        <div class="mb-2">
+                            <label for="x_route_id" class="form-label">x_route_id</label>
+                            <select class="form-control" name="route" id="route" [(ngModel)]="model.x_route_id" name="x_route_id"   #x_route_id="ngModel"
+                                required>
+                                <option value="" [hidden]="model.x_route_id"> - </option>
+                                <option [value]="x.id" *ngFor="let x of x_route">{{x.x_name}}</option>
+                            </select>
+                            <div [hidden]="x_route_id.valid || x_route_id.pristine" class="text-danger fs-6">
+                                x_route_id is required
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <small>Dev mode :</small>
+                <div>
+                    <code>{{model | json}}</code>
+                </div>
             </div>
         </div>
     </div>
-</footer>
+
+    <footer class="bg-white border-top shadow-sm">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="d-grid  py-2">
+                        <button type="submit" [disabled]="!heroForm.form.valid"
+                            class="btn btn-lg btn-primary">SUBMIT</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</form>

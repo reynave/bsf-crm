@@ -63,16 +63,23 @@ class Activities extends BaseController
     }
     function selectActivitySchedule($id = "")
     {
-        $route = $this->db->query("SELECT id, x_area_id, x_name FROM x_route order by x_name ASC ");
+        if($id == '') $id = model("Core")->accountId();
+        $route = $this->db->query("SELECT id, x_area_id, x_name  
+        FROM x_route 
+        WHERE x_sales_person_id = '$id' 
+        order by x_name ASC ");
         $x_route = $route->getResultArray();
 
-        $mobile_users = $this->db->query("SELECT id, x_employee_id, x_name FROM x_mobile_users order by x_name ASC ");
+        $mobile_users = $this->db->query("SELECT id, x_employee_id, x_name 
+        FROM x_mobile_users  
+        order by x_name ASC ");
         $x_mobile_users = $mobile_users->getResultArray();
 
         $data = [
             "error" => false,
             "x_route" => $x_route,
             "x_mobile_users" => $x_mobile_users,
+            "x_salesperson_id" => model("Core")->accountId(),
         ];
 
         return $this->response->setJSON($data);

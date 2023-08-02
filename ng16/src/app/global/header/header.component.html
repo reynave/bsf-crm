@@ -5,7 +5,7 @@
 
             </div>
             <div class="col-10 align-self-center text-center  ">
-                <h5 class="p-0 m-0  ms-3"> BSF MOBILE </h5>
+                <h5 class="p-0 m-0  ms-3"><img src="./assets/img/BSF.png" width="20px" >  BSF MOBILE </h5>
             </div>
             <div class="col-1 align-self-center text-center ">
                 <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
@@ -30,15 +30,16 @@
         </a>
     </div>
     <div class="offcanvas-body">
+        Hi, {{account['x_name']}}
         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="#">Home</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">Profile</a>
-            </li>
+            </li> -->
             <li class="nav-item">
-                <a class="nav-link" data-bs-dismiss="offcanvas" (click)="logout();">Log Out</a>
+                <a class="nav-link" data-bs-dismiss="offcanvas" (click)="logout();"><b>Log Out</b></a>
             </li>
         </ul>
 

@@ -8,12 +8,17 @@ import { ConfigService } from 'src/app/service/config.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
+  account : any = [];
   constructor(
     private http: HttpClient,
     private router: Router,
     private configService: ConfigService,
   ) { }
+  ngOnInit(): void {
+    this.account = this.configService.account()['account'];
+    console.log(this.account);
+  }
 
   logout() {
     this.configService.removeToken().subscribe(
