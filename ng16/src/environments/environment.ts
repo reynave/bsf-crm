@@ -1,7 +1,18 @@
 export const environment = {
     version : "V1 prod",
     production: true, 
-    api:"http://systemapk.bsfar.com:41021/api/v1/",
+    api:"http://systemapk.bsfar.com:41021/",
     serialNumber : false,
     cam : true,
+    tokenName : 'bsfJwtToken01',
+    appSelect : [
+        {
+            code:'api-bsf/v1/',
+            label:'BSF',  
+        },
+        {
+            code:'api-suf/v1/',
+            label:'SUF', 
+        }
+    ]
 };

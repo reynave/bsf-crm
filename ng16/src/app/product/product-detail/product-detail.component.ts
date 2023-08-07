@@ -32,7 +32,7 @@ export class ProductDetailComponent implements OnInit {
   }
 
   httpGet(){  
-    this.http.get<any>(this.api + 'product/detail/'+this.id, {
+    this.http.get<any>(this.api + this.configService.getAppCode()+'product/detail/'+this.id, {
       headers : this.configService.headers(),
     }).subscribe(
       data => {
@@ -53,7 +53,7 @@ export class ProductDetailComponent implements OnInit {
       item : this.item,
       qty : this.qty,
     }
-    this.http.post<any>(this.api + 'product/addToCard', body, {
+    this.http.post<any>(this.api + this.configService.getAppCode()+'product/addToCard', body, {
       headers : this.configService.headers(),
     }).subscribe(
       data => {

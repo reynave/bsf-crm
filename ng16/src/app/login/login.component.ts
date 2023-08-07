@@ -24,14 +24,21 @@ export class LoginComponent implements OnInit {
   api: string = environment.api;
   env : any = environment;
   note: string = "";
+  app : any = "";
+  selectApp : any = environment.appSelect
   constructor(
     private http: HttpClient,
     private router: Router,
     private configService: ConfigService,
   ) { }
+
   ngOnInit(): void { 
-    this.model.serialNumber = environment.production ? "": environment.serialNumber; 
-    
+    this.model.serialNumber = environment.production ? "": environment.serialNumber;  
+    localStorage.setItem("appCodeManasol","");
+  }
+
+  updateApp(){
+    localStorage.setItem("appCodeManasol",this.app);
   }
 
   onSubmit() {
@@ -47,9 +54,8 @@ export class LoginComponent implements OnInit {
       player_id: "player_id45553434",
 
     }
-    console.log(body);
-
-    this.http.post<any>(this.api + 'login/auth', body).subscribe(
+    console.log(body); 
+    this.http.post<any>(this.api + this.app + 'login/auth', body).subscribe(
       data => {
         this.loading = false;
         console.log(data);

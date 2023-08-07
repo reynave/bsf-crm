@@ -47,7 +47,7 @@ export class ActivityInsertComponent implements OnInit {
     this.model.x_sales_activity_schedule_id = this.activeRoute.snapshot.queryParams['activityScheduleId'];
   }
   httpGet() {
-    this.http.get<any>(this.api + 'Res_partner', {
+    this.http.get<any>(this.api +this.configService.getAppCode()+ 'Res_partner', {
       headers: this.configService.headers(),
     }).subscribe(
       data => {
@@ -65,7 +65,7 @@ export class ActivityInsertComponent implements OnInit {
     const body = {
       name: this.searchCustomer
     }
-    this.http.get<any>(this.api + 'Res_partner/searchCustomer', {
+    this.http.get<any>(this.api + this.configService.getAppCode()+'Res_partner/searchCustomer', {
       headers: this.configService.headers(),
       params: {
         name: this.searchCustomer
@@ -96,7 +96,7 @@ export class ActivityInsertComponent implements OnInit {
         customer: this.objCustomer,
       }
 
-      this.http.post<any>(this.api + 'activities/createActivity', body, {
+      this.http.post<any>(this.api + this.configService.getAppCode()+'activities/createActivity', body, {
         headers: this.configService.headers(),
       }).subscribe(
         data => {

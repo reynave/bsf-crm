@@ -65,7 +65,7 @@
 
         <div class="row g-3 ">
             <div class="col-12">
-                <small>Development Only</small>
+                <small>Check Device Only</small>
             </div>
             <div class="col-4">
                 <div class=" bg-white rounded shadow-sm text-center" (click)="portal1()">
@@ -106,7 +106,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row" [hidden]="env.production == true">
             <div class="col-12">
                 <div class="lh-1 my-3 alert bg-light">
                     <code> {{env | json}}</code>

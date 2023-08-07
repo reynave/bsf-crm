@@ -28,7 +28,7 @@ export class ScheduleActivitiesComponent implements OnInit {
     history.back();
   }
   httpGet(data : any = []){  
-    this.http.get<any>(this.api + 'activities/schedules', {
+    this.http.get<any>(this.api + this.configService.getAppCode()+'activities/schedules', {
       headers : this.configService.headers(),
       params : data,
     }).subscribe(
@@ -50,7 +50,7 @@ export class ScheduleActivitiesComponent implements OnInit {
       insert : true,
       user : this.configService.account()
     }
-    this.http.post<any>(this.api + 'activities/fnAdd', body, {
+    this.http.post<any>(this.api + this.configService.getAppCode()+'activities/fnAdd', body, {
       headers : this.configService.headers(),
     }).subscribe(
       data => {

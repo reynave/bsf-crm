@@ -42,7 +42,7 @@ export class ActivityScheduleComponent implements OnInit {
   }
   selectActivitySchedule(){  
     this.model.x_route_id = "";
-    this.http.get<any>(this.api + 'activities/selectActivitySchedule/'+this.model.x_salesperson_id, {
+    this.http.get<any>(this.api +this.configService.getAppCode()+ 'activities/selectActivitySchedule/'+this.model.x_salesperson_id, {
       headers : this.configService.headers(), 
     }).subscribe(
       data => { 
@@ -62,7 +62,7 @@ export class ActivityScheduleComponent implements OnInit {
       model : this.model, 
     }
 
-    this.http.post<any>(this.api + 'activities/createActivitySchedule',body, {
+    this.http.post<any>(this.api +this.configService.getAppCode()+ 'activities/createActivitySchedule',body, {
       headers : this.configService.headers(),
     }).subscribe(
       data => { 

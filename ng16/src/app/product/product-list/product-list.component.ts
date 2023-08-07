@@ -30,7 +30,7 @@ export class ProductListComponent implements OnInit {
     this.dtOptions = {
       //   serverSide: true,     // Set the flag 
       ajax: {
-        url: environment.api + 'product/datatable',
+        url: environment.api +this.configService.getAppCode() + 'product/datatable',
         data: this.activatedRoute.snapshot.queryParams,
         type: "GET",
         headers: {

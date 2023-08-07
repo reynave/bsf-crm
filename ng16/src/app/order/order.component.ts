@@ -33,7 +33,7 @@ export class OrderComponent implements OnInit {
 
   httpGet() {
     this.loading = true;
-    this.http.get<any>(this.api + 'order', {
+    this.http.get<any>(this.api + this.configService.getAppCode()+ 'order', {
       headers: this.configService.headers(),
     }).subscribe(
       data => {
@@ -56,7 +56,7 @@ export class OrderComponent implements OnInit {
     this.detail = [];
     this.modalService.open(content, { fullscreen: true });
     this.loading = true;
-    this.http.get<any>(this.api + 'order/detail/' + item['id'], {
+    this.http.get<any>(this.api + this.configService.getAppCode()+ 'order/detail/' + item['id'], {
       headers: this.configService.headers(),
     }).subscribe(
       data => {

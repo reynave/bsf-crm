@@ -27,7 +27,7 @@ export class ProductComponent implements OnInit {
     this.httpGet();
   }
   httpGet(){  
-    this.http.get<any>(this.api + 'product', {
+    this.http.get<any>(this.api + this.configService.getAppCode()+ 'product', {
       headers : this.configService.headers(),
     }).subscribe(
       data => {

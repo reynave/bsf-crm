@@ -31,7 +31,7 @@ export class CartComponent implements OnInit{
 
   httpGet(){  
     this.loading = true;  
-    this.http.get<any>(this.api + 'cart', {
+    this.http.get<any>(this.api + this.configService.getAppCode()+'cart', {
       headers : this.configService.headers(),
     }).subscribe(
       data => {
@@ -54,7 +54,7 @@ export class CartComponent implements OnInit{
     const body = { 
       item : x, 
     }
-    this.http.post<any>(this.api + 'cart/updateQty', body, {
+    this.http.post<any>(this.api +this.configService.getAppCode()+ 'cart/updateQty', body, {
       headers : this.configService.headers(),
     }).subscribe(
       data => {
@@ -83,7 +83,7 @@ export class CartComponent implements OnInit{
         item : x, 
       }
       this.loading = true;  
-      this.http.post<any>(this.api + 'cart/removeCart', body, {
+      this.http.post<any>(this.api + this.configService.getAppCode()+'cart/removeCart', body, {
         headers : this.configService.headers(),
       }).subscribe(
         data => {
@@ -102,7 +102,7 @@ export class CartComponent implements OnInit{
     const body = {  
       id : this.id
     }
-    this.http.post<any>(this.api + 'cart/onCloseCart', body, {
+    this.http.post<any>(this.api +this.configService.getAppCode()+ 'cart/onCloseCart', body, {
       headers : this.configService.headers(),
     }).subscribe(
       data => {

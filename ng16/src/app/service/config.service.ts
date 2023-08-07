@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core'; 
 import { HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ConfigService {
-  private tokenKey : string = "bsfJwtToken01";
+  private tokenKey : string = environment.tokenName;
   constructor() { }
 
   setToken(token: string): Observable<boolean> {
@@ -30,6 +31,10 @@ export class ConfigService {
 
   getToken(): any | null {
     return localStorage.getItem(this.tokenKey);
+  }
+
+  getAppCode(): any | null {
+    return localStorage.getItem("appCodeManasol");
   }
 
   headers() { 

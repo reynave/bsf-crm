@@ -35,7 +35,7 @@ export class CustomerModalComponent  implements OnInit {
     this.httpGet(); 
   }
   httpGet() {
-    this.http.get<any>(this.api + 'Res_partner', {
+    this.http.get<any>(this.api + this.configService.getAppCode()+ 'Res_partner', {
       headers: this.configService.headers(),
     }).subscribe(
       data => {
@@ -53,7 +53,7 @@ export class CustomerModalComponent  implements OnInit {
     const body = {
       name: this.searchCustomer
     }
-    this.http.get<any>(this.api + 'Res_partner/searchCustomer', {
+    this.http.get<any>(this.api + this.configService.getAppCode()+ 'Res_partner/searchCustomer', {
       headers: this.configService.headers(),
       params: {
         name: this.searchCustomer
@@ -84,7 +84,7 @@ export class CustomerModalComponent  implements OnInit {
       }
 
       console.log(body);
-      this.http.post<any>(this.api + 'Res_partner/modal', body, {
+      this.http.post<any>(this.api + this.configService.getAppCode()+ 'Res_partner/modal', body, {
         headers: this.configService.headers(),
       }).subscribe(
         data => {

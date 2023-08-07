@@ -14,7 +14,7 @@ export class ActivityComponent implements OnInit {
   api: string = environment.api;
   note: string = "";
   items : any = [];
-  id : string = "";
+  id : string = ""; 
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -23,6 +23,7 @@ export class ActivityComponent implements OnInit {
   ){ }
 
   ngOnInit(){
+   
     this.id = this.activeRouter.snapshot.queryParams['id'];
     this.httpGet();
   }
@@ -31,7 +32,7 @@ export class ActivityComponent implements OnInit {
   }
   httpGet(){  
     console.log(this.activeRouter.snapshot.queryParams);
-    this.http.get<any>(this.api + 'activities/index', {
+    this.http.get<any>(this.api +this.configService.getAppCode()+ 'activities/index', {
       headers : this.configService.headers(),
       params : this.activeRouter.snapshot.queryParams
     }).subscribe(
@@ -52,7 +53,7 @@ export class ActivityComponent implements OnInit {
       insert : true,
       user : this.configService.account()
     }
-    this.http.post<any>(this.api + 'activities/fnAdd', body, {
+    this.http.post<any>(this.api + this.configService.getAppCode()+'activities/fnAdd', body, {
       headers : this.configService.headers(),
     }).subscribe(
       data => {
@@ -72,7 +73,7 @@ export class ActivityComponent implements OnInit {
       item : x
     }
     if(confirm("Delete this activity?")){
-      this.http.post<any>(this.api + 'activities/fnRemove', body, {
+      this.http.post<any>(this.api + this.configService.getAppCode()+'activities/fnRemove', body, {
         headers : this.configService.headers(),
       }).subscribe(
         data => {

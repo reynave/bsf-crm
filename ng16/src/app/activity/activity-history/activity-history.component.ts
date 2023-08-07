@@ -26,7 +26,7 @@ export class ActivityHistoryComponent implements OnInit {
     history.back();
   }
   httpGet(){  
-    this.http.get<any>(this.api + 'activities/index', {
+    this.http.get<any>(this.api + this.configService.getAppCode()+'activities/index', {
       headers : this.configService.headers(),
     }).subscribe(
       data => {
@@ -46,7 +46,7 @@ export class ActivityHistoryComponent implements OnInit {
       insert : true,
       user : this.configService.account()
     }
-    this.http.post<any>(this.api + 'activities/fnAdd', body, {
+    this.http.post<any>(this.api + this.configService.getAppCode()+'activities/fnAdd', body, {
       headers : this.configService.headers(),
     }).subscribe(
       data => {
