@@ -67,14 +67,21 @@ class Product extends BaseController
 
     public function detail($id = "")
     {
+        
+ 
         $query = $this->db->query("SELECT *
         FROM product_template  WHERE id = '$id'  ");
         $item = $query->getResultArray();
 
+        $qty = $this->db->query("SELECT  coalesce(quantity - reserved_quantity,0 ) as qty
+        FROM stock_quant  WHERE product_id = '".$item[0]['id']."'  ");
+        $itemqty = $qty->getResultArray();
+
         $data = [
             "error" => false,
             "datetime" => date("Y-m-d H:i:s"),
-            "item" => $item[0],
+            "item" => $item[0], 
+            "qty" => (int)$itemqty[0]['qty'],
 
         ];
         return $this->response->setJSON($data);

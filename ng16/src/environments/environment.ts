@@ -13,6 +13,10 @@ export const environment = {
         {
             code:'api-suf/v1/',
             label:'SUF', 
+        },
+        {
+            code:'api-dev/',
+            label:'Development', 
         }
     ]
 };

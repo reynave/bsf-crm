@@ -16,6 +16,9 @@ export class ProductDetailComponent implements OnInit {
   note: string = "";
   item : any = [];
   id : string = "";
+  itemQty : number = 0;
+  qty : number = 1;
+  totalAmount : number = 0;
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -23,12 +26,11 @@ export class ProductDetailComponent implements OnInit {
     private activeRoute: ActivatedRoute,
     private modalService: NgbModal
   ){ }
-
-
-
+  
   ngOnInit(): void {
     this.id = this.activeRoute.snapshot.params['id'];
     this.httpGet();
+    this.cart();
   }
 
   httpGet(){  
@@ -38,6 +40,7 @@ export class ProductDetailComponent implements OnInit {
       data => {
         this.loading = false;
         this.item = data['item'];
+        this.itemQty  = data['qty'];
         console.log(data); 
       },
       e => {
@@ -46,7 +49,7 @@ export class ProductDetailComponent implements OnInit {
       },
     );
   }
-  qty : number = 1;
+ 
   addToCard(){
     const body = {
       id: this.id,
@@ -59,7 +62,8 @@ export class ProductDetailComponent implements OnInit {
       data => {
         this.loading = false; 
         console.log(data); 
-        this.modalService.dismissAll(); 
+        this.modalService.dismissAll();
+        this.cart(); 
       },
       e => {
         console.log(e);
@@ -67,6 +71,23 @@ export class ProductDetailComponent implements OnInit {
       },
     );
   }
+
+  cart(){  
+    this.loading = true;  
+    this.http.get<any>(this.api + this.configService.getAppCode()+'cart', {
+      headers : this.configService.headers(),
+    }).subscribe(
+      data => { 
+        console.log(data);  
+        this.totalAmount = data['total'];
+      },
+      e => {
+        console.log(e);
+        this.note = "Error Server!";
+      },
+    );
+  }
+
   back(){
     history.back();
   }
