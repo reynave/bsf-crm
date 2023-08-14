@@ -26,13 +26,15 @@
 
                 <div class="card mb-2  " *ngFor="let x of items" [routerLink]="[ '/activity' ]"
                     [queryParams]="{id:x.id}">
-                    <div class="card-body">
-
-
-
-                        <div class="row">
-                            <div class="col-12 mb-2">
+                    <div class="card-body"> 
+                        <div class="row g-1">
+                            <div class="col-10 mb-2">
                                 <strong>{{x.x_salesperson}}</strong>
+                            </div>
+                            <div class="col-2 mb-2" >
+                               <div class="badge bg-danger" [hidden]="!x.x_status">
+                                {{ x.x_status}}
+                               </div>
                             </div>
                             <div class="col">
                                 <div class="lh-sm">
@@ -47,7 +49,7 @@
                                     <small>x_route_id</small>
                                 </div>
                                 <div class="lh-sm">
-                                    <label>{{x.x_route_id}}</label>
+                                    <label>{{x.x_route_id_name}} [{{x.x_route_id}}]</label>
                                 </div>
                             </div>
                         </div>

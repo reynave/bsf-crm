@@ -49,9 +49,9 @@
                         </div>
                         <div class="mb-2">
                             <label for="x_route_id" class="form-label">x_route_id</label>
-                            <select class="form-control" name="route" id="route" [(ngModel)]="model.x_route_id" name="x_route_id"   #x_route_id="ngModel"
-                                required>
-                                <option value="" [hidden]="model.x_route_id"> - </option>
+                            <select class="form-control" name="route" id="route" [(ngModel)]="model.x_route_id" name="x_route_id"  #x_route_id="ngModel"
+                                >
+                                <option value=""> -  Manual -</option>
                                 <option [value]="x.id" *ngFor="let x of x_route">{{x.x_name}}</option>
                             </select>
                             <div [hidden]="x_route_id.valid || x_route_id.pristine" class="text-danger fs-6">

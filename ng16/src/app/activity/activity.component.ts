@@ -9,37 +9,37 @@ import { ConfigService } from 'src/app/service/config.service';
   templateUrl: './activity.component.html',
   styleUrls: ['./activity.component.css']
 })
-export class ActivityComponent implements OnInit { 
+export class ActivityComponent implements OnInit {
   loading: boolean = false;
   api: string = environment.api;
   note: string = "";
-  items : any = [];
-  id : string = ""; 
+  items: any = [];
+  id: string = "";
   constructor(
     private http: HttpClient,
     private router: Router,
     private configService: ConfigService,
     private activeRouter: ActivatedRoute,
-  ){ }
+  ) { }
 
-  ngOnInit(){
-   
+  ngOnInit() {
+
     this.id = this.activeRouter.snapshot.queryParams['id'];
     this.httpGet();
   }
-  back(){
+  back() {
     history.back();
   }
-  httpGet(){  
+  httpGet() {
     console.log(this.activeRouter.snapshot.queryParams);
-    this.http.get<any>(this.api +this.configService.getAppCode()+ 'activities/index', {
-      headers : this.configService.headers(),
-      params : this.activeRouter.snapshot.queryParams
+    this.http.get<any>(this.api + this.configService.getAppCode() + 'activities/index', {
+      headers: this.configService.headers(),
+      params: this.activeRouter.snapshot.queryParams
     }).subscribe(
       data => {
         this.loading = false;
         this.items = data['items'];
-        console.log(data); 
+        console.log(data);
       },
       e => {
         console.log(e);
@@ -48,18 +48,18 @@ export class ActivityComponent implements OnInit {
     );
   }
 
-  fnAdd(){
-    const body ={
-      insert : true,
-      user : this.configService.account()
+  fnAdd() {
+    const body = {
+      insert: true,
+      user: this.configService.account()
     }
-    this.http.post<any>(this.api + this.configService.getAppCode()+'activities/fnAdd', body, {
-      headers : this.configService.headers(),
+    this.http.post<any>(this.api + this.configService.getAppCode() + 'activities/fnAdd', body, {
+      headers: this.configService.headers(),
     }).subscribe(
       data => {
-        this.loading = false; 
-        this.router.navigate(['activity/detail',data['post']['user']['account']['id']]);
-        console.log(data); 
+        this.loading = false;
+        this.router.navigate(['activity/detail', data['post']['user']['account']['id']]);
+        console.log(data);
       },
       e => {
         console.log(e);
@@ -68,17 +68,41 @@ export class ActivityComponent implements OnInit {
     );
   }
 
-  fnRemove(x :any){ 
-    const body ={ 
-      item : x
+  fnRemove(x: any) {
+    const body = {
+      item: x
     }
-    if(confirm("Delete this activity?")){
-      this.http.post<any>(this.api + this.configService.getAppCode()+'activities/fnRemove', body, {
-        headers : this.configService.headers(),
+    if (confirm("Delete this activity?")) {
+      this.http.post<any>(this.api + this.configService.getAppCode() + 'activities/fnRemove', body, {
+        headers: this.configService.headers(),
       }).subscribe(
         data => {
-          this.loading = false;  
+          this.loading = false;
           this.httpGet();
+        },
+        e => {
+          console.log(e);
+          this.note = "Error Server!";
+        },
+      );
+    }
+  }
+
+  fnCancelActiviesSchedule() {
+    const body = {
+      id: this.id,
+    }
+
+    if (confirm("Cancel this activities schedule ? ")) { 
+      this.http.post<any>(this.api + this.configService.getAppCode() + 'activities/fnCancelActiviesSchedule', body, {
+        headers: this.configService.headers(),
+        params: this.activeRouter.snapshot.queryParams
+      }).subscribe(
+        data => {
+          this.loading = false;
+          this.items = data['items'];
+          console.log(data);
+          history.back();
         },
         e => {
           console.log(e);

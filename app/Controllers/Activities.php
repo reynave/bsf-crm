@@ -54,7 +54,7 @@ class Activities extends BaseController
         $results = $query->getResultArray()[0];
         $results['x_photo_url_check_in'] = $results['x_photo_url_check_in'] != "" ? base_url() . $results['x_photo_url_check_in'] : "";
         $results['x_photo_url_check_out'] = $results['x_photo_url_check_out'] != "" ? base_url() . $results['x_photo_url_check_out'] : "";
-        
+
         $data = [
             "error" => false,
             "item" => $results,
@@ -63,7 +63,8 @@ class Activities extends BaseController
     }
     function selectActivitySchedule($id = "")
     {
-        if($id == '') $id = model("Core")->accountId();
+        if ($id == '')
+            $id = model("Core")->accountId();
         $route = $this->db->query("SELECT id, x_area_id, x_name  
         FROM x_route 
         WHERE x_sales_person_id = '$id' 
@@ -97,6 +98,10 @@ class Activities extends BaseController
         ];
         if ($post) {
             $id = model('Core')->header()['account']['id'];
+            $x_route_id = $post['model']['x_route_id'];
+           
+
+
             $this->db->table("x_sales_activity_schedule")->insert([
                 // "create_uid" => $id,
                 "create_date" => date("Y-m-d H:i:s") . ".0000",
@@ -106,39 +111,41 @@ class Activities extends BaseController
                 "x_salesperson_id" => $post['model']['x_salesperson_id'],
                 "x_salesperson" => model("Core")->select("x_name", "x_mobile_users", "x_employee_id = '" . $post['model']['x_salesperson_id'] . "' "),
 
-                "x_route_id" => $post['model']['x_route_id'],
+                "x_route_id" => $x_route_id != "" ? $x_route_id : null,
                 // "x_name" => model("Core")->select("x_name", "x_mobile_users", "id = '" . $post['model']['x_salesperson_id'] . "' "),
             ]);
+            if ($x_route_id) {
+                $x_sales_activity_schedule_id = model("Core")->select("id", "x_sales_activity_schedule", " true ORDER BY id DESC");
 
-            $x_sales_activity_schedule_id = model("Core")->select("id", "x_sales_activity_schedule", " true ORDER BY id DESC");
+                $x_route_line = $this->db->query("SELECT * FROM x_route_line where x_route_id = '" . $post['model']['x_route_id'] . "' ");
+                foreach ($x_route_line->getResultArray() as $row) {
+                    $faker = Factory::create();
+                    $this->db->table("x_sales_activity")->insert([
+                        //  "create_uid" => $id,
+                        "create_date" => date("Y-m-d H:i:s") . ".0000",
+                        // "write_uid" => $id,
+                        "write_date" => date("Y-m-d H:i:s") . ".0000",
+                        "x_customer_id" => $row['x_partner_id'],
+                        "x_customer_name" => $row['x_customer_name'] == "" ? $faker->name : $row['x_customer_name'],
+                        "x_customer_no" => $row['x_customer_no'],
 
-            $x_route_line = $this->db->query("SELECT * FROM x_route_line where x_route_id = '" . $post['model']['x_route_id'] . "' ");
-            foreach ($x_route_line->getResultArray() as $row) {
-                $faker = Factory::create();
-                $this->db->table("x_sales_activity")->insert([
-                    //  "create_uid" => $id,
-                    "create_date" => date("Y-m-d H:i:s") . ".0000",
-                    // "write_uid" => $id,
-                    "write_date" => date("Y-m-d H:i:s") . ".0000",
-                    "x_customer_id" => $row['x_partner_id'],
-                    "x_customer_name" => $row['x_customer_name'] == "" ? $faker->name : $row['x_customer_name'],
-                    "x_customer_no" => $row['x_customer_no'],
+                        "x_route_name" => $row['x_name'] . " " . $row['x_street'] . " " . $row['x_street_2'] . " " . $row['x_city'] . " " . $row['x_zip'],
+                        "x_cust_latitude" => $row['x_latitude'],
+                        "x_cust_longitude" => $row['x_longitude'],
 
-                    "x_route_name" => $row['x_name'] . " " . $row['x_street'] . " " . $row['x_street_2'] . " " . $row['x_city'] . " " . $row['x_zip'],
-                    "x_cust_latitude" => $row['x_latitude'],
-                    "x_cust_longitude" => $row['x_longitude'],
-
-                    "x_activity_status" => "OPEN",
-                    "x_sales_activity_schedule_id" => $x_sales_activity_schedule_id,
-                    "x_schedule_date" => $post['model']['x_schedule_date'],
-                    "x_salesperson_id" => $post['model']['x_salesperson_id'],
-                    "x_salesperson" => model("Core")->select("x_name", "x_mobile_users", "x_employee_id = '" . $post['model']['x_salesperson_id'] . "' "),
-                    "x_route_id" => $post['model']['x_route_id'],
-                    //"x_res_name" => $row['x_branch_id'],
+                        "x_activity_status" => "OPEN",
+                        "x_sales_activity_schedule_id" => $x_sales_activity_schedule_id,
+                        "x_schedule_date" => $post['model']['x_schedule_date'],
+                        "x_salesperson_id" => $post['model']['x_salesperson_id'],
+                        "x_salesperson" => model("Core")->select("x_name", "x_mobile_users", "x_employee_id = '" . $post['model']['x_salesperson_id'] . "' "),
+                        "x_route_id" => $post['model']['x_route_id'],
+                        //"x_res_name" => $row['x_branch_id'],
 
 
-                ]);
+                    ]);
+                }
             }
+
 
             $data = [
                 "error" => false,
@@ -171,7 +178,7 @@ class Activities extends BaseController
                 // "write_uid" => $id,
                 "write_date" => date("Y-m-d H:i:s") . ".0000",
                 "x_customer_id" => $post['customer']['id'],
-                "x_customer_name" =>  $post['customer']['name'],
+                "x_customer_name" => $post['customer']['name'],
                 //"x_customer_no" => $row['x_customer_no'],
 
                 "x_route_name" => $post['customer']['street'],
@@ -183,7 +190,7 @@ class Activities extends BaseController
                 "x_schedule_date" => $post['model']['schedule_date'],
                 "x_salesperson_id" => $id,
                 "x_salesperson" => model("Core")->select("x_name", "x_mobile_users", "x_employee_id = '" . $id . "' "),
-              //  "x_route_id" => $post['model']['x_route_id'],
+                //  "x_route_id" => $post['model']['x_route_id'],
                 //"x_res_name" => $row['x_branch_id'],
 
 
@@ -351,36 +358,49 @@ class Activities extends BaseController
             }
         }
 
-        
+
         $q = "SELECT *
         FROM x_sales_activity_schedule  
         WHERE  $account 
         x_schedule_date >= date(now()) - $range AND x_schedule_date <= date(now())
         ORDER BY id DESC ";
-     
-        if(isset($post['selectDate']) &&  $post['selectDate'] == 'a'){
+
+        if (isset($post['selectDate']) && $post['selectDate'] == 'a') {
             $q = "SELECT *
             FROM x_sales_activity_schedule  
             WHERE  $account 
             x_schedule_date >= date(now())
             ORDER BY id DESC ";
         }
-         
-       
+
+
 
         $query = $this->db->query($q);
         $results = $query->getResultArray();
+
+        $items = [];
+        foreach($results as $row){
+            // $route = $this->db->query("SELECT id, x_area_id, x_name  
+            // FROM x_route 
+            // order by x_name ASC "); 
+           
+            array_push($items, array_merge($row,[
+                "x_route_id_name" => $row['x_route_id'] != "" ? model("Core")->select("x_name","x_route","id = '".$row['x_route_id']."'") : null,
+            ]));
+        }
+
         $data = [
             "q" => $q,
             "error" => false,
-            "items" => $results,
+            "items" => $items,
             "noteSelect" => ($range > 0 ? "last $range days" : "Today"),
         ];
         return $this->response->setJSON($data);
     }
 
-    function fnRemove() {
-         //x_check_in_date
+    function fnRemove()
+    {
+        //x_check_in_date
         //x_check_in_time
         $json = file_get_contents('php://input');
         $post = json_decode($json, true);
@@ -390,8 +410,29 @@ class Activities extends BaseController
         ];
         if ($post) {
             $this->db->table("x_sales_activity")->delete([
-                "id" => $post['item']['id'], 
+                "id" => $post['item']['id'],
             ]);
+            $data = [
+                "error" => false,
+                "post" => $post,
+            ];
+        }
+        return $this->response->setJSON($data);
+    }
+
+    function fnCancelActiviesSchedule() {
+        //x_check_in_date
+        //x_check_in_time
+        $json = file_get_contents('php://input');
+        $post = json_decode($json, true);
+        $data = [
+            "error" => true,
+            "post" => $post,
+        ];
+        if ($post) {
+            $this->db->table("x_sales_activity_schedule")->update([
+                "x_status" => 'CANCEL',
+            ],"id = ".$post['id'] );
             $data = [
                 "error" => false,
                 "post" => $post,
