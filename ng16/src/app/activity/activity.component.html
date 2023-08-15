@@ -19,25 +19,26 @@
         <div class="row">
             <div class="col-12">
 
-                <div class="card mb-3  border-{{x.x_activity_status == 'OPEN' ? 'success border-3' : '' }} border-{{x.x_activity_status == 'CHECKIN' ? 'info border-3' : '' }}" *ngFor="let x of items" [routerLink]="[ '/activity/detail/',x.id ]">
+                <div class="card mb-3  border-{{x.x_activity_status == 'OPEN' ? 'success border-3' : '' }} border-{{x.x_activity_status == 'CHECKIN' ? 'info border-3' : '' }}" *ngFor="let x of items" >
                     <div class="card-body">
                          
-                        <div class="row g-0"> 
+                        <div class="row g-0" [routerLink]="[ '/activity/detail/',x.id ]"> 
                             <div class="col-9" >
                                 <strong>{{x.x_customer_name}}</strong> 
                             </div>
-                            <div class="col-3 text-end">
-                                    <small *ngIf="x.x_is_visited != 'f' " class="badge bg-secondary mx-1">{{x.x_activity_status}}</small> 
-                                    <small *ngIf="x.x_is_visited == 'f' " class="badge bg-danger mx-1">Not Visit</small> 
+                            <div class="col-3 text-end"> 
+                                <small class="badge bg-{{x.x_activity_status != 'CLOSE'? 'secondary':'info'}} mx-1">{{x.x_activity_status}}</small>
+                                    <!-- <small *ngIf="x.x_is_visited != 'f' " class="badge bg-secondary mx-1">{{x.x_activity_status}}</small> 
+                                    <small *ngIf="x.x_is_visited == 'f' " class="badge bg-danger mx-1">Not Visit</small>  -->
                             </div>
                            
                         </div>
                          
-                        <div class="lh-sm mb-2" >
+                        <div class="lh-sm mb-2" [routerLink]="[ '/activity/detail/',x.id ]">
                             <small>{{x.x_route_name}}</small>
                         </div>
                        
-                        <div class="row mb-2">
+                        <div class="row mb-2" [routerLink]="[ '/activity/detail/',x.id ]">
                             <div class="col">
                                 <div class="lh-sm">
                                     <small>Schdule Date </small>

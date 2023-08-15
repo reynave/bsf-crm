@@ -229,7 +229,7 @@ class Activities extends BaseController
                 "x_check_in_date" => date("Y-m-d H:i:s") . ".0000",
                 "x_check_in_time" => date("H:i:s"),
 
-                "x_is_visited" => true,
+              //  "x_is_visited" => true,
             ], "id = '" . $post['id'] . "'  ");
             $data = [
                 "error" => false,
@@ -257,7 +257,7 @@ class Activities extends BaseController
                 //    "x_visited_latitude" => $post['geoData']['lat'],
                 "x_check_out_date" => date("Y-m-d"),
                 "x_check_out_time" => date("H:i:s"),
-                "x_is_visited" => true,
+            //    "x_is_visited" => true,
             ], "id = '" . $post['id'] . "'  ");
             $data = [
                 "error" => false,
@@ -281,7 +281,7 @@ class Activities extends BaseController
 
             $this->db->table("x_sales_activity")->update([
                 "x_not_visit_reason" => $post['model']['x_not_visit_reason'],
-                "x_is_visited" => false,
+              //  "x_is_visited" => false,
                 "x_activity_status" => "",
             ], "id = '" . $post['id'] . "'  ");
             $data = [
