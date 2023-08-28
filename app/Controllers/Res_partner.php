@@ -17,7 +17,7 @@ class Res_partner extends BaseController
         return $this->response->setJSON($data);
     }
 
-    public function searchCustomer()
+    function searchCustomer()
     {
         $post = $this->request->getVar();
         $status = false;
@@ -57,7 +57,7 @@ class Res_partner extends BaseController
         return $this->response->setJSON($data);
     }
 
-    public function detail($id = "")
+    function detail($id = "")
     {
         $query = $this->db->query("SELECT *
         FROM product_template  WHERE id = '$id'  ");

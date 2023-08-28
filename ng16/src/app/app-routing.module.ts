@@ -18,6 +18,8 @@ import { ActivityInsertComponent } from './activity/activity-insert/activity-ins
 import { CartComponent } from './cart/cart.component';
 import { OrderComponent } from './order/order.component';
 import { CustomerModalComponent } from './modal/customer-modal/customer-modal.component';
+import { CustomerComponent } from './customer/customer.component';
+import { CustomerDetailComponent } from './customer/customer-detail/customer-detail.component';
 
 const routes: Routes = [
   { path:"", component:HomeComponent, data: { active: "home" },  canActivate:[authGuard] },
@@ -41,6 +43,9 @@ const routes: Routes = [
 
   { path:"modal/customer", component:CustomerModalComponent , data: { active: "customer" },  canActivate:[authGuard]},
  
+  { path:"customer", component:CustomerComponent , data: { active: "customer" },  canActivate:[authGuard]},
+  { path:"customer/detail/:id", component:CustomerDetailComponent , data: { active: "customer" },  canActivate:[authGuard]},
+
   { path:"cart", component:CartComponent , data: { active: "cart" },  canActivate:[authGuard]},
   { path:"order", component:OrderComponent , data: { active: "order" },  canActivate:[authGuard]},
 

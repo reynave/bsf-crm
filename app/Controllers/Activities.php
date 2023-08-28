@@ -119,14 +119,14 @@ class Activities extends BaseController
 
                 $x_route_line = $this->db->query("SELECT * FROM x_route_line where x_route_id = '" . $post['model']['x_route_id'] . "' ");
                 foreach ($x_route_line->getResultArray() as $row) {
-                    $faker = Factory::create();
+                   
                     $this->db->table("x_sales_activity")->insert([
                         //  "create_uid" => $id,
                         "create_date" => date("Y-m-d H:i:s") . ".0000",
                         // "write_uid" => $id,
                         "write_date" => date("Y-m-d H:i:s") . ".0000",
                         "x_customer_id" => $row['x_partner_id'],
-                        "x_customer_name" => $row['x_customer_name'] == "" ? $faker->name : $row['x_customer_name'],
+                        "x_customer_name" =>   $row['x_customer_name'],
                         "x_customer_no" => $row['x_customer_no'],
 
                         "x_route_name" => $row['x_name'] . " " . $row['x_street'] . " " . $row['x_street_2'] . " " . $row['x_city'] . " " . $row['x_zip'],
@@ -160,7 +160,7 @@ class Activities extends BaseController
 
     function createActivity()
     {
-        $faker = Factory::create();
+        
 
         $json = file_get_contents('php://input');
         $post = json_decode($json, true);
@@ -171,7 +171,7 @@ class Activities extends BaseController
         if ($post) {
             $id = model('Core')->header()['account']['id'];
 
-            $faker = Factory::create();
+           
             $this->db->table("x_sales_activity")->insert([
                 //  "create_uid" => $id,
                 "create_date" => date("Y-m-d H:i:s") . ".0000",

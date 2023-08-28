@@ -26,6 +26,8 @@ import { ActivityInsertComponent } from './activity/activity-insert/activity-ins
 import { CartComponent } from './cart/cart.component';
 import { OrderComponent } from './order/order.component';
 import { CustomerModalComponent } from './modal/customer-modal/customer-modal.component';
+import { CustomerComponent } from './customer/customer.component';
+import { CustomerDetailComponent } from './customer/customer-detail/customer-detail.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +46,7 @@ import { CustomerModalComponent } from './modal/customer-modal/customer-modal.co
     ProductComponent,
     ProductDetailComponent,
     ProductListComponent, 
-    ScheduleActivitiesComponent, ActivityInsertComponent, CartComponent, OrderComponent, CustomerModalComponent
+    ScheduleActivitiesComponent, ActivityInsertComponent, CartComponent, OrderComponent, CustomerModalComponent, CustomerComponent, CustomerDetailComponent
   ],
   imports: [
     BrowserModule,
