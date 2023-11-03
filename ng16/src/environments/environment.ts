@@ -15,7 +15,7 @@ export const environment = {
             label:'SUF', 
         },
         {
-            code:'api-dev/',
+            code:'api-dev/v1/',
             label:'Development', 
         }
     ]

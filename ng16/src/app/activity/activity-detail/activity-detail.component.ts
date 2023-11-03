@@ -106,7 +106,7 @@ export class ActivityDetailComponent implements OnInit {
       data => {
         console.log(data);
         if (environment.cam === true) {
-          this.takePhoto();
+        //  this.takePhoto();
         }
 
         this.httpGet();
