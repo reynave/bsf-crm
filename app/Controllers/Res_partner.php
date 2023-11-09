@@ -57,6 +57,31 @@ class Res_partner extends BaseController
         return $this->response->setJSON($data);
     }
 
+
+    function onSubmit(){
+        $json = file_get_contents('php://input');
+        $post = json_decode($json, true);
+
+        $data = [
+            "error" => true,
+            "post" => $post,
+        ];
+
+        if ($post ) {
+
+            /**
+             * INSERT DISNI
+             */
+
+
+
+            $data = [
+                "error" => false,
+                "post" => $post,
+            ];
+        }
+        return $this->response->setJSON($data);
+    }
     function detail($id = "")
     {
         $query = $this->db->query("SELECT *

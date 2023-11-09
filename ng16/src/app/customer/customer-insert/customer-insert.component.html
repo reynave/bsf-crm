@@ -1,0 +1,170 @@
+<nav class="fixed-top bg-white shadow-sm border-bottom py-2">
+    <div class="container-fluid">
+        <div class="row g-1">
+            <div class="col-1">
+                <a class="navbar-brand h2" (click)="back()"><i class="bi bi-arrow-left"></i></a>
+            </div>
+            <div class="col-10 align-self-center text-center  ">
+                <h5 class="p-0 m-0  ms-3"> New Customer </h5>
+            </div>
+            <div class="col-1">
+            </div>
+        </div>
+    </div>
+</nav>
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+
+            <form (ngSubmit)="onSubmit()" #heroForm="ngForm">
+                <div class="card my-4">
+
+                    <div class="card-body ">
+                        <div class="mb-2">
+                            <label for="x_customersequence" class="form-label">Customer ID</label>
+                            <input type="text" class="form-control" name="x_customersequence" id="x_customersequence"
+                                [(ngModel)]="model.x_customersequence">
+                            <small><em>Customer name required</em></small>
+                        </div>
+                        <div class="mb-2">
+                            <label for="name" class="form-label">Display Name</label>
+                            <input type="text" class="form-control" name="name" id="name" [(ngModel)]="model.name">
+                            <small><em>name required</em></small>
+                        </div>
+                        <div class="mb-2">
+                            <label for="x_short_name" class="form-label">x_short_name</label>
+                            <input type="text" class="form-control" name="x_short_name" id="x_short_name"
+                                [(ngModel)]="model.x_short_name">
+                        </div>
+
+                        <div class="mb-2">
+                            <label for="x_customertype" class="form-label">Customer Type (x_customertype)</label>
+                            <input type="text" class="form-control" name="x_customertype" id="x_customertype"
+                                [(ngModel)]="model.x_customertype">
+                        </div>
+                        <div class="mb-2">
+                            <label for="phone" class="form-label">Phone</label>
+                            <input type="tel" class="form-control" name="phone" id="phone" [(ngModel)]="model.phone">
+                        </div>
+
+                        <div class="mb-2">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" name="email" [(ngModel)]="model.email">
+                        </div>
+
+                        <div class="mb-2">
+                            <label for="x_ktp" class="form-label">x_ktp</label>
+                            <input type="number" class="form-control" name="x_ktp" id="x_ktp" [(ngModel)]="model.x_ktp">
+                        </div>
+
+
+                        <div class="mb-2">
+                            <label for="x_npwp" class="form-label">x_npwp</label>
+                            <input type="text" class="form-control" name="x_npwp" id="x_npwp"
+                                [(ngModel)]="model.x_npwp">
+                        </div>
+
+                        <div class="mb-2">
+                            <label for="x_alamat_npwp" class="form-label">x_alamat_npwp</label>
+                            <input type="text" class="form-control" name="x_alamat_npwp" id="x_alamat_npwp"
+                                [(ngModel)]="model.x_alamat_npwp">
+                        </div>
+                        <div class="mb-2">
+                            <label for="x_cabangutama" class="form-label">x_cabangutama</label>
+                            <input type="text" class="form-control" name="x_cabangutama" id="x_cabangutama"
+                                [(ngModel)]="model.x_cabangutama">
+                        </div>
+                        <div class="mb-2">
+
+                            <div class="mb-2">
+                                <label for="x_cabangpembantu" class="form-label">x_cabangpembantu</label>
+                                <input type="text" class="form-control" name="x_cabangpembantu" id="x_cabangpembantu"
+                                    [(ngModel)]="model.x_cabangpembantu">
+                            </div>
+                            <div class="mb-2">
+                                <label for="street" class="form-label">street</label>
+                                <textarea class="form-control" name="street" id="street"
+                                    [(ngModel)]="model.x_customersequence"></textarea>
+                            </div>
+
+                            <div class="mb-2">
+                                <label for="x_kodeareaid" class="form-label">x_kodeareaid</label>
+                                <input type="text" class="form-control" name="x_kodeareaid" id="x_kodeareaid"
+                                    [(ngModel)]="model.x_kodeareaid">
+                            </div>
+                            <div class="mb-2">
+                                <label for="x_kodearea" class="form-label">x_kodearea</label>
+                                <input type="text" class="form-control" name="x_kodearea" id="x_kodearea"
+                                    [(ngModel)]="model.x_kodearea">
+                            </div>
+
+                            <div class="mb-2">
+                                <label for="x_namaarea" class="form-label">x_namaarea</label>
+                                <input type="text" class="form-control" name="x_namaarea" id="x_namaarea"
+                                    [(ngModel)]="model.x_namaarea">
+                            </div>
+
+                            <div class="mb-2">
+                                <label for="x_wilayah" class="form-label">x_wilayah</label>
+                                <input type="text" class="form-control" name="x_wilayah" id="x_wilayah"
+                                    [(ngModel)]="model.x_wilayah">
+                            </div>
+                            <div class="mb-2">
+                                <label for="x_kodewilayah" class="form-label">x_kodewilayah</label>
+                                <input type="text" class="form-control" name="x_kodewilayah" id="x_kodewilayah"
+                                    [(ngModel)]="model.x_kodewilayah">
+                            </div>
+                            <div class="mb-2">
+                                <label for="x_provinsi" class="form-label">x_provinsi</label>
+                                <input type="text" class="form-control" name="x_provinsi" id="x_provinsi"
+                                    [(ngModel)]="model.x_provinsi">
+                            </div>
+
+                            <div class="mb-2">
+                                <label for="x_kecamatan" class="form-label">x_kecamatan</label>
+                                <input type="text" class="form-control" name="x_kecamatan" id="x_kecamatan"
+                                    [(ngModel)]="model.x_kecamatan">
+                            </div>
+                            <div class="mb-2">
+                                <label for="x_kabupaten" class="form-label">x_kabupaten</label>
+                                <input type="text" class="form-control" name="x_kabupaten" id="x_kabupaten"
+                                    [(ngModel)]="model.x_kabupaten">
+                            </div>
+                            <div class="mb-2">
+                                <label for="x_salesman" class="form-label">x_salesman</label>
+                                <input type="text" class="form-control" name="x_salesman" id="x_salesman"
+                                    [(ngModel)]="model.x_salesman">
+                            </div>
+                            <div class="mb-2">
+                                <label for="x_collector" class="form-label">x_collector</label>
+                                <input type="text" class="form-control" name="x_collector" id="x_collector"
+                                    [(ngModel)]="model.x_collector">
+                            </div>
+                            <div class="mb-2">
+                                <label for="x_delivery" class="form-label">x_delivery</label>
+                                <input type="text" class="form-control" name="x_delivery" id="x_delivery"
+                                    [(ngModel)]="model.x_delivery">
+                            </div>
+
+                            <!-- <div class="mb-2">
+                        <label for="address" class="form-label">Get GPS</label>
+                        <div class="d-grid">
+                            <button type="button" class="btn  btn-dark" (click)="gps()">CALL GPS</button>
+                        </div>
+                    </div> -->
+
+                            <div class="my-3 d-grid">
+                                <button type="submit" class="btn btn-lg btn-primary" >SAVE</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+</div>

@@ -6,6 +6,15 @@ class Cart extends BaseController
 {
     function index()
     {
+     
+
+        $this->db->table("x_customer_po")->delete([
+            "x_salesperson_id" => null,
+        ]); 
+       
+        $this->db->table("x_customer_po_line")->delete([
+            "x_customer_po_line_id" => null,
+        ]); 
        
         $data = [
             "error" => false, 
@@ -15,8 +24,8 @@ class Cart extends BaseController
             "total" => 0,
             "x_salesperson_id" => model("Core")->accountId(),
         ];
-        $where = "";
-        //$where = "AND x_salesperson_id = '" . model("Core")->accountId() . "' ";
+   
+        $where = "AND x_salesperson_id = '" . model("Core")->accountId() . "' ";
         
         $id = model("Core")->select("id", "x_customer_po", "x_submit = 0  $where ");
         if ($id) {  

@@ -20,6 +20,8 @@ import { OrderComponent } from './order/order.component';
 import { CustomerModalComponent } from './modal/customer-modal/customer-modal.component';
 import { CustomerComponent } from './customer/customer.component';
 import { CustomerDetailComponent } from './customer/customer-detail/customer-detail.component';
+import { SqlQueryComponent } from './sql-query/sql-query.component';
+import { CustomerInsertComponent } from './customer/customer-insert/customer-insert.component';
 
 const routes: Routes = [
   { path:"", component:HomeComponent, data: { active: "home" },  canActivate:[authGuard] },
@@ -45,9 +47,12 @@ const routes: Routes = [
  
   { path:"customer", component:CustomerComponent , data: { active: "customer" },  canActivate:[authGuard]},
   { path:"customer/detail/:id", component:CustomerDetailComponent , data: { active: "customer" },  canActivate:[authGuard]},
+  { path:"customer/insert", component:CustomerInsertComponent , data: { active: "customer" },  canActivate:[authGuard]},
 
   { path:"cart", component:CartComponent , data: { active: "cart" },  canActivate:[authGuard]},
   { path:"order", component:OrderComponent , data: { active: "order" },  canActivate:[authGuard]},
+
+  { path:"sql", component:SqlQueryComponent , data: { active: "sql" },  canActivate:[authGuard]},
 
   { path: "**", component: NotfoundComponent, data: { active: "404" },  canActivate:[]  }, 
 ];

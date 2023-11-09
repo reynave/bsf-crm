@@ -21,17 +21,30 @@ export class HomeComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private config: ConfigService,
-    private ngZone: NgZone,
+    private ngZone: NgZone, 
   ){ }
 
   ngOnInit()  {
      console.log(this.config.account());
   }
-
+  callApi(){
+    //http://systemapk.bsfar.com:41021/api-dev/v1/
+    this.http.get<any>(environment.api+this.config.getAppCode()).subscribe(
+      data => {
+        console.log(data); 
+        this.note = "Call Success ";
+      },
+      e => {
+        console.log(e); 
+        this.note = "Error";
+      },
+    );
+  }
   gps(){
     console.log("GEO is :");
     let self = this;
     var onSuccess = function (position : any) {
+      self.note = "GPS Success ";
         console.log('Latitude: ' + position.coords.latitude + '\n' +
             'Longitude: ' + position.coords.longitude + '\n' +
             'Altitude: ' + position.coords.altitude + '\n' +
@@ -80,7 +93,7 @@ export class HomeComponent implements OnInit {
 
   note : string = "";
   portal1(){
-    this.http.get<any>("http://systemapk.bsfar.com:41021/bsf-portal/index.php/mobile_api/product").subscribe(
+    this.http.get<any>(environment.api+"bsf-portal/index.php/mobile_api/product").subscribe(
       data => {
         console.log(data); 
         this.note = "Success";

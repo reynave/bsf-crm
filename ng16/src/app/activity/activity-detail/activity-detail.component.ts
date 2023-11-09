@@ -251,4 +251,14 @@ export class ActivityDetailComponent implements OnInit {
   }
 
 
+
+  takeOrder(x: any = []) {
+    let objCustomer: any = [];
+    objCustomer = {
+      x_customer_id : this.item.x_customer_id,
+    }
+
+    this.router.navigate(['product'], {queryParams:objCustomer});
+   
+  }
 }

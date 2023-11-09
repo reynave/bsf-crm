@@ -79,11 +79,11 @@
                 <small>Check Device Only</small>
             </div>
             <div class="col-4">
-                <div class=" bg-white rounded shadow-sm text-center" (click)="portal1()">
+                <div class=" bg-white rounded shadow-sm text-center" (click)="callApi()">
                     <div class="lh-1 py-2">
-                        <h2> <i class="bi bi-filetype-json"></i> </h2>
+                        <h2> <i class="bi bi-database-up"></i> </h2>
                         <small>
-                            <a >Test Call API Server</a>
+                            <a >Test Oddo Server</a>
                         </small>
                     </div>
                 </div>
@@ -112,7 +112,13 @@
             </div>
             <div class="col-12">
                 <div class="bg-light rounded p-2">
-                    {{note}} {{gpsInfo | json}}
+                   <div>
+                    {{note}} 
+                   </div>
+
+                    <code>
+                        {{gpsInfo | json}}
+                    </code>
                 </div>
             </div>
         </div>

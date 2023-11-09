@@ -26,11 +26,11 @@ export class ProductListComponent implements OnInit {
     this.httpGet();
   }
   mytable() {
-
+    let self = this;
     this.dtOptions = {
       //   serverSide: true,     // Set the flag 
       ajax: {
-        url: environment.api +this.configService.getAppCode() + 'product/datatable',
+        url: environment.api +self.configService.getAppCode() + 'product/datatable',
         data: this.activatedRoute.snapshot.queryParams,
         type: "GET",
         headers: {
@@ -46,7 +46,10 @@ export class ProductListComponent implements OnInit {
           data: 'name',
           render: function (data: any, type: any, full: any) {
             let price = new Intl.NumberFormat().format(full['list_price']);
-            let url = full['qty_available'] > 0 ?  "#/product/detail/"+full['id'] :"javascript:;";
+            let customer = self.activatedRoute.snapshot.queryParams['x_customer_id'] != null ? "x_customer_id="+self.activatedRoute.snapshot.queryParams['x_customer_id'] : "" ;
+
+
+            let url = full['qty_available'] > 0 ?  "#/product/detail/"+full['id']+"?"+customer :"javascript:;";
             let a = `
             <a href="${url}">
                 <div >${data}</div>
@@ -70,7 +73,7 @@ export class ProductListComponent implements OnInit {
   }
 
   httpGet(){
-    this.http.get<any>(environment.api + 'product/datatable?search='+ this.search, {
+    this.http.get<any>(environment.api + this.configService.getAppCode()+'product/datatable?search='+ this.search, {
       headers : this.configService.headers(),
     }).subscribe(
       data => {

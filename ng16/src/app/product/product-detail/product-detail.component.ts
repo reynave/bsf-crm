@@ -55,7 +55,10 @@ export class ProductDetailComponent implements OnInit {
       id: this.id,
       item : this.item,
       qty : this.qty,
+      account : this.configService.account()['account'],
+      x_customer_id : this.activeRoute.snapshot.queryParams['x_customer_id'],
     }
+    console.log(body);
     this.http.post<any>(this.api + this.configService.getAppCode()+'product/addToCard', body, {
       headers : this.configService.headers(),
     }).subscribe(

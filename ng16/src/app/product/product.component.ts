@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ConfigService } from 'src/app/service/config.service';
 
 @Component({
@@ -20,6 +20,7 @@ export class ProductComponent implements OnInit {
     private http: HttpClient,
     private router: Router,
     private configService: ConfigService,
+    private activeRouter : ActivatedRoute
   ){ }
 
 
@@ -44,7 +45,8 @@ export class ProductComponent implements OnInit {
   onSearch(){
     if(this.search.length >= 3){
       const body = {
-        search : this.search
+        search : this.search,
+        x_customer_id : this.activeRouter.snapshot.queryParams['x_customer_id'],
       }
       this.router.navigate(['product/list'],{queryParams:body});
     }

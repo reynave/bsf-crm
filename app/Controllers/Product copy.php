@@ -67,21 +67,21 @@ class Product extends BaseController
 
     public function detail($id = "")
     {
-
-
+        
+ 
         $query = $this->db->query("SELECT *
         FROM product_template  WHERE id = '$id'  ");
         $item = $query->getResultArray();
 
         $qty = $this->db->query("SELECT  coalesce(quantity - reserved_quantity,0 ) as qty
-        FROM stock_quant  WHERE product_id = '" . $item[0]['id'] . "'  ");
+        FROM stock_quant  WHERE product_id = '".$item[0]['id']."'  ");
         $itemqty = $qty->getResultArray();
 
         $data = [
             "error" => false,
             "datetime" => date("Y-m-d H:i:s"),
-            "item" => $item[0],
-            "qty" => (int) $itemqty[0]['qty'],
+            "item" => $item[0], 
+            "qty" => (int)$itemqty[0]['qty'],
 
         ];
         return $this->response->setJSON($data);
@@ -96,33 +96,19 @@ class Product extends BaseController
             "post" => $post,
         ];
         if ($post) {
-            // $where = "and x_salesperson_id = '" . model("Core")->accountId() . "' ";
-            $where = " and x_salesperson_id = '" . $post['account']['id'] . "'";
-
+           // $where = "and x_salesperson_id = '" . model("Core")->accountId() . "' ";
+           $where = "";
             $id = model("Core")->select("id", "x_customer_po", "x_submit = 0  $where");
             if (!$id) {
-
                 $this->db->table("x_customer_po")->insert([
-                    "x_salesperson_id" => $post['account']['id'],
-                    "x_salesperson" => $post['account']['x_name'],
-
-                    "x_customer_id" => isset($post['x_customer_id']) ? $post['x_customer_id'] : "",
-                    "x_customer" => isset($post['x_customer_id']) ? $post['x_customer_id'] : "",
-
+                   // "x_salesperson_id" => model("Core")->accountId(),
                     "x_order_date" => date("Y-m-d H:i:s"),
                     "create_date" => date("Y-m-d H:i:s"),
                     "write_date" => date("Y-m-d H:i:s"),
                     "x_submit" => 0,
                 ]);
                 $id = model("Core")->select("id", "x_customer_po", "x_submit = 0  $where  order by create_date DESC");
-
-            } else {
-                if (isset($post['x_customer_id'])) { 
-                    $this->db->table("x_customer_po")->update([
-                        "x_customer_id" => isset($post['x_customer_id']) ? $post['x_customer_id'] : "",
-                        "x_customer" => isset($post['x_customer_id']) ? $post['x_customer_id'] : "",
-                    ]," id =  '$id' ");
-                }
+                ;
             }
 
             $this->db->table("x_customer_po_line")->insert([
@@ -130,8 +116,8 @@ class Product extends BaseController
                 "x_product" => $post['item']['id'],
                 "x_name" => $post['item']['name'],
                 "x_unitprice" => $post['item']['list_price'],
-                "x_subtotal" => $post['item']['list_price'] * $post['qty'],
-
+                "x_subtotal" => $post['item']['list_price'] *  $post['qty'],
+                
                 "x_qty" => $post['qty'],
                 "create_date" => date("Y-m-d H:i:s"),
                 "write_date" => date("Y-m-d H:i:s"),

@@ -21,6 +21,9 @@
 
 <div class="container-fluid mt-3">
     <div class="row">
+        <div class="col-12 mb-2 d-grid" *ngIf="item.x_customer_id != null ">
+            <button class="btn btn-primary " (click)="takeOrder();">Take Order</button>
+        </div>
         <div class="col-12">
             <div class="card mb-3">
 
