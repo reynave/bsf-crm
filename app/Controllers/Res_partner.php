@@ -60,7 +60,7 @@ class Res_partner extends BaseController
 
     function onSubmit(){
         $json = file_get_contents('php://input');
-        $post = json_decode($json, true);
+        $post = $this->request->getVar(); #json_decode($json, true);
 
         $data = [
             "error" => true,
@@ -69,10 +69,24 @@ class Res_partner extends BaseController
 
         if ($post ) {
 
-            /**
-             * INSERT DISNI
+            /*
+             * INSERT DI SINI
              */
 
+			$parameters = ['name'=>$post['name'],'email'=>$post['email'],'street'=>$post['street']];
+			$q = http_build_query($parameters);
+			
+			$url = 'http://192.168.131.90/odoo_ext_api/res_partner.php?action=create'; #URL asumsikan ada di server dev
+			
+			if(!$curl = curl_init()){
+				exit();
+			}
+			
+			curl_setopt($curl,CURLOPT_POST,true);
+			curl_setopt($curl,CURLOPT_POSTFIELDS,$q);
+			curl_setopt($curl,CURLOPT_URL,$url);
+			curl_setopt($curl,CURLOPT_RETURNTRANSFER,true);
+			$response = curl_exec($curl);
 
 
             $data = [
