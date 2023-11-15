@@ -60,11 +60,12 @@ class Res_partner extends BaseController
 
     function onSubmit(){
         $json = file_get_contents('php://input');
-        $post = $this->request->getVar(); #json_decode($json, true);
+        $post = json_decode($json, true);
 
         $data = [
             "error" => true,
             "post" => $post,
+            "response" => [],
         ];
 
         if ($post ) {
@@ -92,6 +93,7 @@ class Res_partner extends BaseController
             $data = [
                 "error" => false,
                 "post" => $post,
+                "response" => $response,
             ];
         }
         return $this->response->setJSON($data);
