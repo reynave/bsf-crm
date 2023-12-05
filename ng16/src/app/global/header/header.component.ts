@@ -10,6 +10,7 @@ import { ConfigService } from 'src/app/service/config.service';
 })
 export class HeaderComponent implements OnInit {
   account : any = [];
+  ver : string = environment.version;
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -24,7 +25,7 @@ export class HeaderComponent implements OnInit {
     this.configService.removeToken().subscribe(
       data =>{
         if(data == true){
-          this.router.navigate(['login']);
+          this.router.navigate(['relogin']);
         }
       }
     )

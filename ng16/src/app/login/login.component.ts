@@ -34,7 +34,14 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void { 
     this.model.serialNumber = environment.production ? "": environment.serialNumber;  
-    localStorage.setItem("appCodeManasol","");
+    this.app =  localStorage.getItem("appCodeManasol");
+     this.fnCheckSessionLogin();
+  }
+
+  fnCheckSessionLogin(){
+    if (this.configService.getToken() != "" && this.configService.getToken() != null ) {
+      this.router.navigate(['home']);
+    }
   }
 
   updateApp(){

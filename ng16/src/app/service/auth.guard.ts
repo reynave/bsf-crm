@@ -13,7 +13,8 @@ export class authGuard {
     state: RouterStateSnapshot
   ): Observable<boolean> | Promise<boolean> | boolean {
      
-    if (this.config.getToken()) {
+    if (this.config.getToken() != "" && this.config.getToken() != null ) {
+      console.log("guard ",true, this.config.getToken() );
       return true;
     } else {
       this.router.navigate(['relogin']) 

@@ -4,10 +4,10 @@
             <div class="col-1 align-self-center  ">
                 <a class="navbar-brand h2" (click)="back()"><i class="bi bi-arrow-left"></i></a>
             </div>
-            <div class="col-9 align-self-center  text-center ">
+            <div class="col-8 align-self-center  ">
                 <h5 class="p-0 m-0  ms-3"> Activites</h5>
             </div>
-            <div class="col-2 text-end  ">
+            <div class="col-3 text-end  ">
                   <a (click)="fnCancelActiviesSchedule();" class="btn btn-danger rounded-pill">Cancel</a>  
             </div>
         </div>
@@ -17,7 +17,13 @@
 <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
     <div class="container-fluid py-4">
         <div class="row">
-            <div class="col-12">
+            
+            <div class="col-12" *ngIf="loading">
+               <div class="text-center my-5">
+                <img src="./assets/gif/loadingIntro.gif" width="80%">
+               </div>
+            </div>
+            <div class="col-12" *ngIf="!loading">
 
                 <div class="card mb-3  border-{{x.x_activity_status == 'OPEN' ? 'success border-3' : '' }} border-{{x.x_activity_status == 'CHECKIN' ? 'info border-3' : '' }}" *ngFor="let x of items" >
                     <div class="card-body">

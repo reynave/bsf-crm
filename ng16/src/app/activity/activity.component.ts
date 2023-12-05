@@ -31,6 +31,7 @@ export class ActivityComponent implements OnInit {
     history.back();
   }
   httpGet() {
+    this.loading = true;
     console.log(this.activeRouter.snapshot.queryParams);
     this.http.get<any>(this.api + this.configService.getAppCode() + 'activities/index', {
       headers: this.configService.headers(),

@@ -19,11 +19,12 @@ export class ReloginComponent implements OnInit {
     private router: Router,
     private configService: ConfigService,
   ){ }
-  ngOnInit(): void {
-    
+  ngOnInit(): void { 
+   
   }
 
   relogin(){
+    localStorage.removeItem(this.configService.getToken()); 
     this.configService.removeToken().subscribe(
       ()=>{
         this.router.navigate(['./login']);

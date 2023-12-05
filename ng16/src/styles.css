@@ -6,7 +6,9 @@
 body {
     padding-top: 3.5rem;
 }
-
+strong{
+    color: black;
+}
 .mobile-first {
     max-width: var(--mobile-width);
     margin: 0 auto;
