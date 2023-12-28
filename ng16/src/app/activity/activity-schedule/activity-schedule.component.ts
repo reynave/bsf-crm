@@ -22,6 +22,7 @@ export class ActivityScheduleComponent implements OnInit {
   date = new Date();
   loading: boolean = false;
   api: string = environment.api;
+  prod  : boolean = environment.production;
   note: string = "";
   model  : any = new Model("",this.date.getFullYear()+'-'+("0" + (this.date.getMonth() + 1)).slice(-2)+'-'+("0" + (this.date.getDate() )).slice(-2), "" );
   id : string = "";

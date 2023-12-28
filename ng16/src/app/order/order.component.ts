@@ -18,7 +18,7 @@ export class OrderComponent implements OnInit {
   id: string = "";
   total: number = 0;
   detail: any = [];
-
+ 
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -68,8 +68,10 @@ export class OrderComponent implements OnInit {
         console.log(e);
         this.note = "Error Server!";
       },
-    );
+    ); 
+  }
 
-
+  goToDetail(item : any){
+    this.router.navigate(['./order/detail'],{queryParams:{id:item['id']}});
   }
 }

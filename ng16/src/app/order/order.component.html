@@ -15,8 +15,8 @@
 <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
 
     <div class="row">
-        <div class="col-12">
-            <div class="border bg-white shadow p-3 " *ngFor="let x of item" (click)="open(content,x)">
+        <div class="col-12" [hidden]="loading">
+            <div class="border bg-white shadow p-3 " *ngFor="let x of item" (click)="goToDetail(x)">
                 <div class="row g-0  mb-2">
                     <div class="col-9">
                         <small> Order Date : {{x.x_order_date | date:"medium"}}</small>
@@ -55,47 +55,15 @@
                         </div>
                     </div>
                 </div>
-            </div>
-
+            </div> 
+        </div>
+        <div class="col-12" [hidden]="!loading">
+           <div class="text-center my-5">
+             <img src="./assets/gif/icons8-loading.gif" width="50">
+           </div>
         </div>
     </div>
 
 </main>
 
-
-<ng-template #content let-modal>
-
-    <div class="modal-body">
-        <div class="row">
-            <div class="col-12 text-end">
-                <a (click)="modal.dismiss()">Close</a>
-            </div>
-        </div>
-        <div class="row  border-bottom py-4" *ngFor="let x of detail">
-            <div class="col-12">
-                <div>
-                    <strong>{{x.x_name}}</strong>
-                </div>
-
-            </div>
-
-            <div class="col text-end">
-                <small>Unit Price</small>
-                <div><b>Rp {{x.x_unitprice | number}}</b></div>
-            </div>
-            <div class="col text-end">
-                <small>Qty</small>
-                <div> <b>{{x.x_qty | number }}</b></div>
-            </div>
-            <div class="col text-end" [hidden]="!x.x_discount">
-                <small>Discount</small>
-                <div> <b>Rp {{x.x_discount| number}}</b></div>
-            </div>
-            <div class="col text-end">
-                <small>Subtotal</small>
-                <div> <b>Rp {{x.x_subtotal| number}}</b></div>
-            </div>
-        </div>
-    </div>
-
-</ng-template>
+ 

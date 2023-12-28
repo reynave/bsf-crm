@@ -38,7 +38,7 @@
                         <div class="mb-2">
                             <label for="x_name" class="form-label">x_salesperson_id</label>
 
-                            <select class="form-control" [(ngModel)]="model.x_salesperson_id" name="x_salesperson_id"   #x_salesperson_id="ngModel"
+                            <select class="form-control" disabled [(ngModel)]="model.x_salesperson_id" name="x_salesperson_id"   #x_salesperson_id="ngModel"
                                 (change)="selectActivitySchedule()">
                                 <option *ngFor="let n of x_mobile_users" [value]="n.x_employee_id"> {{n.x_name}}
                                 </option>
@@ -61,7 +61,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12">
+            <div class="col-12" [hidden]="!prod">
                 <small>Dev mode :</small>
                 <div>
                     <code>{{model | json}}</code>

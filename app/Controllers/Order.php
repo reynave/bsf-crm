@@ -13,7 +13,7 @@ class Order extends BaseController
             "x_salesperson_id" => model("Core")->accountId(),
         ];
         $where = "cpo.x_salesperson_id = ".model("Core")->accountId() ;
-        $where = " TRUE " ;
+     //   $where = " TRUE " ;
         
         $q = "SELECT cpo.* , p.name,  p.street
             FROM x_customer_po as cpo

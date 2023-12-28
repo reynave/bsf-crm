@@ -30,6 +30,7 @@ import { CustomerComponent } from './customer/customer.component';
 import { CustomerDetailComponent } from './customer/customer-detail/customer-detail.component';
 import { SqlQueryComponent } from './sql-query/sql-query.component';
 import { CustomerInsertComponent } from './customer/customer-insert/customer-insert.component';
+import { OrderDetailComponent } from './order/order-detail/order-detail.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,7 @@ import { CustomerInsertComponent } from './customer/customer-insert/customer-ins
     ProductComponent,
     ProductDetailComponent,
     ProductListComponent, 
-    ScheduleActivitiesComponent, ActivityInsertComponent, CartComponent, OrderComponent, CustomerModalComponent, CustomerComponent, CustomerDetailComponent, SqlQueryComponent, CustomerInsertComponent
+    ScheduleActivitiesComponent, ActivityInsertComponent, CartComponent, OrderComponent, CustomerModalComponent, CustomerComponent, CustomerDetailComponent, SqlQueryComponent, CustomerInsertComponent, OrderDetailComponent
   ],
   imports: [
     BrowserModule,

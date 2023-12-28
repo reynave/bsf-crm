@@ -36,7 +36,14 @@ class Cart extends BaseController
             $db = $this->db->query($q);
             $item = $db->getResultArray();
 
-            $total = $this->db->query("SELECT  sum(x_subtotal)
+
+            if(count($item) < 1){
+                $q0 = "DELETE FROM  x_customer_po 
+                where x_submit = 0 and x_salesperson_id = '".model("Core")->accountId()."' "; 
+                $query = $this->db->query($q0);
+            }
+
+            $total = $this->db->query("SELECT sum(x_subtotal)
                 FROM x_customer_po_line
                 where x_customer_po_line_id = $id");
             $total = $total->getResultArray()[0]['sum'];
@@ -53,12 +60,21 @@ class Cart extends BaseController
                 $customer = $query->getResultArray()[0];
             }
            
+            $q0 = "SELECT *
+            FROM x_customer_po  
+            where x_submit = 0 and x_salesperson_id = '".model("Core")->accountId()."' "; 
+            $query = $this->db->query($q0);
+            $x_customer_po = $query->getResultArray();
+
+
+          
 
             $data = [
                 "error" => false, 
                 "datetime" => date("Y-m-d H:i:s"),
                 "item" =>  $item,
                 "customer" => $customer,
+                "x_customer_po" => $x_customer_po,
                 "id" =>  $id,
                 "total" => (int)$total,
                 "x_salesperson_id" => model("Core")->accountId(),

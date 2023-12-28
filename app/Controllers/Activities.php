@@ -14,7 +14,9 @@ class Activities extends BaseController
             $where = " AND x_sales_activity_schedule_id = " . $this->request->getVar()['id'];
         }
 
-        $q = "SELECT x_route_name,  x_schedule_date, x_activity_status,  x_salesperson_id, id, create_date, x_customer_name, x_is_visited
+        $q = "SELECT 
+        x_route_name,  x_schedule_date, x_activity_status,  x_salesperson_id, 
+        id, create_date, x_customer_name, x_is_visited, x_is_unscheduled
         FROM x_sales_activity  
         WHERE TRUE   $where 
         order by id DESC ";
@@ -140,7 +142,7 @@ class Activities extends BaseController
                         "x_salesperson" => model("Core")->select("x_name", "x_mobile_users", "x_employee_id = '" . $post['model']['x_salesperson_id'] . "' "),
                         "x_route_id" => $post['model']['x_route_id'],
                         //"x_res_name" => $row['x_branch_id'],
-
+                        "x_is_unscheduled" => false,
 
                     ]);
                 }
@@ -192,8 +194,7 @@ class Activities extends BaseController
                 "x_salesperson" => model("Core")->select("x_name", "x_mobile_users", "x_employee_id = '" . $id . "' "),
                 //  "x_route_id" => $post['model']['x_route_id'],
                 //"x_res_name" => $row['x_branch_id'],
-
-
+                "x_is_unscheduled" => true, 
             ]);
 
 
@@ -348,8 +349,8 @@ class Activities extends BaseController
     function schedules()
     {
 
-        //$account = "x_salesperson_id = '" . model('Core')->header()['account']['id'] . "'  AND ";
-        $account = "";
+        $account = "x_salesperson_id = '" . model('Core')->header()['account']['id'] . "'  AND ";
+       // $account = "";
         $post = $this->request->getVar();
         $range = 0;
         if (isset($post['type'])) {

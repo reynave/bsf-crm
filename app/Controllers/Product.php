@@ -101,27 +101,53 @@ class Product extends BaseController
 
             $id = model("Core")->select("id", "x_customer_po", "x_submit = 0  $where");
             if (!$id) {
+                if ($post['x_customer_id'] == "") {
+                    $this->db->table("x_customer_po")->insert([
+                        "x_salesperson_id" => $post['account']['id'],
+                        "x_salesperson" => $post['account']['x_name'],
 
-                $this->db->table("x_customer_po")->insert([
-                    "x_salesperson_id" => $post['account']['id'],
-                    "x_salesperson" => $post['account']['x_name'],
+                        // "x_customer_id" =>  $post['x_customer_id'] == "" ? '0':  $post['x_customer_id'],
+                        // "x_customer" =>  $post['x_customer_id'] == "" ? '0':  $post['x_customer_id'],
 
-                    "x_customer_id" => isset($post['x_customer_id']) ? $post['x_customer_id'] : "",
-                    "x_customer" => isset($post['x_customer_id']) ? $post['x_customer_id'] : "",
+                        "x_order_date" => date("Y-m-d H:i:s"),
+                        "create_date" => date("Y-m-d H:i:s"),
+                        "write_date" => date("Y-m-d H:i:s"),
+                        "x_is_magic_order" => true,
+                        "x_submit" => 0,
+                    ]);
+                } else {
+                    $this->db->table("x_customer_po")->insert([
+                        "x_salesperson_id" => $post['account']['id'],
+                        "x_salesperson" => $post['account']['x_name'],
 
-                    "x_order_date" => date("Y-m-d H:i:s"),
-                    "create_date" => date("Y-m-d H:i:s"),
-                    "write_date" => date("Y-m-d H:i:s"),
-                    "x_submit" => 0,
-                ]);
+                        "x_customer_id" => $post['x_customer_id'] == "" ? '0' : $post['x_customer_id'],
+                        "x_customer" => $post['x_customer_id'] == "" ? '0' : $post['x_customer_id'],
+
+                        "x_order_date" => date("Y-m-d H:i:s"),
+                        "create_date" => date("Y-m-d H:i:s"),
+                        "write_date" => date("Y-m-d H:i:s"),
+                        "x_is_magic_order" => false,
+                        "x_submit" => 0,
+                    ]);
+                }
                 $id = model("Core")->select("id", "x_customer_po", "x_submit = 0  $where  order by create_date DESC");
 
             } else {
-                if (isset($post['x_customer_id'])) { 
-                    $this->db->table("x_customer_po")->update([
-                        "x_customer_id" => isset($post['x_customer_id']) ? $post['x_customer_id'] : "",
-                        "x_customer" => isset($post['x_customer_id']) ? $post['x_customer_id'] : "",
-                    ]," id =  '$id' ");
+                if (isset($post['x_customer_id'])) {
+
+                    if ($post['x_customer_id'] == "") {
+                        $this->db->table("x_customer_po")->update([
+                            "x_is_magic_order" => true,
+                        ], " id =  '$id' ");
+                    } else {
+                        $this->db->table("x_customer_po")->update([
+                            "x_customer_id" => $post['x_customer_id'] == "" ? "" : $post['x_customer_id'],
+                            "x_customer" => $post['x_customer_id'] == "" ? "" : $post['x_customer_id'],
+                            "x_is_magic_order" => false,
+                        ], " id =  '$id' ");
+                    }
+
+
                 }
             }
 
