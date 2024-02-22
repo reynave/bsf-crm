@@ -14,12 +14,19 @@ class Activities extends BaseController
             $where = " AND x_sales_activity_schedule_id = " . $this->request->getVar()['id'];
         }
 
-        $q = "SELECT 
-        x_route_name,  x_schedule_date, x_activity_status,  x_salesperson_id, 
-        id, create_date, x_customer_name, x_is_visited, x_is_unscheduled
+        // $q2 = "SELECT 
+        // x_route_name,  x_schedule_date, x_activity_status,  x_salesperson_id, 
+        // id, create_date, x_customer_name, x_is_visited, x_is_unscheduled
+        // FROM x_sales_activity  
+        // WHERE TRUE   $where 
+        // order by id DESC ";
+
+        $q = "SELECT   x_route_name,  x_schedule_date, x_activity_status,  x_salesperson_id, 
+        id, create_date, x_customer_name, x_is_visited, x_is_unscheduled, x_salesperson
         FROM x_sales_activity  
-        WHERE TRUE   $where 
+        WHERE x_salesperson_id = '" . model('Core')->header()['account']['id'] . "'   $where 
         order by id DESC ";
+
         // x_salesperson_id = '" . model('Core')->header()['account']['id'] . "'
         $query = $this->db->query($q);
         $results = $query->getResultArray();
@@ -325,10 +332,10 @@ class Activities extends BaseController
             "post" => $post,
         );
         if ($post) {
-
+            $filename = model('Core')->header()['account']['id']."-".date("YmdHis")."-".rand(1999999,9999999);
             $data = [
                 "error" => false,
-                "photo" => $post['base64Images'] != false ? model("Core")->cam_to_img($post['base64Images'], "./uploads/activity/", date("YmdHis")) : "",
+                "photo" => $post['base64Images'] != false ? model("Core")->cam_to_img( $post['base64Images'], "./uploads/activity/", $filename) : "",
                 "post" => $post,
             ];
             if ($post['status'] == 'CHECKIN') {

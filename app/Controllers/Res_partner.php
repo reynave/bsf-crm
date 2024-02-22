@@ -34,10 +34,16 @@ class Res_partner extends BaseController
         }
 
         if ($status) {
-            $where = " WHERE active = true AND customer_rank > 0  AND name like '%" . $name . "%' ";
+            //AND  salesman   = '".model("Core")->accountId()."'
+            $where = " WHERE active = true AND customer_rank > 0  AND name like '%" . $name . "%'  
+            AND x_salesman = '" . model('Core')->header()['account']['id'] . "'";
 
-            $q = "SELECT id, name,  street, x_latitude, x_longitude
-            FROM res_partner  $where";
+            $q = "SELECT 
+                id, name,  street, x_latitude, x_longitude, x_salesman
+            FROM res_partner  $where ";
+
+            //  $q = "SELECT  *
+            //  FROM res_partner  $where";
             $query = $this->db->query($q);
 
             $items = $query->getResultArray();
