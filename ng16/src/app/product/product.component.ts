@@ -45,9 +45,10 @@ export class ProductComponent implements OnInit {
   onSearch(){
     if(this.search.length >= 3){
       const body = {
-        search : this.search,
-        x_customer_id : this.activeRouter.snapshot.queryParams['x_customer_id'],
+        search : this.search, 
+        accountId : this.configService.accountId(),
       }
+      console.log(body);
       this.router.navigate(['product/list'],{queryParams:body});
     }
   }

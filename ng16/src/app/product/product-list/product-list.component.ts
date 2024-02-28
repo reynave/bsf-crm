@@ -34,7 +34,8 @@ export class ProductListComponent implements OnInit {
         data: this.activatedRoute.snapshot.queryParams,
         type: "GET",
         headers: {
-          'token': "coming soon",
+          'Content-Type': 'application/json', 
+          'Token': this.configService.getToken(),
         },
       },
       ordering: false,
