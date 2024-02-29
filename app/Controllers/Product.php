@@ -91,19 +91,34 @@ class Product extends BaseController
     {
 
 
-        $query = $this->db->query("SELECT *
-        FROM product_template  WHERE id = '$id'  ");
+        // $query = $this->db->query("SELECT *
+        // FROM product_template  WHERE id = '$id'  ");
+        // $item = $query->getResultArray();
+
+        // $qty = $this->db->query("SELECT  coalesce(quantity - reserved_quantity,0 ) as qty
+        // FROM stock_quant  WHERE product_id = '" . $item[0]['id'] . "'  ");
+        // $itemqty = $qty->getResultArray();
+
+
+        $q = "SELECT  p.id, p.id as product_id,  s.x_product_name  as name,  
+        s.x_sales_price as list_price, p.default_code,  
+        s.quantity,
+        s.reserved_quantity, s.location_id,
+        coalesce(s.quantity - s.reserved_quantity,0 ) AS qty_Available 
+        
+        FROM product_product AS p
+        LEFT JOIN stock_quant AS s ON s.product_id = p.id
+        WHERE p.active = 't' AND  p.id = $id  ";
+
+        $query = $this->db->query($q); 
         $item = $query->getResultArray();
 
-        $qty = $this->db->query("SELECT  coalesce(quantity - reserved_quantity,0 ) as qty
-        FROM stock_quant  WHERE product_id = '" . $item[0]['id'] . "'  ");
-        $itemqty = $qty->getResultArray();
 
         $data = [
             "error" => false,
             "datetime" => date("Y-m-d H:i:s"),
             "item" => $item[0],
-            "qty" => (int) $itemqty[0]['qty'],
+            "qty" => (int) $item[0]['qty_available'],
 
         ];
         return $this->response->setJSON($data);
