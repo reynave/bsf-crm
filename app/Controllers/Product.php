@@ -118,8 +118,8 @@ class Product extends BaseController
             "error" => false,
             "datetime" => date("Y-m-d H:i:s"),
             "item" => $item[0],
+          //  "qty" => (int) $item[0]['qty_available'] < 0 ? 0 : $item[0]['qty_available'] ,
             "qty" => (int) $item[0]['qty_available'],
-
         ];
         return $this->response->setJSON($data);
     }
