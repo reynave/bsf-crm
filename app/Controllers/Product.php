@@ -9,14 +9,12 @@ class Product extends BaseController
 
         $total = $this->db->query("SELECT count(id) FROM product_template ");
         $total = (int) $total->getResultArray()[0]['count'];
-
         $data = [
             "error" => false,
             "total" => $total,
             "datetime" => date("Y-m-d H:i:s"),
         ];
         return $this->response->setJSON($data);
-
     }
 
     public function datatable()
@@ -39,9 +37,9 @@ class Product extends BaseController
 
             $where = "   s.x_product_name LIKE '%" . strtoupper($search) . "%'";
             $locationId = 0;
-            if ( $post['accountId'] ) {
+            if ($post['accountId']) {
                 $accountId = $post['accountId'];
-                $locationId = (int)model("Core")->select("x_location_id", "x_mobile_users", "x_employee_id =  $accountId ");
+                $locationId = (int) model("Core")->select("x_location_id", "x_mobile_users", "x_employee_id =  $accountId ");
             }
 
             $q = "SELECT  p.id, p.id as product_id,  s.x_product_name  as name,  
@@ -68,10 +66,8 @@ class Product extends BaseController
             $items = $query->getResultArray();
             $total = 0;
             // $total = $this->db->query("SELECT count(p.id) FROM product_product  as p WHERE  $where ");
-            // $total = (int) $total->getResultArray()[0]['count'];
-
+            // $total = (int) $total->getResultArray()[0]['count']; 
             $x_mobile_user = $this->db->query("select id, x_employee_id, x_location_id, x_user_id  from x_mobile_users  ")->getResultArray();
-
 
             $data = [
                 "error" => false,
@@ -90,7 +86,7 @@ class Product extends BaseController
     public function detail($id = "")
     {
 
-
+        $get = $this->request->getVar();
         // $query = $this->db->query("SELECT *
         // FROM product_template  WHERE id = '$id'  ");
         // $item = $query->getResultArray();
@@ -104,13 +100,13 @@ class Product extends BaseController
         s.x_sales_price as list_price, p.default_code,  
         s.quantity,
         s.reserved_quantity, s.location_id,
-        coalesce(s.quantity - s.reserved_quantity,0 ) AS qty_Available 
-        
+        coalesce(s.quantity - s.reserved_quantity,0 ) AS qty_Available  
+
         FROM product_product AS p
         LEFT JOIN stock_quant AS s ON s.product_id = p.id
-        WHERE p.active = 't' AND  p.id = $id  ";
+        WHERE p.active = 't' AND  p.id = " . $get['id'] . " AND  s.location_id  =  " . $get['location_id'];
 
-        $query = $this->db->query($q); 
+        $query = $this->db->query($q);
         $item = $query->getResultArray();
 
 
@@ -118,7 +114,8 @@ class Product extends BaseController
             "error" => false,
             "datetime" => date("Y-m-d H:i:s"),
             "item" => $item[0],
-          //  "qty" => (int) $item[0]['qty_available'] < 0 ? 0 : $item[0]['qty_available'] ,
+            "items" => $item,
+            //"qty" => (int) $item[0]['qty_available'] < 0 ? 0 : $item[0]['qty_available'],
             "qty" => (int) $item[0]['qty_available'],
         ];
         return $this->response->setJSON($data);

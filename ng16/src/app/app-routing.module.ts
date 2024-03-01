@@ -42,7 +42,7 @@ const routes: Routes = [
  
   { path:"product", component:ProductComponent , data: { active: "product" },  canActivate:[authGuard]},
   { path:"product/list", component:ProductListComponent , data: { active: "product" },  canActivate:[authGuard]},
-  { path:"product/detail/:id", component:ProductDetailComponent , data: { active: "product" },  canActivate:[authGuard]},
+  { path:"product/detail", component:ProductDetailComponent , data: { active: "product" },  canActivate:[authGuard]},
 
   { path:"modal/customer", component:CustomerModalComponent , data: { active: "customer" },  canActivate:[authGuard]},
  

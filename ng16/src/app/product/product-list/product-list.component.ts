@@ -50,7 +50,7 @@ export class ProductListComponent implements OnInit {
             let customer = self.activatedRoute.snapshot.queryParams['x_customer_id'] != null ? "x_customer_id="+self.activatedRoute.snapshot.queryParams['x_customer_id'] : "" ;
 
 
-            let url = full['qty_available'] > 0 ?  "#/product/detail/"+full['id']+"?"+customer :"javascript:;";
+            let url = full['qty_available'] > 0 ?  "#/product/detail?id="+full['id']+"&location_id="+full['location_id']:"javascript:;";
             let a = `
             <a href="${url}">
                 <div >${data}</div>
