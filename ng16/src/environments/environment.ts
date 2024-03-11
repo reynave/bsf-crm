@@ -1,5 +1,5 @@
 export const environment = {
-    version : "V1.31.2 prod",
+    version : "V1.33.1 prod",
     production: true, 
     api:"http://systemapk.bsfar.com:41021/",
     serialNumber : false,

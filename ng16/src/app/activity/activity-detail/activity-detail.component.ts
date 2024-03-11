@@ -118,30 +118,7 @@ export class ActivityDetailComponent implements OnInit {
     );
   }
 
-  checkOut() {
-    const body = {
-      id: this.id,
-      model: this.model,
-      geoData: this.geoData
-    }
-    console.log(body);
-    this.http.post<any>(this.api + this.configService.getAppCode()+'activities/checkOut', body, {
-      headers: this.configService.headers(),
-    }).subscribe(
-      data => {
-        console.log(data);
-        if (environment.cam === true) {
-          this.takePhoto();
-        }
-        this.httpGet();
-      },
-      e => {
-        console.log(e);
-        this.note = "Error Server!";
-      },
-    );
-  }
-
+ 
   getGeo() {
     if (environment.cam == true) { 
       let self = this;
@@ -187,6 +164,61 @@ export class ActivityDetailComponent implements OnInit {
   }
 
 
+
+  checkOut_DEL() {
+    const body = {
+      id: this.id,
+      model: this.model,
+      geoData: this.geoData
+    }
+    console.log(body);
+    this.http.post<any>(this.api + this.configService.getAppCode()+'activities/checkOut', body, {
+      headers: this.configService.headers(),
+    }).subscribe(
+      data => {
+        console.log(data);
+        if (environment.cam === true) {
+          this.takePhoto();
+        }
+        this.httpGet();
+      },
+      e => {
+        console.log(e);
+        this.note = "Error Server!";
+      },
+    );
+  }
+
+  checkOut() {
+    if (environment.cam === true) {
+      this.takePhoto();
+    }else{
+      this.httpCheckOut();
+    }
+  }
+
+  httpCheckOut(){
+    const body = {
+      id: this.id,
+      model: this.model,
+      geoData: this.geoData
+    }
+    console.log(body);
+    this.http.post<any>(this.api + this.configService.getAppCode()+'activities/checkOut', body, {
+      headers: this.configService.headers(),
+    }).subscribe(
+      data => {
+        console.log(data);
+        this.modalService.dismissAll();
+        this.httpGet();
+      },
+      e => {
+        console.log(e);
+        this.note = "Error Server!";
+      },
+    );
+  }
+
   images: string = "";
   initPhoto: boolean = false;
   takePhoto() {
@@ -201,12 +233,22 @@ export class ActivityDetailComponent implements OnInit {
     navigator.camera.getPicture(this.cameraSuccess, this.cameraError, options);
 
   }
+
+
+
   cameraSuccess = (imagesData: any) => {
     this.initPhoto = true;
     this.loading = false;
     this.ngZone.run(() => {
       this.images = 'data:image/png;base64,' + imagesData;
-      this.saveImages()
+      console.log(imagesData);
+      if(imagesData.length < 20){
+        alert("No photo");
+        console.log("belum ambil photo");
+      }else{
+        this.saveImages()
+      }
+     
     });
 
   }
@@ -234,8 +276,8 @@ export class ActivityDetailComponent implements OnInit {
         data => {
           console.log(data);
           this.loading = false;
-          this.modalService.dismissAll();
-          this.httpGet();
+         this.httpCheckOut();
+         
         },
         e => {
           console.log(e);
