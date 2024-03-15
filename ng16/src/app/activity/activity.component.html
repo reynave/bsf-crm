@@ -25,7 +25,8 @@
             </div>
             <div class="col-12" *ngIf="!loading">
 
-                <div class="card mb-3  border-{{x.x_activity_status == 'OPEN' ? 'success border-3' : '' }} border-{{x.x_activity_status == 'CHECKIN' ? 'info border-3' : '' }}" *ngFor="let x of items" >
+                <div class="card mb-3  border-{{x.x_activity_status == 'OPEN' ? 'success border-3' : '' }} border-{{x.x_activity_status == 'CHECKIN' ? 'info border-3' : '' }}" 
+                *ngFor="let x of items" >
                     <div class="card-body">
                          
                         <div class="row g-0" [routerLink]="[ '/activity/detail/',x.id ]"> 
@@ -45,6 +46,54 @@
                         </div>
                        
                         <div class="row mb-2" [routerLink]="[ '/activity/detail/',x.id ]">
+                            <div class="col">
+                                <div class="lh-sm">
+                                    <small>Schdule Date </small>
+                                </div> 
+                                <div class="lh-sm">
+                                    <label>{{x.x_schedule_date | date:'d MMM y'}}</label>
+                                </div> 
+                            </div>
+                            <div class="col">
+                                <div class="lh-sm">
+                                    <small>Created Date</small>
+                                </div> 
+                                <div class="lh-sm">
+                                    <label>{{x.create_date | date:'medium'}}</label>
+                                </div> 
+                            </div>
+                        </div>
+
+                        <!-- <div class="row" *ngIf="x.x_activity_status == 'OPEN' ">
+                            <div class="col-12 text-end">
+                                 <span (click)="fnRemove(x);" class="badge bg-danger "><i class="bi bi-trash3"></i> REMOVE </span>
+                            </div>
+                        </div> -->
+                        
+                    </div>
+                </div>
+
+
+
+                <div class="card mb-3 disabled  border-{{x.x_activity_status == 'OPEN' ? 'success border-3' : '' }} border-{{x.x_activity_status == 'CHECKIN' ? 'info border-3' : '' }}" 
+                *ngFor="let x of itemsLock" >
+                    <div class="card-body">
+                         
+                        <div class="row g-0"  > 
+                            <div class="col-9" >
+                                <strong>{{x.x_customer_name}}</strong> 
+                            </div>
+                            <div class="col-3 text-end"> 
+                                <small class="badge bg-{{x.x_activity_status != 'CLOSE'? 'secondary':'info'}} mx-1">{{x.x_activity_status}}</small> 
+                            </div>
+                           
+                        </div>
+                         
+                        <div class="lh-sm mb-2"  >
+                            <small>{{x.x_route_name}}</small>
+                        </div>
+                       
+                        <div class="row mb-2"  >
                             <div class="col">
                                 <div class="lh-sm">
                                     <small>Schdule Date </small>

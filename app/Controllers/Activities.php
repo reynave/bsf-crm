@@ -14,18 +14,41 @@ class Activities extends BaseController
             $where = " AND x_sales_activity_schedule_id = " . $this->request->getVar()['id'];
         }
 
-        // $q2 = "SELECT 
-        // x_route_name,  x_schedule_date, x_activity_status,  x_salesperson_id, 
-        // id, create_date, x_customer_name, x_is_visited, x_is_unscheduled
-        // FROM x_sales_activity  
-        // WHERE TRUE   $where 
-        // order by id DESC ";
-
+       
         $q = "SELECT   x_route_name,  x_schedule_date, x_activity_status,  x_salesperson_id, 
         id, create_date, x_customer_name, x_is_visited, x_is_unscheduled, x_salesperson
         FROM x_sales_activity  
         WHERE x_salesperson_id = '" . model('Core')->header()['account']['id'] . "'   $where 
         order by id DESC ";
+
+        $totalCheckin = false;
+
+        $q1 = "SELECT  id
+        FROM x_sales_activity  
+        WHERE x_activity_status = 'CHECKIN' AND x_salesperson_id = '" . model('Core')->header()['account']['id'] . "'   $where 
+        order by id DESC limit 10 ";
+     
+
+        if(count($this->db->query($q1)->getResultArray()) > 0){
+            $totalCheckin = true;
+        }
+       // $totalCheckin = 0;
+
+       if( $totalCheckin == true){
+        $q = "SELECT   x_route_name,  x_schedule_date, x_activity_status,  x_salesperson_id, 
+        id, create_date, x_customer_name, x_is_visited, x_is_unscheduled, x_salesperson
+        FROM x_sales_activity  
+        WHERE x_salesperson_id = '" . model('Core')->header()['account']['id'] . "'   $where  AND  x_activity_status = 'CHECKIN'
+        order by id DESC ";
+       }
+
+
+       $q0 = "SELECT   x_route_name,  x_schedule_date, x_activity_status,  x_salesperson_id, 
+       id, create_date, x_customer_name, x_is_visited, x_is_unscheduled, x_salesperson
+       FROM x_sales_activity  
+       WHERE x_salesperson_id = '" . model('Core')->header()['account']['id'] . "'   $where  AND x_activity_status != 'CHECKIN' 
+       order by id DESC ";
+
 
         // x_salesperson_id = '" . model('Core')->header()['account']['id'] . "'
         $query = $this->db->query($q);
@@ -33,8 +56,11 @@ class Activities extends BaseController
         $data = [
             "q" => $q,
             "error" => false,
-            "items" => $results,
+            "items" =>  $this->db->query($q)->getResultArray(),
+            "itemsLock" => $this->db->query($q0)->getResultArray(),
+            
             "get" => $this->request->getVar(),
+            "stillCheckIn" =>  $totalCheckin,
             //  "header" => model('Core')->header(),
         ];
         return $this->response->setJSON($data);

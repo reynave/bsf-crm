@@ -14,6 +14,7 @@ export class ActivityComponent implements OnInit {
   api: string = environment.api;
   note: string = "";
   items: any = [];
+  itemsLock : any = [];
   id: string = "";
   constructor(
     private http: HttpClient,
@@ -40,6 +41,7 @@ export class ActivityComponent implements OnInit {
       data => {
         this.loading = false;
         this.items = data['items'];
+        this.itemsLock = data['itemsLock'];
         console.log(data);
       },
       e => {
