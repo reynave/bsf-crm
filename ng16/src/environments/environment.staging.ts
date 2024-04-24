@@ -1,5 +1,5 @@
 export const environment = {
-    version : "V1.35.1 Staging",
+    version: require('../../package.json').version+ '-staging',
     production: false, 
     api:"http://systemapk.bsfar.com:41021/",
     serialNumber : false,
