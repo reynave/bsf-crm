@@ -5,19 +5,19 @@ namespace App\Controllers;
 class Attendance extends BaseController
 {
     function index()
-    { 
+    {
 
         // $q = "SELECT  *
-        // FROM x_attendance  
+        // FROM x_attendance
         // WHERE x_employee_id = '" . model('Core')->header()['account']['id'] . "'  order by id DESC limit 300 ";
 
         $q = "SELECT  *
-        FROM x_attendance  
+        FROM x_attendance
         order by id DESC limit 300 ";
-   
-        $data = [ 
+
+        $data = [
             "error" => false,
-            "items" => $this->db->query($q)->getResultArray(), 
+            "items" => $this->db->query($q)->getResultArray(),
         ];
 
         return $this->response->setJSON($data);
@@ -32,18 +32,18 @@ class Attendance extends BaseController
             "error" => true,
             "post" => $post,
         ];
-        if ($post) { 
+        if ($post) {
             $x_employee_id = model('Core')->header()['account']['id'];
-            $today = date("Y-m-d");
-            $x_clock_in = model("Core")->select("x_clock_in","x_attendance","x_employee_id = '$x_employee_id' and x_date = '$today' ");
+          //  $today = $this->db->query("SELECT CURRENT_DATE")->getRowArray();
+            $x_clock_in = model("Core")->select("x_clock_in","x_attendance","x_employee_id = '$x_employee_id' and x_date = CURRENT_DATE ");
             if(!$x_clock_in){
-                $this->db->table("x_attendance")->insert([ 
-                    "create_date" => date("Y-m-d H:i:s") . ".0000", 
-                    "write_date" => date("Y-m-d H:i:s") . ".0000",
-                    "x_clock_in" =>  date("Y-m-d H:i:s"),
-    
-                    "x_employee_id" =>  $x_employee_id, 
-                    "x_date" => date("Y-m-d"), 
+                $this->db->table("x_attendance")->insert([
+                    "create_date" => $this->db->query("SELECT NOW()")->getRowArray(),
+                    "write_date" => $this->db->query("SELECT NOW()")->getRowArray(),
+                    "x_clock_in" => $this->db->query("SELECT NOW()")->getRowArray(),
+
+                    "x_employee_id" =>  $x_employee_id,
+                    "x_date" => $this->db->query("SELECT CURRENT_DATE")->getRowArray(),
                 ]);
                 $data = [
                     "error" => false,
@@ -57,13 +57,13 @@ class Attendance extends BaseController
                     "duplicate" => true
                 ];
             }
-           
-           
+
+
         }
         return $this->response->setJSON($data);
     }
 
-   
+
     function clockOut()
     {
         $json = file_get_contents('php://input');
@@ -72,78 +72,92 @@ class Attendance extends BaseController
             "error" => true,
             "post" => $post,
         ];
-        if ($post) { 
+        if ($post) {
             $x_employee_id = model('Core')->header()['account']['id'];
-            $today = date("Y-m-d");
-            $x_clock_in = model("Core")->select("x_clock_in","x_attendance","x_employee_id = '$x_employee_id' and x_date = '$today' ");
-            $x_clock_out = model("Core")->select("x_clock_out","x_attendance","x_employee_id = '$x_employee_id' and x_date = '$today' ");
-            
+            $x_clock_in = model("Core")->select("x_clock_in","x_attendance","x_employee_id = '$x_employee_id' and x_date = CURRENT_DATE ");
+            $x_clock_out = model("Core")->select("x_clock_out","x_attendance","x_employee_id = '$x_employee_id' and x_date = CURRENT_DATE ");
+
             if($x_clock_in &&  !$x_clock_out ){
 
-                $this->db->table("x_attendance")->update([  
-                    "write_date" => date("Y-m-d H:i:s") . ".0000",
-                    "x_clock_out" =>  date("Y-m-d H:i:s"),
+                $this->db->table("x_attendance")->update([
+                    "write_date" => $this->db->query("SELECT NOW()")->getRowArray(),
+                    "x_clock_out" => $this->db->query("SELECT NOW()")->getRowArray(),
 
-                ]," x_employee_id = '$x_employee_id' and x_date = '$today' ");
+                ]," x_employee_id = '$x_employee_id' and x_date = CURRENT_DATE ");
 
                 $data = [
                     "error" => false,
-                    "post" => $post, 
+                    "post" => $post,
                 ];
-            } 
-           
-           
+            }
+
+
         }
         return $this->response->setJSON($data);
     }
 
     function today(){
-        $date = date("Y-m-d");
+
         $q = "SELECT  *
-        FROM x_attendance  
-        WHERE x_employee_id = '" . model('Core')->header()['account']['id'] . "'  
-        and x_date = '$date' ";
- 
-        $data = [ 
+        FROM x_attendance
+        WHERE x_employee_id = '" . model('Core')->header()['account']['id'] . "'
+        and x_date = CURRENT_DATE ";
+
+        $item = isset($this->db->query($q)->getResultArray()[0]) ?  $this->db->query($q)->getResultArray()[0] : [];
+        $origin = isset($this->db->query($q)->getResultArray()[0]) ?  $this->db->query($q)->getResultArray()[0] : [];
+
+        if(isset($this->db->query($q)->getResultArray()[0]) ){
+            $item['x_clock_in'] =  $item['x_clock_in']!= "" ?  date('Y-m-d H:i:s', strtotime($item['x_clock_in'] . ' +7 hours')) : '';
+            $item['x_clock_out'] =  $item['x_clock_out']!= "" ?  date('Y-m-d H:i:s', strtotime($item['x_clock_out'] . ' +7 hours'))  : '';
+
+        }
+        $datetime = '2024-04-25 04:32:23.334131'; 
+      //  $newDatetime = date('Y-m-d H:i:s', strtotime($item[0]['x_clock_in'] . ' +7 hours'));
+
+
+        $data = [
             "error" => false,
-            "items" => isset($this->db->query($q)->getResultArray()[0]) ?  $this->db->query($q)->getResultArray()[0] : [], 
+            "items" => isset($this->db->query($q)->getResultArray()[0]) ?  $item : [],
+            "origin" => isset($this->db->query($q)->getResultArray()[0]) ?  $origin : [],
+            
+           // "newDatetime" => $item['x_clock_in'] ,
         ];
 
         return $this->response->setJSON($data);
     }
- 
-    function historyAll(){ 
+
+    function historyAll(){
         $q = "SELECT *
-        FROM x_attendance  
+        FROM x_attendance
         limit 100 ";
- 
-        $data = [ 
+
+        $data = [
             "error" => false,
-            "items" =>   $this->db->query($q)->getResultArray(), 
+            "items" =>   $this->db->query($q)->getResultArray(),
         ];
 
-        return $this->response->setJSON($data); 
+        return $this->response->setJSON($data);
 
     }
 
-    function history(){ 
+    function history(){
         $q = "SELECT *
-        FROM x_attendance  
+        FROM x_attendance
         WHERE x_employee_id = '" . model('Core')->header()['account']['id'] . "' limit 100 ";
- 
-        $data = [ 
+
+        $data = [
             "error" => false,
-            "items" =>   $this->db->query($q)->getResultArray(), 
+            "items" =>   $this->db->query($q)->getResultArray(),
         ];
 
-        return $this->response->setJSON($data); 
+        return $this->response->setJSON($data);
 
     }
     // function delete(){
-    //     $today = date("Y-m-d");
-    //     $this->db->table("x_attendance")->delete("  x_date = '$today' ");
- 
+
+    //     $this->db->table("x_attendance")->delete("  x_date <= CURRENT_DATE ");
+
     //     echo "done delete today";
- 
+
     // }
 }

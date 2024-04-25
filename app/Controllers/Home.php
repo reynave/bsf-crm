@@ -8,7 +8,11 @@ class Home extends BaseController
     {
         $data = [
             "error" => false,
-            "datetime" => date("Y-m-d H:i:s")
+            "datetime" => date("Y-m-d H:i:s"),
+            "posgreSQL" => $this->db->query("SELECT NOW()")->getRowArray(),
+            "CURDATE" => $this->db->query("SELECT CURRENT_DATE")->getRowArray(),
+            
+            
         ];
         return $this->response->setJSON($data);
     }
