@@ -42,18 +42,23 @@ class Product extends BaseController
                 $locationId = (int) model("Core")->select("x_location_id", "x_mobile_users", "x_employee_id =  $accountId ");
             }
 
+            // $q = "SELECT  p.id, p.id as product_id,  s.x_product_name  as name,  
+            // s.x_sales_price as list_price, p.default_code,  
+            // s.quantity,
+            // s.reserved_quantity, s.location_id,
+            // coalesce(s.quantity - s.reserved_quantity,0 ) AS qty_Available 
+            // FROM product_product AS p
+            // LEFT JOIN stock_quant AS s ON s.product_id = p.id
+            // WHERE p.active = 't' AND  s.location_id =  $locationId AND      ";
+
             $q = "SELECT  p.id, p.id as product_id,  s.x_product_name  as name,  
             s.x_sales_price as list_price, p.default_code,  
             s.quantity,
             s.reserved_quantity, s.location_id,
-            coalesce(s.quantity - s.reserved_quantity,0 ) AS qty_Available
-            
-            -- , '---table_product_product---' as t1  ,p.*, 
-            -- '---table_stock_quant---' as t2 , s.*
-            
+            coalesce(s.quantity - s.reserved_quantity,0 ) AS qty_Available 
             FROM product_product AS p
             LEFT JOIN stock_quant AS s ON s.product_id = p.id
-            WHERE p.active = 't' AND  s.location_id =  $locationId AND      ";
+            WHERE  p.active = 't' AND  s.location_id =  $locationId AND      ";
 
             // $q1 = "SELECT p.id, s.product_id, p.name, p.list_price, p.default_code, 
             // s.quantity,s.reserved_quantity,
@@ -67,13 +72,14 @@ class Product extends BaseController
             $total = 0;
             // $total = $this->db->query("SELECT count(p.id) FROM product_product  as p WHERE  $where ");
             // $total = (int) $total->getResultArray()[0]['count']; 
-            $x_mobile_user = $this->db->query("select id, x_employee_id, x_location_id, x_user_id  from x_mobile_users  ")->getResultArray();
+            //$x_mobile_user = $this->db->query("select id, x_employee_id, x_location_id, x_user_id  from x_mobile_users  ")->getResultArray();
 
             $data = [
                 "error" => false,
+                // "q" => str_replace(["\n","\r"],"",$q. $where ), 
                 "post" => $post,
                 "locationId" => $locationId,
-                "x_mobile_user" => $x_mobile_user,
+               // "x_mobile_user" => $x_mobile_user,
                 "total" => $total,
                 "datetime" => date("Y-m-d H:i:s"),
                 "data" => $items,
