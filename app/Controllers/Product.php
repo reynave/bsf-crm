@@ -37,7 +37,7 @@ class Product extends BaseController
 
             $where = "   s.x_product_name LIKE '%" . strtoupper($search) . "%'";
             $locationId = 0;
-            if ($post['accountId']) {
+            if (isset($post['accountId'])) {
                 $accountId = $post['accountId'];
                 $locationId = (int) model("Core")->select("x_location_id", "x_mobile_users", "x_employee_id =  $accountId ");
             }
@@ -58,18 +58,44 @@ class Product extends BaseController
             coalesce(s.quantity - s.reserved_quantity,0 ) AS qty_Available 
             FROM product_product AS p
             LEFT JOIN stock_quant AS s ON s.product_id = p.id
-            WHERE  p.active = 't' AND  s.location_id =  $locationId AND      ";
+            WHERE  p.active = 't' AND     ";
+            // s.location_id =  $locationId AND   
 
-            // $q1 = "SELECT p.id, s.product_id, p.name, p.list_price, p.default_code, 
-            // s.quantity,s.reserved_quantity,
-            // coalesce(s.quantity - s.reserved_quantity,0 ) as qty_Available
-            // FROM product_template AS p
-            // LEFT JOIN stock_quant AS s ON  s.product_id = p.id 
-            // WHERE true AND ";
+            $q2 = "SELECT  p.id, p.id as product_id,  s.x_product_name  as name,  
+            s.x_sales_price as list_price, p.default_code,  
+            sum(s.quantity) as 'quantity',
+            sum(s.reserved_quantity) as 'reserved_quantity',  
+            sum(coalesce(s.quantity - s.reserved_quantity,0 )) AS qty_Available 
+            FROM product_product AS p
+            LEFT JOIN stock_quant AS s ON s.product_id = p.id
+            GROUP BY  p.default_code, p.id 
+            WHERE  p.active = 't' AND     ";
+
+
             $query = $this->db->query(" $q  $where  ");
 
             $items = $query->getResultArray();
             $total = 0;
+
+            $newData = [];
+            // Iterasi melalui array awal
+            foreach ($items as $item) {
+                $defaultCode = $item['default_code'];
+
+                // Jika default_code sudah ada dalam array hasil
+                if (isset($newData[$defaultCode])) {
+                    // Tambahkan quantity ke nilai yang ada
+                    $newData[$defaultCode]['quantity'] += $item['quantity'];
+                } else {
+                    // Jika default_code belum ada dalam array hasil
+                    $newData[$defaultCode] = $item;
+                }
+            }
+            $newItems2 = [];
+            foreach ($newData as $item) {
+                $newItems2[] = $item; 
+            }
+
             // $total = $this->db->query("SELECT count(p.id) FROM product_product  as p WHERE  $where ");
             // $total = (int) $total->getResultArray()[0]['count']; 
             //$x_mobile_user = $this->db->query("select id, x_employee_id, x_location_id, x_user_id  from x_mobile_users  ")->getResultArray();
@@ -79,10 +105,13 @@ class Product extends BaseController
                 // "q" => str_replace(["\n","\r"],"",$q. $where ), 
                 "post" => $post,
                 "locationId" => $locationId,
-               // "x_mobile_user" => $x_mobile_user,
+                // "x_mobile_user" => $x_mobile_user,
                 "total" => $total,
                 "datetime" => date("Y-m-d H:i:s"),
-                "data" => $items,
+
+                "allData" => $items,
+                "data" => $newItems2,
+                
 
             ];
         }
