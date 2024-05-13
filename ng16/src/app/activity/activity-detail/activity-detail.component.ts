@@ -49,7 +49,8 @@ export class ActivityDetailComponent implements OnInit {
     this.id = this.activeRoute.snapshot.params['id'];
     this.httpGet();
   }
-
+  ar : any = [];
+  totalAR : number = 0;
   httpGet() {
     this.modalService.dismissAll();
     this.loading = true;
@@ -60,6 +61,8 @@ export class ActivityDetailComponent implements OnInit {
         this.loading = false;
         console.log(data);
         this.item = data['item'];
+        this.ar = data['ar'];
+        this.totalAR = data['totalAR'];
         this.model.x_activity_type_id = data['item']['x_activity_type_id'];
         this.model.x_note = data['item']['x_note'];
         this.model.x_summary = data['item']['x_summary'];

@@ -99,12 +99,25 @@ class Activities extends BaseController
         $results['x_photo_url_check_in'] = $results['x_photo_url_check_in'] != "" ? base_url() . $results['x_photo_url_check_in'] : "";
         $results['x_photo_url_check_out'] = $results['x_photo_url_check_out'] != "" ? base_url() . $results['x_photo_url_check_out'] : "";
 
+        $query = $this->db->query("SELECT  partner_id, name, amount_residual_signed, invoice_payment_state, invoice_date, type , amount_total
+        FROM account_move   
+        WHERE partner_id = '" . $results['x_customer_id'] . "' and invoice_payment_state = 'not_paid' AND type = 'out_invoice'  ");
+        $ar = $query->getResultArray();
+        $totalAR = 0;
+        foreach($ar as $row){
+            $totalAR += $row['amount_total'];
+        }
+
         $data = [
             "error" => false,
             "item" => $results,
+            "ar"=> $ar,
+            "totalAR" => $totalAR,
         ];
         return $this->response->setJSON($data);
     }
+
+
     function selectActivitySchedule($id = "")
     {
         if ($id == '')

@@ -51,7 +51,7 @@ export class ProductListComponent implements OnInit {
 
 
             //    let url = full['qty_available'] > 0 ?  "#/product/detail?id="+full['id']+"&location_id="+full['location_id']:"javascript:;";
-            let url = "#/product/detail?id=" + full['id'] + "&location_id=" + full['location_id'];
+            let url = "#/product/detail?id=" + full['id'] + "&location_id=" + full['location_id']+'&'+customer;
 
             let a = `
             <a href="${url}">

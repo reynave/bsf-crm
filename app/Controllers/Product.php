@@ -37,10 +37,10 @@ class Product extends BaseController
 
             $where = "   s.x_product_name LIKE '%" . strtoupper($search) . "%'";
             $locationId = 0;
-            if (isset($post['accountId'])) {
-                $accountId = $post['accountId'];
-                $locationId = (int) model("Core")->select("x_location_id", "x_mobile_users", "x_employee_id =  $accountId ");
-            }
+            // if (isset($post['accountId'])) {
+            //     $accountId = $post['accountId'];
+            //     $locationId = (int) model("Core")->select("x_location_id", "x_mobile_users", "x_employee_id =  $accountId ");
+            // }
 
             // $q = "SELECT  p.id, p.id as product_id,  s.x_product_name  as name,  
             // s.x_sales_price as list_price, p.default_code,  
