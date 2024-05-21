@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfigService } from 'src/app/service/config.service';
+import { FuncService } from '../service/func.services';
 
 @Component({
   selector: 'app-activity',
@@ -16,21 +17,25 @@ export class ActivityComponent implements OnInit {
   items: any = [];
   itemsLock : any = [];
   id: string = "";
+  today : string = '';  expired : boolean = false;
   constructor(
     private http: HttpClient,
     private router: Router,
     private configService: ConfigService,
     private activeRouter: ActivatedRoute,
+    public funcService : FuncService,
   ) { }
 
   ngOnInit() {
-
+    this.today = this.funcService.formatDate();
     this.id = this.activeRouter.snapshot.queryParams['id'];
     this.httpGet();
   }
+
   back() {
     history.back();
   }
+
   httpGet() {
     this.loading = true;
     console.log(this.activeRouter.snapshot.queryParams);
@@ -112,6 +117,15 @@ export class ActivityComponent implements OnInit {
           this.note = "Error Server!";
         },
       );
+    }
+  }
+
+  fnCheckExp(date : string){
+    if( Date.parse(this.today) > Date.parse(date) ){
+         
+      return true;
+    }else{
+      return false;
     }
   }
 }

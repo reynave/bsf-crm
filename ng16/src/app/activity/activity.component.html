@@ -34,12 +34,17 @@
                                 <strong>{{x.x_customer_name}}</strong> 
                             </div>
                             <div class="col-3 text-end"> 
-                                <small class="badge bg-{{x.x_activity_status != 'CLOSE'? 'secondary':'info'}} mx-1">{{x.x_activity_status}}</small>
-                                    <!-- <small *ngIf="x.x_is_visited != 'f' " class="badge bg-secondary mx-1">{{x.x_activity_status}}</small> 
-                                    <small *ngIf="x.x_is_visited == 'f' " class="badge bg-danger mx-1">Not Visit</small>  -->
+                                <small *ngIf="!fnCheckExp(x.x_schedule_date)" class="badge bg-{{x.x_activity_status != 'CLOSE'? 'secondary':'info'}} mx-1">{{x.x_activity_status}}</small> 
+                            
+                                <small *ngIf="fnCheckExp(x.x_schedule_date)" class="badge bg-light mx-1">Expired</small> 
+                           
                             </div>
                            
                         </div>
+
+                        <!-- <div class="row">
+                            {{x.x_schedule_date}} {{today}}
+                        </div> -->
                          
                         <div class="lh-sm mb-2" [routerLink]="[ '/activity/detail/',x.id ]">
                             <small>{{x.x_route_name}}</small>

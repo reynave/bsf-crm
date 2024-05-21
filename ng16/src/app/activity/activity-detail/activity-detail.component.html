@@ -45,26 +45,10 @@
 
                     <div class="mb-2">
                         <label> AR Info</label>
-                       <div>
-                        <strong>Total AR : {{totalAR | number}} </strong>
-                       </div>
-                        <table class="table table-sm ">
-                            <thead>
-                                <tr>
-                                    <th>Invoice No</th>
-                                    <th>Due Date</th>
-                                    <th>Amount Due</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let x of ar">
-                                    <td> {{x.name}}</td>
-                                    <td> {{x.invoice_date | date}}</td>
-                                    <td class="text-end"> {{x.amount_total | number}}</td>
-                                </tr>
-                            </tbody>
+                        <div>
+                            <strong>Total AR : {{totalAR | number}} </strong>
+                        </div>
 
-                        </table>
                     </div>
                 </div>
 
@@ -74,6 +58,28 @@
     </div>
 
 </div>
+<div class="bg-white" *ngIf="totalAR > 0">
+    <table class="table table-sm ">
+        <thead>
+            <tr>
+                <th>Invoice No</th>
+                <th>Due Date</th>
+                <th> Amount </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let x of ar">
+                <td> {{x.name}}</td>
+                <td> {{x.invoice_date | date}}</td>
+                <td class="text-end">
+                    {{x.amount_total | number}}
+                </td>
+            </tr>
+        </tbody>
+
+    </table>
+</div>
+
 <!--  
 <div class="container-fluid">
     <div class="row">
@@ -204,18 +210,24 @@
 
     </div>
 </div> -->
-
-<footer class="bg-white border-top shadow-sm" *ngIf="item.x_activity_status  != 'CLOSE'">
+ 
+ 
+<footer class="bg-white border-top shadow-sm" *ngIf="item.x_activity_status  != 'CLOSE' ">
     <div class="container" *ngIf="item.x_is_visited != 'f'">
         <div class="row">
             <div class="col-12">
-                <div class="d-grid py-2">
+                <div class="d-grid py-2" *ngIf="expired == false">
 
                     <button class="btn btn-success rounded-pill" (click)="openFullscreen(contentCheckIn)"
                         *ngIf="item.x_activity_status  == 'OPEN'">Check In</button>
 
                     <button class="btn btn-info rounded-pill" (click)="openFullscreen(contentCheckOut)"
                         *ngIf="item.x_activity_status  == 'CHECKIN'">Check Out</button>
+
+                </div>
+                <div class="d-grid py-2" *ngIf="expired == true"> 
+
+                    <button class="btn btn-light rounded-pill" disabled >Expired</button>
 
                 </div>
 

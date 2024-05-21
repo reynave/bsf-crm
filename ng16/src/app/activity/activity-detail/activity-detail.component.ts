@@ -5,7 +5,8 @@ import { environment } from 'src/environments/environment';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfigService } from 'src/app/service/config.service';
 import { NgZone } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';  
+import { FuncService } from 'src/app/service/func.services';
 
 declare let navigator: any;
 declare let Camera: any;
@@ -31,6 +32,9 @@ export class ActivityDetailComponent implements OnInit {
   loading: boolean = false;
   api: string = environment.api;
   note: string = "";
+  today : string = '';;  expired : boolean = false;
+  ar : any = [];
+  totalAR : number = 0;
   model: any = new Model("", "", "", "", "");
   id: string = "";
   item: any = [];
@@ -42,15 +46,18 @@ export class ActivityDetailComponent implements OnInit {
     private activeRoute: ActivatedRoute,
     private configService: ConfigService,
     private ngZone: NgZone,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    public funcService : FuncService,
   ) { }
 
   ngOnInit(): void {
     this.id = this.activeRoute.snapshot.params['id'];
+    this.today = this.funcService.formatDate();
     this.httpGet();
+   
+
   }
-  ar : any = [];
-  totalAR : number = 0;
+
   httpGet() {
     this.modalService.dismissAll();
     this.loading = true;
@@ -66,6 +73,14 @@ export class ActivityDetailComponent implements OnInit {
         this.model.x_activity_type_id = data['item']['x_activity_type_id'];
         this.model.x_note = data['item']['x_note'];
         this.model.x_summary = data['item']['x_summary'];
+
+        console.log(this.today, this.item['x_schedule_date']);
+        if( Date.parse(this.today) > Date.parse(this.item['x_schedule_date']) ){
+         
+          this.expired = true;
+        }
+
+       // console.log('Epoch ',Date.parse(this.today) , Date.parse(this.item['x_schedule_date']))
       },
       e => {
         console.log(e);
@@ -73,7 +88,7 @@ export class ActivityDetailComponent implements OnInit {
       },
     );
   }
-
+ 
   remove() {
     const body = {
       id: this.id,
