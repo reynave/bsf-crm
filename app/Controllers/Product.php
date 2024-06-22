@@ -144,12 +144,22 @@ class Product extends BaseController
         $query = $this->db->query($q);
         $item = $query->getResultArray();
 
+        $accountId = model("Core")->accountId();   
+        $q2 = 'SELECT  p.id , p.x_customer, p.x_salesperson_id, p.x_is_magic_order,
+            sum(l.x_qty) as "qty", sum(l.x_qty * l.x_subtotal) as "totalAmount"
+            FROM x_customer_po  as p
+            left join x_customer_po_line as l on p.id = l.x_customer_po_line_id
+            where p.x_salesperson_id = ' . $accountId . '  and x_submit = 0
+            group by p.id ';
+        $x_customer_po = $this->db->query($q2)->getResultArray();
+
 
         $data = [
             "error" => false,
             "datetime" => date("Y-m-d H:i:s"),
             "item" => $item[0],
             "items" => $item,
+            "x_customer_po" => $x_customer_po,
             //"qty" => (int) $item[0]['qty_available'] < 0 ? 0 : $item[0]['qty_available'],
             "qty" => (int) $item[0]['qty_available'],
         ];

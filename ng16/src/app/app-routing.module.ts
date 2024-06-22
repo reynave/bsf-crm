@@ -23,6 +23,8 @@ import { CustomerDetailComponent } from './customer/customer-detail/customer-det
 import { SqlQueryComponent } from './sql-query/sql-query.component';
 import { CustomerInsertComponent } from './customer/customer-insert/customer-insert.component';
 import { OrderDetailComponent } from './order/order-detail/order-detail.component';
+import { CartsComponent } from './carts/carts.component';
+import { CartsDetailComponent } from './carts/carts-detail/carts-detail.component';
 
 const routes: Routes = [
   { path:"", component:HomeComponent, data: { active: "home" },  canActivate:[authGuard] },
@@ -50,7 +52,13 @@ const routes: Routes = [
   { path:"customer/detail/:id", component:CustomerDetailComponent , data: { active: "customer" },  canActivate:[authGuard]},
   { path:"customer/insert", component:CustomerInsertComponent , data: { active: "customer" },  canActivate:[authGuard]},
 
-  { path:"cart", component:CartComponent , data: { active: "cart" },  canActivate:[authGuard]},
+  { path:"carts", component:CartsComponent , data: { active: "cart" },  canActivate:[authGuard]},
+  { path:"cart", component:CartsComponent , data: { active: "cart" },  canActivate:[authGuard]},
+  
+  { path:"carts/detail", component:CartsDetailComponent , data: { active: "cart" },  canActivate:[authGuard]},
+ 
+  //{ path:"cart", component:CartComponent , data: { active: "cart" },  canActivate:[authGuard]},
+  
   { path:"order", component:OrderComponent , data: { active: "order" },  canActivate:[authGuard]},
   { path:"order/detail", component:OrderDetailComponent , data: { active: "order" },  canActivate:[authGuard]},
 

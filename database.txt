@@ -1,0 +1,6 @@
+database.default.hostname = 185.111.159.143
+database.default.database = BEE-DEV
+database.default.username = root
+database.default.password = 7x4pD1R*Jr6o
+database.default.DBDriver = Postgre 
+database.default.port = 5432

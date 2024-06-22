@@ -1,3 +1,7 @@
 .modal-footer{
     display: block !important;
 }
+
+option, select{
+    font-size: 1.2rem ;
+}

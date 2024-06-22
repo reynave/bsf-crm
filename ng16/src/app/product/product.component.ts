@@ -48,6 +48,7 @@ export class ProductComponent implements OnInit {
         search : this.search, 
         accountId : this.configService.accountId(),
         x_customer_id : this.activeRouter.snapshot.queryParams['x_customer_id'],
+        cardId : this.activeRouter.snapshot.queryParams['cardId'],
       }
       console.log(body);
       this.router.navigate(['product/list'],{queryParams:body});

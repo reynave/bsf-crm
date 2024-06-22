@@ -35,8 +35,10 @@ class Res_partner extends BaseController
 
         if ($status) {
             //AND  salesman   = '".model("Core")->accountId()."'
-            $where = " WHERE active = true AND customer_rank > 0  AND name like '%" . $name . "%'  
-            AND x_salesman = '" . model('Core')->header()['account']['id'] . "'";
+            // $where = " WHERE active = true AND customer_rank > 0  AND name like '%" . $name . "%'  
+            // AND x_salesman = '" . model('Core')->header()['account']['id'] . "'";
+             $where = " WHERE active = true AND customer_rank > 0  AND name like '%" . $name . "%'  ";
+            
 
             $q = "SELECT 
                 id, name,  street, x_latitude, x_longitude, x_salesman

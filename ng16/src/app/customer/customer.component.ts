@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfigService } from 'src/app/service/config.service';
+import { error } from 'jquery';
 
 @Component({
   selector: 'app-customer',
@@ -75,6 +76,23 @@ export class CustomerComponent implements OnInit {
   onSelectCustomer(x: any) {
     this.objCustomer = x;
     console.log(this.objCustomer);  
+    if(this.activeRoute.snapshot.queryParams['cardId']){
+      const body = {
+        id : this.activeRoute.snapshot.queryParams['cardId'],
+        item: x,
+      }
+      this.http.post<any>(this.api +this.configService.getAppCode()+"carts/updateCustomer",body,{
+        headers:this.configService.headers(),
+      }).subscribe(
+        data=>{
+          console.log(data);
+          history.back();
+        },
+        error=>{
+          console.log(error);
+        }
+      )
+    }
   }
 
   back() {

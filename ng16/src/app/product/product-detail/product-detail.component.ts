@@ -17,10 +17,11 @@ export class ProductDetailComponent implements OnInit {
   item : any = [];
   id : string = "";
   location_id : string = "";
-  
+  cardId : string = "";
   itemQty : number = 0;
   qty : number = 1;
   totalAmount : number = 0;
+  x_customer_po : any = [];
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -32,13 +33,13 @@ export class ProductDetailComponent implements OnInit {
   ngOnInit(): void {
     this.id = this.activeRoute.snapshot.queryParams['id'];
     this.location_id = this.activeRoute.snapshot.queryParams['location_id'];
-
+    this.cardId = this.activeRoute.snapshot.queryParams['cardId'];
     this.httpGet();
     this.cart();
   }
 
   httpGet(){   
-    this.http.get<any>(environment.api + this.configService.getAppCode()+'product/detail', {
+    this.http.get<any>(this.api +this.configService.getAppCode()+'product/detail', {
       headers : this.configService.headers(), 
       params : this.activeRoute.snapshot.queryParams,
     }).subscribe(
@@ -46,6 +47,7 @@ export class ProductDetailComponent implements OnInit {
         this.loading = false;
         this.item = data['item'];
         this.itemQty  = data['qty'];
+        this.x_customer_po = data['x_customer_po'];
         console.log(data); 
       },
       e => {

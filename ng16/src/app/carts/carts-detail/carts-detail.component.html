@@ -1,0 +1,111 @@
+<nav class="fixed-top py-2 bg-white shadow-sm">
+    <div class="container-fluid">
+        <div class="row g-1">
+            <div class="col-1 align-self-center  ">
+                <a class="navbar-brand" (click)="back()"><i class="bi bi-arrow-left"></i></a>
+            </div>
+            <div class="col-10 align-self-center text-center">
+                <b>ORDER ID : {{header.id}}</b>
+            </div>
+        </div>
+    </div>
+</nav>
+
+
+<main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+    <div class="container-fluid ">
+        <div class="row">
+
+            <div class="col-12 mb-3" *ngIf="loading">
+                <div class="text-center my-5">
+                    <img src="./assets/gif/loadingIntro.gif" width="80%">
+                </div>
+            </div>
+
+
+            <div class="col-12" *ngIf="!loading">
+                <div class="px-3 py-2 mb-3">
+                    <div class="row">
+                        <div class="col-8">
+                            <strong><small>Customer Name</small></strong>
+                            <a [routerLink]="[ '/customer' ]" [queryParams]="{cardId:header.id}">
+                                <div class="form-control form-control-sm border">
+                                    {{header.x_customer}} &nbsp;
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-4 text-end">
+                            <strong><small>Order ID</small></strong>
+                            <div>
+                                <h6>{{header.id}}</h6>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row g-1">
+                        <div class="col-6 align-self-center">
+                            <strong><small>Grand Total</small></strong>
+                            <h4 class="lh-1">
+                                Rp {{header.totalAmount | number}}
+                            </h4>
+                        </div>
+
+                        <div class="col-6 align-self-center text-end">
+                            <a class="btn btn-sm btn-danger"> <i class="bi bi-trash3"></i> Remove</a>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div><strong>Order detail</strong></div>
+                <div class="bg-white px-3 py-2 border  mb-3" *ngFor="let x of items">
+
+                    <div class="row">
+                        <div class="col-10">
+
+                            <strong><small>Product name</small></strong>
+                            <div>
+                                <h6>{{x.x_name}}</h6>
+                            </div>
+                        </div>
+                        <div class="col-2 text-end">
+                            <a (click)="fnDeleteDetail(x.id)"> <i class="bi bi-trash3"></i></a>
+                        </div>
+                    </div>
+                    <div class="row g-1">
+                        <div class="col-4 align-self-center">
+                            <strong><small>Grand Total</small></strong>
+                            <h4 class="lh-1">
+                                Rp {{x.x_unitprice | number}}
+                            </h4>
+                        </div>
+                        <div class="col-3 align-self-center text-center">
+                            <strong><small>QTY</small></strong>
+                            <div>
+                                <input type="number" class="form-control text-center" [(ngModel)]="x.x_qty"
+                                    (change)="updateQty(x)" name="x_qty">
+                            </div>
+                        </div>
+                        <div class="col-5 align-self-center text-end">
+                            <strong><small>Grand Total</small></strong>
+                            <h4 class="lh-1">
+                                Rp {{x.x_subtotal | number}}
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-grid mb-2">
+                     
+                    <a  class="btn btn-lg btn-primary" [routerLink]="[ '/product',  ]" [queryParams]="{cardId:header.id}">ADD ITEM</a>
+                </div>
+
+                <div class="d-grid mb-2">
+                     
+                    <a  class="btn btn-lg btn-success"  (click)="onCloseCart()">CLOSE CARD</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</main>
