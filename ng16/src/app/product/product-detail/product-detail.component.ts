@@ -35,7 +35,7 @@ export class ProductDetailComponent implements OnInit {
     this.location_id = this.activeRoute.snapshot.queryParams['location_id'];
     this.cardId = this.activeRoute.snapshot.queryParams['cardId'];
     this.httpGet();
-    this.cart();
+    
   }
 
   httpGet(){   
@@ -62,6 +62,8 @@ export class ProductDetailComponent implements OnInit {
       id: this.id,
       item : this.item,
       qty : this.qty,
+      cardId : this.activeRoute.snapshot.queryParams['cardId'],
+      
       account : this.configService.account()['account'],
       x_customer_id : this.activeRoute.snapshot.queryParams['x_customer_id'] ? this.activeRoute.snapshot.queryParams['x_customer_id'] : '',
     }
@@ -72,8 +74,7 @@ export class ProductDetailComponent implements OnInit {
       data => {
         this.loading = false; 
         console.log(data); 
-        this.modalService.dismissAll();
-        this.cart(); 
+        this.modalService.dismissAll(); 
       },
       e => {
         console.log(e);
@@ -82,21 +83,7 @@ export class ProductDetailComponent implements OnInit {
     );
   }
 
-  cart(){  
-    this.loading = true;  
-    this.http.get<any>(this.api + this.configService.getAppCode()+'cart', {
-      headers : this.configService.headers(),
-    }).subscribe(
-      data => { 
-        console.log(data);  
-        this.totalAmount = data['total'];
-      },
-      e => {
-        console.log(e);
-        this.note = "Error Server!";
-      },
-    );
-  }
+   
 
   back(){
     history.back();

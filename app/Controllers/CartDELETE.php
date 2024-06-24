@@ -6,15 +6,7 @@ class Cart extends BaseController
 {
     function index()
     {
-     
-
-        $this->db->table("x_customer_po")->delete([
-            "x_salesperson_id" => null,
-        ]); 
-       
-        $this->db->table("x_customer_po_line")->delete([
-            "x_customer_po_line_id" => null,
-        ]); 
+      
        
         $data = [
             "error" => false, 
