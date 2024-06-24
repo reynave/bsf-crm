@@ -100,5 +100,24 @@ export class CartsComponent implements OnInit{
     );
   }
 
+  newOrder(){
+    const body = {  
+      status : true
+    }
+    this.http.post<any>(this.api +this.configService.getAppCode()+ 'carts/newOrder', body, {
+      headers : this.configService.headers(),
+    }).subscribe(
+      data => {
+        console.log(data);
+        this.loading = false;  
+        this.httpGet();
+      },
+      e => {
+        console.log(e);
+        this.note = "Error Server!";
+      },
+    );
+  }
+
    
 }

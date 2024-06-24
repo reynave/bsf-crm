@@ -122,6 +122,28 @@ export class CartsDetailComponent implements   OnInit{
     }
   }
 
+  remove(){
+    if(confirm("Remove this item ?")){
+      const body = { 
+        item : {
+          id : this.activeRoute.snapshot.queryParams['id'],
+        }
+      }
+      this.loading = true;  
+      this.http.post<any>(this.api + this.configService.getAppCode()+'carts/removeCart', body, {
+        headers : this.configService.headers(),
+      }).subscribe(
+        data => {
+          this.loading = false;  
+          history.back(); 
+        },
+        e => {
+          console.log(e);
+          this.note = "Error Server!";
+        },
+      );
+    }
+  }
   onCloseCart(){
     const body = {  
       id : this.activeRoute.snapshot.queryParams['id']

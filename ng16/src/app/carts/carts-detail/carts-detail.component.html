@@ -51,7 +51,7 @@
                         </div>
 
                         <div class="col-6 align-self-center text-end">
-                            <a class="btn btn-sm btn-danger"> <i class="bi bi-trash3"></i> Remove</a>
+                            <a class="btn btn-sm btn-danger" (click)="remove();"> <i class="bi bi-trash3"></i> Remove</a>
                         </div>
                     </div>
                 </div>
@@ -95,8 +95,7 @@
                     </div>
                 </div>
 
-                <div class="d-grid mb-2">
-                     
+                <div class="d-grid mb-2"> 
                     <a  class="btn btn-lg btn-primary" [routerLink]="[ '/product',  ]" [queryParams]="{cardId:header.id}">ADD ITEM</a>
                 </div>
 

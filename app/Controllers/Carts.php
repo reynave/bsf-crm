@@ -176,4 +176,29 @@ class Carts extends BaseController
         }
         return $this->response->setJSON($data);
     }
+
+    
+    function newOrder()
+    {
+        $json = file_get_contents('php://input');
+        $post = json_decode($json, true);
+        $data = [
+            "error" => true,
+            "post" => $post,
+        ];
+        if ($post) {
+            $accountId = model("Core")->accountId(); 
+            
+            $this->db->table("x_customer_po")->insert([
+                "x_submit" => 0, 
+                "x_salesperson_id" => $accountId
+            ]);
+
+            $data = [
+                "error" => false,
+                "post" => $post,
+            ];
+        }
+        return $this->response->setJSON($data);
+    }
 }
