@@ -34,27 +34,38 @@ class Res_partner extends BaseController
         }
 
         if ($status) {
+            $accountId = model("Core")->accountId(); 
             //AND  salesman   = '".model("Core")->accountId()."'
             // $where = " WHERE active = true AND customer_rank > 0  AND name like '%" . $name . "%'  
             // AND x_salesman = '" . model('Core')->header()['account']['id'] . "'";
-             $where = " WHERE active = true AND customer_rank > 0  AND name like '%" . $name . "%'  ";
             
+            if(model("Core")->x_employee_type() == ''  ){
+                $where = " WHERE active = true AND customer_rank > 0  AND name like '%" . $name . "%'  "; 
+            }else{
+                $where = " WHERE name like '%" . $name . "%' AND x_ext_sales = '$accountId'  "; 
+            }
+             
 
             $q = "SELECT 
                 id, name,  street, x_latitude, x_longitude, x_salesman
-            FROM res_partner  $where ";
+            FROM res_partner  $where  ";
 
             //  $q = "SELECT  *
-            //  FROM res_partner  $where";
-            $query = $this->db->query($q);
-
-            $items = $query->getResultArray();
+            //  FROM res_partner  $where"; 
+            $items = $this->db->query($q)->getResultArray(); 
 
             $total = $this->db->query("SELECT count(id) as total FROM res_partner  $where ");
-            $total = (int) $total->getResultArray()[0]['total'];
+            $total = (int) $total->getResultArray()[0]['total']; 
 
             $data = [
                 "q" => $q,
+                "account" => $this->db->query("SELECT  * FROM x_mobile_users WHERE x_employee_id = '" .  $accountId . "' ")->getResultArray()[0],
+               // "res_partner_all" => $this->db->query("SELECT  * FROM res_partner Limit 10 ")->getResultArray(),
+               // "res_partner_ext" => $this->db->query("SELECT  * FROM res_partner where x_ext_sales  is not null   Limit 10 ")->getResultArray(),
+                
+                "x_employee_type" => model("Core")->x_employee_type(),
+                "header" => model("Core")->header(),
+                
                 "error" => false,
                 "post" => $post,
                 "total" => $total,

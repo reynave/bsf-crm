@@ -165,13 +165,20 @@ class Carts extends BaseController
             "post" => $post,
         ];
         if ($post) {
+            $accountId = model("Core")->accountId();
+            $x_mobile_users = $this->db->query("SELECT  * FROM x_mobile_users WHERE x_employee_id = '" .  $accountId . "' ")->getResultArray()[0];
+
             $this->db->table("x_customer_po")->update([
                 "x_submit" => 1,
-            ], " x_submit = 0 and  id = " . $post['id']);
+                "x_ext_sales_id" => $x_mobile_users['id'],
+                "x_ext_salesperson_id" => $x_mobile_users['x_ext_salesperson_id'], 
 
+            ], " x_submit = 0 and  id = " . $post['id']);
+     
             $data = [
                 "error" => false,
                 "post" => $post,
+                "po" => $this->db->query("SELECT  * FROM x_customer_po   Limit 10 ")->getResultArray()
             ];
         }
         return $this->response->setJSON($data);

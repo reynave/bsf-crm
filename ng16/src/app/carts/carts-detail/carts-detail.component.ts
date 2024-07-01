@@ -146,15 +146,15 @@ export class CartsDetailComponent implements   OnInit{
   }
   onCloseCart(){
     const body = {  
-      id : this.activeRoute.snapshot.queryParams['id']
+      id : this.activeRoute.snapshot.queryParams['id'],
     }
-    this.http.post<any>(this.api +this.configService.getAppCode()+ 'cart/onCloseCart', body, {
+    this.http.post<any>(this.api +this.configService.getAppCode()+ 'carts/onCloseCart', body, {
       headers : this.configService.headers(),
     }).subscribe(
       data => {
         console.log(data);
         this.loading = false;  
-        this.router.navigate(['order']);
+        this.router.navigate(['carts']);
       },
       e => {
         console.log(e);

@@ -59,18 +59,30 @@ class Login extends BaseController
                 // $serialNumber = " AND x_serial_number = '$serialNumber' ";
             }
             $id = model('Core')->select("x_employee_id", "x_mobile_users", "x_email = '$email' AND x_password = '$pass' $serialNumber ");
-            if ($id) {
 
+            if ($id) {
+                $x_employee_type = model('Core')->select("x_employee_type", "x_mobile_users", "x_employee_id = '$id' ");
+ 
                 $key = $_ENV['SECRETKEY'];
                 $token = uniqid();
-                $payload = [
-                    "account" => $this->db->query("SELECT  x_employee_id as id, x_name, x_email FROM x_mobile_users WHERE x_employee_id = '" . $id . "' ")->getResultArray()[0],
-                    'token' => md5($token),
-                    'iat' => time() . microtime(),
-                    'nbf' => strtotime(date("Y-m-d H:i:s")),
-                ];
-                $jwt = JWT::encode($payload, $key, 'HS256');
+                if($x_employee_type == null){
+                    $payload = [
+                        "account" => $this->db->query("SELECT x_employee_id as id, x_name, x_email, x_employee_type FROM x_mobile_users WHERE x_employee_id = '" . $id . "' ")->getResultArray()[0],
+                        'token' => md5($token),
+                        'iat' => time() . microtime(),
+                        'nbf' => strtotime(date("Y-m-d H:i:s")),
+                    ];
+                }else{
+                    $payload = [
+                        "account" => $this->db->query("SELECT x_ext_salesperson_id as id, x_name, x_email, x_employee_type FROM x_mobile_users WHERE x_employee_id = '" . $id . "' ")->getResultArray()[0],
+                        'token' => md5($token),
+                        'iat' => time() . microtime(),
+                        'nbf' => strtotime(date("Y-m-d H:i:s")),
+                    ];
+                }
 
+                $jwt = JWT::encode($payload, $key, 'HS256');
+ 
                 $this->db->table("x_mobile_users_auth")->insert([
                   //  "create_uid" => $id,
                     "create_date" => date("Y-m-d H:i:s") . ".0000",

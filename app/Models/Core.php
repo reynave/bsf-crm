@@ -44,6 +44,10 @@ class Core extends Model
         return self::header() != false ? self::header()['account']['id'] : ""; 
     }
 
+    function x_employee_type() {
+        return self::header() != false ? self::header()['account']['x_employee_type'] : ""; 
+    }
+
 
     function number($name = "")
     {

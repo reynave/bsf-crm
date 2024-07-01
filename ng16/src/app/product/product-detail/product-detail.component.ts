@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfigService } from 'src/app/service/config.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { param } from 'jquery';
 
 @Component({
   selector: 'app-product-detail',
@@ -74,6 +75,8 @@ export class ProductDetailComponent implements OnInit {
       data => {
         this.loading = false; 
         console.log(data); 
+       
+        this.router.navigate(['carts/detail'], {queryParams:{id:this.activeRoute.snapshot.queryParams['cardId']}})
         this.modalService.dismissAll(); 
       },
       e => {
