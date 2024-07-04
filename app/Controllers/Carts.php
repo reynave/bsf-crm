@@ -15,7 +15,7 @@ class Carts extends BaseController
         $x_customer_po_line = $this->db->query($q1)->getResultArray();
 
         $q2 = 'SELECT  p.id , p.x_customer, p.x_salesperson_id, p.x_is_magic_order,
-            sum(l.x_qty) as "qty", sum(l.x_qty * l.x_subtotal) as "totalAmount"
+            sum(l.x_qty) as "qty", sum(l.x_subtotal) as "totalAmount"
             FROM x_customer_po  as p
             left join x_customer_po_line as l on p.id = l.x_customer_po_line_id
             where p.x_salesperson_id = ' . $accountId . ' and x_submit = 0
@@ -43,7 +43,7 @@ class Carts extends BaseController
         $id = $this->request->getVar()['id'];
 
         $q1 = 'SELECT  p.id , p.x_customer, p.x_salesperson_id, p.x_is_magic_order,
-        sum(l.x_qty) as "qty", sum(l.x_qty * l.x_subtotal) as "totalAmount"
+        sum(l.x_qty) as "qty", sum(  l.x_subtotal) as "totalAmount"
         FROM x_customer_po  as p
         left join x_customer_po_line as l on p.id = l.x_customer_po_line_id
         where p.id = ' . $id . '  and x_submit = 0
@@ -172,7 +172,10 @@ class Carts extends BaseController
                 "x_submit" => 1,
                 "x_ext_sales_id" => $x_mobile_users['id'],
                 "x_ext_salesperson_id" => $x_mobile_users['x_ext_salesperson_id'], 
-
+                "create_date" => date("Y-m-d H:i:s"),
+                 "write_date" => date("Y-m-d H:i:s"),
+                "x_order_date" => date("Y-m-d H:i:s"),
+               
             ], " x_submit = 0 and  id = " . $post['id']);
      
             $data = [
