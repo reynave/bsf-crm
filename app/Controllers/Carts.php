@@ -10,11 +10,11 @@ class Carts extends BaseController
         //$accountId = '52';
 
 
-        $q1 = "SELECT  * 
-        FROM x_customer_po_line";
-        $x_customer_po_line = $this->db->query($q1)->getResultArray();
+        // $q1 = "SELECT  * 
+        // FROM x_customer_po_line";
+        // $x_customer_po_line = $this->db->query($q1)->getResultArray();    
 
-        $q2 = 'SELECT  p.id , p.x_customer, p.x_salesperson_id, p.x_is_magic_order,
+        $q2 = 'SELECT  p.id , p.x_customer, p.x_salesperson_id, p.x_is_magic_order,x_cabangutama,x_cabangpembantu,
             sum(l.x_qty) as "qty", sum(l.x_subtotal) as "totalAmount"
             FROM x_customer_po  as p
             left join x_customer_po_line as l on p.id = l.x_customer_po_line_id
@@ -26,7 +26,7 @@ class Carts extends BaseController
         $data = [
             "error" => false,
             "datetime" => date("Y-m-d H:i:s"),
-            "x_customer_po_line" => $x_customer_po_line,
+         //   "x_customer_po_line" => $x_customer_po_line,
             "x_customer_po" => $x_customer_po,
             "x_salesperson_id" => $accountId,
         ];
@@ -198,13 +198,21 @@ class Carts extends BaseController
         ];
         if ($post) {
             $accountId = model("Core")->accountId(); 
-            
+          
+            $email =  model("Core")->header()['account']['x_email'];
+            $x_cabangutama = model("Core")->select("x_cabangutama","x_mobile_users"," x_email = '$email' ");
+            $x_cabangpembantu = model("Core")->select("x_cabangpembantu","x_mobile_users"," x_email = '$email' ");
+
             $this->db->table("x_customer_po")->insert([
+               "x_cabangutama" => $x_cabangutama,
+                 "x_cabangpembantu" => $x_cabangpembantu,
+                
                 "x_submit" => 0, 
                 "x_salesperson_id" => $accountId
             ]);
 
             $data = [
+                "header"=> model("Core")->header(),
                 "error" => false,
                 "post" => $post,
             ];

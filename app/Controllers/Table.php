@@ -7,7 +7,7 @@ class Table extends BaseController
     function index()
     {
         $table = $this->request->getVar()['table'];
-        $query = $this->db->query("SELECT * FROM $table LIMIT 10 ");
+        $query = $this->db->query("SELECT * FROM $table LIMIT 300 ");
         $results = $query->getResultArray();
 
         $field = $this->db->query(" SELECT

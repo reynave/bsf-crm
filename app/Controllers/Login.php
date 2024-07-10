@@ -58,7 +58,7 @@ class Login extends BaseController
             if ($post['serialNumber'] != false) {
                 // $serialNumber = " AND x_serial_number = '$serialNumber' ";
             }
-            $id = model('Core')->select("x_employee_id", "x_mobile_users", "x_email = '$email' AND x_password = '$pass' $serialNumber ");
+            $id = model('Core')->select("x_employee_id", "x_mobile_users", "x_email = '$email' AND x_password = '$pass'   ");
 
             if ($id) {
                 $x_employee_type = model('Core')->select("x_employee_type", "x_mobile_users", "x_employee_id = '$id' ");
@@ -98,6 +98,7 @@ class Login extends BaseController
                     "token" => $jwt,
                     "post" => $post,
                     "payload" => $payload,
+                    "x_mobile_users" =>  $this->db->query("SELECT *  FROM x_mobile_users WHERE x_employee_id = '" . $id . "' ")->getResultArray()
                 );
             } else {
                 $data = array(

@@ -40,7 +40,9 @@ class Res_partner extends BaseController
             // AND x_salesman = '" . model('Core')->header()['account']['id'] . "'";
             
             if(model("Core")->x_employee_type() == ''  ){
-                $where = " WHERE active = true AND customer_rank > 0  AND name like '%" . $name . "%'  "; 
+                //$where = " WHERE active = true AND customer_rank > 0  AND name like '%" . $name . "%'  "; 
+                $where = " WHERE active = true AND x_salesman = '$accountId'   AND name like '%" . $name . "%'  "; 
+                
             }else{
                 $where = " WHERE name like '%" . $name . "%' AND x_ext_sales = '$accountId'  "; 
             }

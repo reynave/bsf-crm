@@ -314,11 +314,24 @@ export class ActivityDetailComponent implements OnInit {
 
   takeOrder(x: any = []) {
     let objCustomer: any = [];
-    objCustomer = {
-      x_customer_id : this.item.x_customer_id,
+    const body = {
+      item :  this.item ,
     }
-
-    this.router.navigate(['product'], {queryParams:objCustomer});
+    this.http.post<any>(this.api + this.configService.getAppCode()+'activities/takeOrder', body, {
+      headers: this.configService.headers(),
+    }).subscribe(
+      data => {
+        console.log(data);
+        this.loading = false;
+        this.router.navigate(['carts']);
+       
+      },
+      e => {
+        console.log(e);
+        this.note = "Error Server!";
+      },
+    );
+    
    
   }
 }

@@ -35,7 +35,7 @@ class Attendance extends BaseController
         if ($post) {
             $x_employee_id = model('Core')->header()['account']['id'];
           //  $today = $this->db->query("SELECT CURRENT_DATE")->getRowArray();
-            $x_clock_in = model("Core")->select("x_clock_in","x_attendance","x_employee_id = '$x_employee_id' and x_date = CURRENT_DATE ");
+            $x_clock_in = model("Core")->select("x_clock_in","x_attendance","x_employee_id = $x_employee_id and x_date = CURRENT_DATE ");
             if(!$x_clock_in){
                 $this->db->table("x_attendance")->insert([
                     "create_date" => $this->db->query("SELECT NOW()")->getRowArray(),
@@ -97,10 +97,10 @@ class Attendance extends BaseController
     }
 
     function today(){
-
+        $accountId = model("Core")->accountId();
         $q = "SELECT  *
         FROM x_attendance
-        WHERE x_employee_id = '" . model('Core')->header()['account']['id'] . "'
+        WHERE x_employee_id = " . (int)model('Core')->header()['account']['id'] . "
         and x_date = CURRENT_DATE ";
 
         $item = isset($this->db->query($q)->getResultArray()[0]) ?  $this->db->query($q)->getResultArray()[0] : [];
@@ -120,7 +120,10 @@ class Attendance extends BaseController
             "items" => isset($this->db->query($q)->getResultArray()[0]) ?  $item : [],
             "origin" => isset($this->db->query($q)->getResultArray()[0]) ?  $origin : [],
             
-           // "newDatetime" => $item['x_clock_in'] ,
+            "accountId" =>  $accountId,
+            "account" => $this->db->query("SELECT  * FROM x_mobile_users WHERE x_employee_id = " .  $accountId . " ")->getResultArray()[0],
+          
+
         ];
 
         return $this->response->setJSON($data);
