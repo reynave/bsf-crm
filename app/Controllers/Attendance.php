@@ -6,11 +6,7 @@ class Attendance extends BaseController
 {
     function index()
     {
-
-        // $q = "SELECT  *
-        // FROM x_attendance
-        // WHERE x_employee_id = '" . model('Core')->header()['account']['id'] . "'  order by id DESC limit 300 ";
-
+ 
         $q = "SELECT  *
         FROM x_attendance
         order by id DESC limit 300 ";
@@ -110,10 +106,7 @@ class Attendance extends BaseController
             $item['x_clock_in'] =  $item['x_clock_in']!= "" ?  date('Y-m-d H:i:s', strtotime($item['x_clock_in'] . ' +7 hours')) : '';
             $item['x_clock_out'] =  $item['x_clock_out']!= "" ?  date('Y-m-d H:i:s', strtotime($item['x_clock_out'] . ' +7 hours'))  : '';
 
-        }
-        $datetime = '2024-04-25 04:32:23.334131'; 
-      //  $newDatetime = date('Y-m-d H:i:s', strtotime($item[0]['x_clock_in'] . ' +7 hours'));
-
+        } 
 
         $data = [
             "error" => false,

@@ -154,7 +154,7 @@ export class CartsDetailComponent implements   OnInit{
       data => {
         console.log(data);
         this.loading = false;  
-        this.router.navigate(['carts']);
+        this.router.navigate(['home']);
       },
       e => {
         console.log(e);

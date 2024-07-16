@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Controllers;
-
+use CodeIgniter\Controller;
+use DateTime;
 class Carts extends BaseController
 {
     function index()
@@ -14,7 +15,7 @@ class Carts extends BaseController
         // FROM x_customer_po_line";
         // $x_customer_po_line = $this->db->query($q1)->getResultArray();    
 
-        $q2 = 'SELECT  p.id , p.x_customer, p.x_salesperson_id, p.x_is_magic_order,x_cabangutama,x_cabangpembantu,
+        $q2 = 'SELECT  p.id , p.x_customer, p.x_salesperson_id, p.x_is_magic_order,x_cabangutama,x_cabangpembantu, x_order_date,
             sum(l.x_qty) as "qty", sum(l.x_subtotal) as "totalAmount"
             FROM x_customer_po  as p
             left join x_customer_po_line as l on p.id = l.x_customer_po_line_id
@@ -42,10 +43,12 @@ class Carts extends BaseController
         //$accountId = model("Core")->accountId();
         $id = $this->request->getVar()['id'];
 
-        $q1 = 'SELECT  p.id , p.x_customer, p.x_salesperson_id, p.x_is_magic_order,
+        $q1 = 'SELECT  p.id , p.x_customer, p.x_salesperson_id, p.x_is_magic_order, 
+        p.x_cabangutama, p.x_cabangpembantu, p.x_order_date,  
         sum(l.x_qty) as "qty", sum(  l.x_subtotal) as "totalAmount"
         FROM x_customer_po  as p
         left join x_customer_po_line as l on p.id = l.x_customer_po_line_id
+        left join x_mastercabang as mcu on mcu.id = p.x_cabangutama
         where p.id = ' . $id . '  and x_submit = 0
         group by p.id ';
         $header = $this->db->query($q1)->getResultArray();
@@ -202,18 +205,30 @@ class Carts extends BaseController
             $email =  model("Core")->header()['account']['x_email'];
             $x_cabangutama = model("Core")->select("x_cabangutama","x_mobile_users"," x_email = '$email' ");
             $x_cabangpembantu = model("Core")->select("x_cabangpembantu","x_mobile_users"," x_email = '$email' ");
+           
+            
 
             $this->db->table("x_customer_po")->insert([
-               "x_cabangutama" => $x_cabangutama,
-                 "x_cabangpembantu" => $x_cabangpembantu,
-                
+                "x_order_date" => $this->db->query("SELECT NOW()")->getRowArray()['now'],
+                "x_cabangutama" => $x_cabangutama,
+                "x_cabangpembantu" => $x_cabangpembantu,
+                "x_is_magic_order" => true,
                 "x_submit" => 0, 
                 "x_salesperson_id" => $accountId
             ]);
 
+            
+        $q2 = "select * 
+        from x_mobile_users 
+        where x_email = '$email'";
+        $x_mobile_users = $this->db->query($q2)->getResultArray();
+
+
             $data = [
                 "header"=> model("Core")->header(),
                 "error" => false,
+                "email" =>  $email ,
+                "x_mobile_users" => $x_mobile_users,
                 "post" => $post,
             ];
         }

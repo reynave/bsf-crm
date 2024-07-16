@@ -25,20 +25,51 @@
 
             <div class="col-12" *ngIf="!loading">
                 <div class="px-3 py-2 mb-3">
-                    <div class="row">
-                        <div class="col-8">
-                            <strong><small>Customer Name</small></strong>
-                            <a [routerLink]="[ '/customer' ]" [queryParams]="{cardId:header.id}">
-                                <div class="form-control form-control-sm border">
-                                    {{header.x_customer}} &nbsp;
-                                </div>
-                            </a>
+                    <div class="row g-1">
+                        <div class="col-6">
+
+                            <strong><small>Date</small></strong>
+                            <div>
+                                <h6>{{header.x_order_date}}</h6>
+                            </div>
                         </div>
-                        <div class="col-4 text-end">
+                        <div class="col-3 text-end">
+
                             <strong><small>Order ID</small></strong>
                             <div>
                                 <h6>{{header.id}}</h6>
                             </div>
+                        </div>
+                        <div class="col-3 text-end">
+
+                            <strong><small> Magic Order</small></strong>
+                            <div>
+                                <h6> {{header.x_is_magic_order == 't' ? "TRUE":"FALSE"}}</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="row">
+                        <div class="col">
+                            <strong><small>Cabang Utama</small></strong>
+                            <div>
+                                {{header.x_cabangutama}}
+                            </div>
+                        </div>
+                        <div class="col text-end">
+                            <strong><small>Cabang Pembantu</small></strong>
+                            <div>
+                                {{header.x_cabangpembantu}}
+                            </div>
+                        </div>
+                    </div> -->
+                    <div class="row">
+                        <div class="col-12">
+                            <strong><small>Customer Name</small></strong>
+                            <a [routerLink]="[ '/customer' ]" [queryParams]="{cardId:header.id}">
+                                <div class="form-control form-control-sm border">
+                                    <h6> {{header.x_customer}} &nbsp;</h6>
+                                </div>
+                            </a>
                         </div>
                     </div>
 
@@ -51,7 +82,8 @@
                         </div>
 
                         <div class="col-6 align-self-center text-end">
-                            <a class="btn btn-sm btn-danger" (click)="remove();"> <i class="bi bi-trash3"></i> Remove</a>
+                            <a class="btn btn-sm btn-danger" (click)="remove();"> <i class="bi bi-trash3"></i>
+                                Remove</a>
                         </div>
                     </div>
                 </div>
@@ -95,13 +127,13 @@
                     </div>
                 </div>
 
-                <div class="d-grid mb-2"> 
-                    <a  class="btn btn-lg btn-primary" [routerLink]="[ '/product',  ]" [queryParams]="{cardId:header.id}">ADD ITEM</a>
+                <div class="d-grid mb-2">
+                    <a class="btn btn-lg btn-primary" [routerLink]="[ '/product',  ]"
+                        [queryParams]="{cardId:header.id}">ADD ITEM</a>
                 </div>
 
                 <div class="d-grid mb-2">
-                     
-                    <a  class="btn btn-lg btn-success"  (click)="onCloseCart()">CLOSE CARD</a>
+                    <a class="btn btn-lg btn-success" (click)="onCloseCart()">CLOSE CARD</a>
                 </div>
             </div>
 

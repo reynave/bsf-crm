@@ -26,16 +26,17 @@
             <div class="col-12 ">
                 <label>Carts </label>
                 <div class="bg-white px-3 py-2 border  mb-3" *ngFor="let x of items">
-                    <div class="row">
-                        <div class="col"> 
+                    <div class="row g-2">
+                        
+                        <div class="col-6">
                             <a [routerLink]="[ '/carts/detail' ]" [queryParams]="{id:x.id}">
-                                <strong><small>Customer Name</small></strong>
-                                <div >
-                                    <h6>{{x.x_customer}}</h6>
+                                <strong><small>Date</small></strong>
+                                <div>
+                                    <h6>{{x.x_order_date | date:'medium'}}</h6>
                                 </div>
                             </a>
                         </div>
-                        <div class="col text-end">
+                        <div class="col-3 text-end">
                             <a [routerLink]="[ '/carts/detail' ]" [queryParams]="{id:x.id}">
                                 <strong><small>Order ID</small></strong>
                                 <div>
@@ -43,11 +44,21 @@
                                 </div>
                             </a>
                         </div>
-                        <div class="col text-end">
+                        <div class="col-3 text-end">
                             <a [routerLink]="[ '/carts/detail' ]" [queryParams]="{id:x.id}">
                                 <strong><small> Magic Order</small></strong>
                                 <div>
                                     <h6>  {{x.x_is_magic_order == 't' ? "TRUE":"FALSE"}}</h6>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12"> 
+                            <a [routerLink]="[ '/carts/detail' ]" [queryParams]="{id:x.id}">
+                                <strong><small>Customer Name</small></strong>
+                                <div>
+                                    <h6>{{x.x_customer}} &nbsp;</h6>
                                 </div>
                             </a>
                         </div>
@@ -68,7 +79,7 @@
                             </h4>
                         </div>
                         <div class="col-2 align-self-center text-end">
-                            <a class="btn btn-sm btn-danger" (click)="removeCart(x);"> <i class="bi bi-trash3"></i></a>
+                            <a class="btn btn-danger" (click)="removeCart(x);"> <i class="bi bi-trash3"></i></a>
                         </div>
                     </div>
                 </div> 
