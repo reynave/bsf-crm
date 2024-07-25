@@ -77,6 +77,12 @@ class Database extends Config
         // Ensure that we always set the database group to 'tests' if
         // we are currently running an automated test suite, so that
         // we don't overwrite live data on accident.
+
+        $this->default['hostname'] = HOSTNAME;
+        $this->default['database'] = DATABASE;
+        $this->default['username'] = USERNAME;
+        $this->default['password'] = PASSWORD;
+
         if (ENVIRONMENT === 'testing') {
             $this->defaultGroup = 'tests';
         }
