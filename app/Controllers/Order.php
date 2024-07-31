@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Controllers;
-
+use DateTime; 
+use DateInterval;
 class Order extends BaseController
 {
     function index()
@@ -32,6 +33,7 @@ class Order extends BaseController
         $db = $db->getResultArray();
 
         $item = [];
+        $i = 0;
         foreach($db as $row){
             $x_qty = "SELECT sum(x_qty) as total
             FROM x_customer_po_line  
@@ -45,14 +47,18 @@ class Order extends BaseController
             $totalAmount = $this->db->query($totalAmount);
             $totalAmount= $totalAmount->getResultArray();
 
-            $temp = [
+            $datetime = new DateTime($row['x_order_date'] );
+            // Tambahkan 7 jam
+            $datetime->add(new DateInterval('PT7H'));  
+
+            $row[$i]['x_order_date']  = $datetime->format('Y-m-d H:i:s');
+
+            $temp = [ 
                 "totalItem" =>  (int)$x_qty[0]['total'],
                 "totalAmount" =>  (int)$totalAmount[0]['total']
-            ];
-            
-
+            ]; 
             array_push($item, array_merge($row,$temp));
-
+            $i++;
         }
 
         $data = [

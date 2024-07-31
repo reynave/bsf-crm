@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Controllers;
+
 use CodeIgniter\Controller;
-use DateTime;
+use DateTime; 
+use DateInterval;
 class Carts extends BaseController
 {
     function index()
@@ -22,12 +24,25 @@ class Carts extends BaseController
             where p.x_salesperson_id = ' . $accountId . ' and x_submit = 0
             group by p.id ';
         $x_customer_po = $this->db->query($q2)->getResultArray();
+        $i = 0;
+
+
+        foreach ($x_customer_po as $row) {
+            // Buat objek DateTime dari string
+            $datetime = new DateTime($x_customer_po[$i]['x_order_date']);
+
+            // Tambahkan 7 jam
+            $datetime->add(new DateInterval('PT7H'));
+
+            $x_customer_po[$i]['x_order_date'] = $datetime->format('Y-m-d H:i:s');
+            $i++;
+        }
 
 
         $data = [
             "error" => false,
             "datetime" => date("Y-m-d H:i:s"),
-         //   "x_customer_po_line" => $x_customer_po_line,
+            //   "x_customer_po_line" => $x_customer_po_line,
             "x_customer_po" => $x_customer_po,
             "x_salesperson_id" => $accountId,
         ];
@@ -136,7 +151,8 @@ class Carts extends BaseController
         return $this->response->setJSON($data);
     }
 
-    function updateCustomer(){
+    function updateCustomer()
+    {
         $json = file_get_contents('php://input');
         $post = json_decode($json, true);
         $data = [
@@ -144,10 +160,10 @@ class Carts extends BaseController
             "post" => $post,
         ];
         if ($post) {
-         
+
             $this->db->table("x_customer_po")->update([
                 "x_customer_id" => $post['item']['id'],
-                "x_customer" => $post['item']['name'] 
+                "x_customer" => $post['item']['name']
             ], " id = " . $post['id']);
 
 
@@ -169,18 +185,18 @@ class Carts extends BaseController
         ];
         if ($post) {
             $accountId = model("Core")->accountId();
-            $x_mobile_users = $this->db->query("SELECT  * FROM x_mobile_users WHERE x_employee_id = '" .  $accountId . "' ")->getResultArray()[0];
+            $x_mobile_users = $this->db->query("SELECT  * FROM x_mobile_users WHERE x_employee_id = '" . $accountId . "' ")->getResultArray()[0];
 
             $this->db->table("x_customer_po")->update([
                 "x_submit" => 1,
                 "x_ext_sales_id" => $x_mobile_users['id'],
-                "x_ext_salesperson_id" => $x_mobile_users['x_ext_salesperson_id'], 
+                "x_ext_salesperson_id" => $x_mobile_users['x_ext_salesperson_id'],
                 "create_date" => date("Y-m-d H:i:s"),
-                 "write_date" => date("Y-m-d H:i:s"),
+                "write_date" => date("Y-m-d H:i:s"),
                 "x_order_date" => date("Y-m-d H:i:s"),
-               
+
             ], " x_submit = 0 and  id = " . $post['id']);
-     
+
             $data = [
                 "error" => false,
                 "post" => $post,
@@ -190,7 +206,7 @@ class Carts extends BaseController
         return $this->response->setJSON($data);
     }
 
-    
+
     function newOrder()
     {
         $json = file_get_contents('php://input');
@@ -200,34 +216,34 @@ class Carts extends BaseController
             "post" => $post,
         ];
         if ($post) {
-            $accountId = model("Core")->accountId(); 
-          
-            $email =  model("Core")->header()['account']['x_email'];
-            $x_cabangutama = model("Core")->select("x_cabangutama","x_mobile_users"," x_email = '$email' ");
-            $x_cabangpembantu = model("Core")->select("x_cabangpembantu","x_mobile_users"," x_email = '$email' ");
-           
-            
+            $accountId = model("Core")->accountId();
+
+            $email = model("Core")->header()['account']['x_email'];
+            $x_cabangutama = model("Core")->select("x_cabangutama", "x_mobile_users", " x_email = '$email' ");
+            $x_cabangpembantu = model("Core")->select("x_cabangpembantu", "x_mobile_users", " x_email = '$email' ");
+
+
 
             $this->db->table("x_customer_po")->insert([
                 "x_order_date" => $this->db->query("SELECT NOW()")->getRowArray()['now'],
                 "x_cabangutama" => $x_cabangutama,
                 "x_cabangpembantu" => $x_cabangpembantu,
                 "x_is_magic_order" => true,
-                "x_submit" => 0, 
+                "x_submit" => 0,
                 "x_salesperson_id" => $accountId
             ]);
 
-            
-        $q2 = "select * 
+
+            $q2 = "select * 
         from x_mobile_users 
         where x_email = '$email'";
-        $x_mobile_users = $this->db->query($q2)->getResultArray();
+            $x_mobile_users = $this->db->query($q2)->getResultArray();
 
 
             $data = [
-                "header"=> model("Core")->header(),
+                "header" => model("Core")->header(),
                 "error" => false,
-                "email" =>  $email ,
+                "email" => $email,
                 "x_mobile_users" => $x_mobile_users,
                 "post" => $post,
             ];
