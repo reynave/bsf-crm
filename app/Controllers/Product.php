@@ -38,18 +38,31 @@ class Product extends BaseController
             $where = "   s.x_product_name LIKE '%" . strtoupper($search) . "%'";
             $locationId = 0;
             // if (isset($post['accountId'])) {
-            //     $accountId = $post['accountId'];
-            //     $locationId = (int) model("Core")->select("x_location_id", "x_mobile_users", "x_employee_id =  $accountId ");
+                  $accountId = $post['accountId'];
+                 $locationId = (int) model("Core")->select("x_location_id", "x_mobile_users", "x_employee_id =  $accountId ");
             // }
 
-            // $q = "SELECT  p.id, p.id as product_id,  s.x_product_name  as name,  
-            // s.x_sales_price as list_price, p.default_code,  
-            // s.quantity,
-            // s.reserved_quantity, s.location_id,
-            // coalesce(s.quantity - s.reserved_quantity,0 ) AS qty_Available 
-            // FROM product_product AS p
-            // LEFT JOIN stock_quant AS s ON s.product_id = p.id
-            // WHERE p.active = 't' AND  s.location_id =  $locationId AND      ";
+             $qBSave = "SELECT  p.id, p.id as product_id,  s.x_product_name  as name,  
+             s.x_sales_price as list_price, p.default_code,  
+             s.quantity,
+             s.reserved_quantity, s.location_id,
+             coalesce(s.quantity - s.reserved_quantity,0 ) AS qty_Available 
+             FROM product_product AS p
+             LEFT JOIN stock_quant AS s ON s.product_id = p.id
+             WHERE p.active = 't' AND  s.location_id =  $locationId  AND      ";
+
+            $qB = "SELECT a.id, sum(a.quantity) AS qty_Available , a.name , a.list_price, a.default_code, 
+                    a.reserved_quantity, a.location_id 
+                    from (
+
+                    SELECT  p.id,  s.x_product_name  as name,              
+                    s.x_sales_price as list_price, p.default_code, s.quantity, s.reserved_quantity, s.location_id       
+                    FROM product_product AS p             
+                    LEFT JOIN stock_quant AS s ON s.product_id = p.id   
+                    WHERE p.active = 't' AND  s.location_id =   $locationId  AND s.x_product_name 
+                    LIKE '%".strtoupper($search)."%' 
+                    ) a 
+                    GROUP BY a.id, a.name, a.list_price, a.default_code,   a.reserved_quantity, a.location_id   ";
 
             $q = "SELECT  p.id, p.id as product_id,  s.x_product_name  as name,  
             s.x_sales_price as list_price, p.default_code,  
@@ -72,10 +85,13 @@ class Product extends BaseController
             WHERE  p.active = 't' AND     ";
 
 
-            $query = $this->db->query(" $q  $where  ");
+            $query = $this->db->query(" $qB    ");
 
             $items = $query->getResultArray();
             $total = 0;
+
+
+
 
             $newData = [];
             // Iterasi melalui array awal
@@ -102,7 +118,7 @@ class Product extends BaseController
 
             $data = [
                 "error" => false,
-                // "q" => str_replace(["\n","\r"],"",$q. $where ), 
+                 "q" => str_replace(["\n","\r"],"",$qB ), 
                 "post" => $post,
                 "locationId" => $locationId,
                 // "x_mobile_user" => $x_mobile_user,
