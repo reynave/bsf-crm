@@ -97,11 +97,18 @@ class Activities extends BaseController
         WHERE id= '" . $id . "' ");
         $results = $query->getResultArray()[0];
         $results['x_photo_url_check_in'] = $results['x_photo_url_check_in'] != "" ? base_url() . $results['x_photo_url_check_in'] : "";
-        $results['x_photo_url_check_out'] = $results['x_photo_url_check_out'] != "" ? base_url() . $results['x_photo_url_check_out'] : "";
+        //$results['x_photo_url_check_out'] = $results['x_photo_url_check_out'] != "" ? base_url() . $results['x_photo_url_check_out'] : "";
+        $results['x_photo_url_check_out'] =  $results['x_photo_url_check_out'];
 
-        $query = $this->db->query("SELECT  partner_id, name, amount_residual_signed, invoice_payment_state, invoice_date, type , amount_total
-        FROM account_move   
-        WHERE partner_id = '" . $results['x_customer_id'] . "' and invoice_payment_state = 'not_paid' AND type = 'out_invoice'  ");
+        // $query = $this->db->query("SELECT  partner_id, name, amount_residual_signed, invoice_payment_state, invoice_date, type , amount_total
+        // FROM account_move   
+        // WHERE partner_id = '" . $results['x_customer_id'] . "' and invoice_payment_state = 'not_paid' AND type = 'out_invoice'  ");
+
+$query = $this->db->query("SELECT  partner_id, name, amount_residual_signed, payment_state, invoice_date, move_type , amount_total
+FROM account_move   
+WHERE partner_id = '" . $results['x_customer_id'] . "' and payment_state = 'not_paid' AND move_type = 'out_invoice'  ");
+
+
         $ar = $query->getResultArray();
         $totalAR = 0;
         foreach ($ar as $row) {
@@ -360,6 +367,10 @@ class Activities extends BaseController
             "post" => $post,
         ];
         if ($post) {
+
+            $this->db->table("x_sales_activity")->update([
+                "x_photo_url_check_out" => $post['photo'],
+            ], "id = '" . $post['id'] . "'  ");
 
             $this->db->table("x_sales_activity")->update([
                 "x_activity_status" => "CLOSE",

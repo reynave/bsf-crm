@@ -109,39 +109,59 @@
             <div class="col-12">
                 <small>Check Device Only</small>
             </div>
-            <div class="col-4">
+        </div>
+
+        <div class="row g-2 mb-3">
+            <div class="col">
                 <div class=" bg-white rounded shadow-sm text-center" (click)="callApi()">
                     <div class="lh-1 py-2">
-                        <h2> <i class="bi bi-database-up"></i> </h2>
+                        <h3> <i class="bi bi-database-up"></i> </h3>
                         <small>
-                            <a >Test Oddo Server</a>
+                            <a >  Oddo Server</a>
                         </small>
                     </div>
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col">
                 <div class=" bg-white rounded shadow-sm text-center"  (click)="cam()">
                     <div class="lh-1 py-2">
-                        <h2> <i class="bi bi-camera2"></i> </h2>
+                        <h3> <i class="bi bi-camera2"></i> </h3>
 
                         <small>
-                            <a >Test Camera Allowed</a>
+                            <a >  Native Camera</a>
                         </small>
                     </div>
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col">
+                <div class=" bg-white rounded shadow-sm text-center" (click)="ngxWebCame()">
+                    <div class="lh-1 py-2">
+                        <h3> <i class="bi bi-webcam"></i> </h3>
+                        <!-- <webcam (initError)="handleInitError($event)"></webcam> -->
+                        <small>
+                            <a >  HTML5 Camera</a>
+                        </small>
+                    </div>
+                </div>
+            </div>
+       
+            
+            <div class="col">
                 <div class=" bg-white rounded shadow-sm text-center" (click)="gps()">
                     <div class="lh-1 py-2">
-                        <h2> <i class="bi bi-braces-asterisk"></i> </h2>
+                        <h3> <i class="bi bi-braces-asterisk"></i> </h3>
 
                         <small>
-                            <a >Test GPS Allowed</a>
+                            <a >  GPS Allowed</a>
                         </small>
                     </div>
                 </div>
             </div>
-            <div class="col-12">
+
+        </div>  
+
+        <div class="row">
+            <div class="col-12">  
                 <div class="bg-light rounded p-2">
                    <div>
                     {{note}} 

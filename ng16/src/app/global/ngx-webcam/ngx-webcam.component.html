@@ -1,0 +1,55 @@
+<nav class="fixed-top bg-gray-100 py-2">
+    <div class="container-fluid">
+        <div class="row g-1">
+            <div class="col-1 align-self-center  ">
+                <a class="navbar-brand h2" (click)="back()"><i class="bi bi-arrow-left"></i></a>
+            </div>
+            <div class="col-10 align-self-center text-center ">
+                <h5 class="p-0 m-0  ms-3">Take Photo</h5>
+            </div>
+            <div class="col-1 text-end  ">
+
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12" [hidden]="!warning">
+            <div class="alert alert-warning text-center ">
+                <strong class="text-white">{{warning}}</strong>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="text-center">
+    <webcam (initError)="handleInitError($event)" [width]="390" [allowCameraSwitch]="true" [trigger]="triggerObservable"
+        (imageCapture)="handleImage($event)"></webcam>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12  d-grid mb-3">
+            <!-- Tombol untuk mengganti kamera (depan/belakang) -->
+            <button (click)="changeCamera()" class="btn  btn-warning">Switch Camera</button>
+        </div>
+        <div class="col-12 d-grid mb-3">
+            <!-- Tombol untuk mengambil gambar -->
+            <button (click)="triggerSnapshot()" class="btn  btn-success">Take Photo</button>
+        </div>
+
+        <div class="col-12">
+            <textarea class="form-control" readonly rows="10">{{ uploadMessage }}</textarea>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Menampilkan gambar yang diambil -->
+<!-- <div *ngIf="webcamImage">
+    <h3>Gambar yang diambil:</h3>
+    <img [src]="webcamImage.imageAsDataUrl" />
+</div> -->

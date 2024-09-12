@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
 import { ConfigService } from 'src/app/service/config.service';
-import { NgZone } from '@angular/core';
+import { NgZone } from '@angular/core'; 
 
 
 declare let navigator: any;
@@ -16,6 +16,7 @@ declare let Camera: any;
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit, OnDestroy {
+
   env: any = environment;
   gpsInfo: any = [];
   note: string = "";
@@ -29,23 +30,27 @@ export class HomeComponent implements OnInit, OnDestroy {
     private http: HttpClient,
     private config: ConfigService,
     private ngZone: NgZone,
+    private router: Router,
+
   ) { }
 
   ngOnInit() {
     console.log(this.config.account());
-    this.getClockDate(); 
+    this.getClockDate();
 
     this.timer = setInterval(() => {
-      this.getClockDate(); 
-    },1000 * 60 * 60);
+      this.getClockDate();
+    }, 1000 * 60 * 60);
   }
 
   ngOnDestroy() {
     clearInterval(this.timer);
   }
 
-
-  getClockDate(){
+  ngxWebCame() {
+    this.router.navigate(['./ngxWebcam']);
+  }
+  getClockDate() {
     console.log("runing");
     this.http.get<any>(this.api + this.config.getAppCode() + "Attendance/today", {
       headers: this.config.headers(),
@@ -60,7 +65,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       }
     )
   }
-
+ 
   callApi() {
     //http://systemapk.bsfar.com:41021/api-dev/v1/
     this.http.get<any>(environment.api + this.config.getAppCode()).subscribe(

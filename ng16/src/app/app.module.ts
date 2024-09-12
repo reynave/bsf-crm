@@ -1,7 +1,8 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA  } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA, isDevMode  } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import {WebcamModule} from 'ngx-webcam';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -33,6 +34,8 @@ import { CustomerInsertComponent } from './customer/customer-insert/customer-ins
 import { OrderDetailComponent } from './order/order-detail/order-detail.component'; 
 import { CartsComponent } from './carts/carts.component';
 import { CartsDetailComponent } from './carts/carts-detail/carts-detail.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { NgxWebcamComponent } from './global/ngx-webcam/ngx-webcam.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +54,7 @@ import { CartsDetailComponent } from './carts/carts-detail/carts-detail.componen
     ProductComponent,
     ProductDetailComponent,
     ProductListComponent, 
-    ScheduleActivitiesComponent, ActivityInsertComponent, CartComponent, OrderComponent, CustomerModalComponent, CustomerComponent, CustomerDetailComponent, SqlQueryComponent, CustomerInsertComponent, OrderDetailComponent, CartsComponent, CartsDetailComponent
+    ScheduleActivitiesComponent, ActivityInsertComponent, CartComponent, OrderComponent, CustomerModalComponent, CustomerComponent, CustomerDetailComponent, SqlQueryComponent, CustomerInsertComponent, OrderDetailComponent, CartsComponent, CartsDetailComponent, NgxWebcamComponent
   ],
   imports: [
     BrowserModule,
@@ -59,7 +62,13 @@ import { CartsDetailComponent } from './carts/carts-detail/carts-detail.componen
     NgbModule,
     HttpClientModule,
     FormsModule, 
-    DataTablesModule
+    WebcamModule,
+    DataTablesModule, ServiceWorkerModule.register('ngsw-worker.js', {
+  enabled: !isDevMode(),
+  // Register the ServiceWorker as soon as the application is stable
+  // or after 30 seconds (whichever comes first).
+  registrationStrategy: 'registerWhenStable:30000'
+})
   ],schemas: [
     CUSTOM_ELEMENTS_SCHEMA
   ],

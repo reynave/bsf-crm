@@ -71,8 +71,7 @@ class Product extends BaseController
             coalesce(s.quantity - s.reserved_quantity,0 ) AS qty_Available 
             FROM product_product AS p
             LEFT JOIN stock_quant AS s ON s.product_id = p.id
-            WHERE  p.active = 't' AND     ";
-            // s.location_id =  $locationId AND   
+            WHERE  p.active = 't' AND     "; 
 
             $q2 = "SELECT  p.id, p.id as product_id,  s.x_product_name  as name,  
             s.x_sales_price as list_price, p.default_code,  
@@ -101,7 +100,9 @@ class Product extends BaseController
                 // Jika default_code sudah ada dalam array hasil
                 if (isset($newData[$defaultCode])) {
                     // Tambahkan quantity ke nilai yang ada
-                    $newData[$defaultCode]['quantity'] += $item['quantity'];
+                    if(isset($item['quantity'])){
+                        $newData[$defaultCode]['quantity'] +=  (int)$item['quantity'] ;
+                    }
                 } else {
                     // Jika default_code belum ada dalam array hasil
                     $newData[$defaultCode] = $item;

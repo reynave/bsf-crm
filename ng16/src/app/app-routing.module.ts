@@ -25,6 +25,7 @@ import { CustomerInsertComponent } from './customer/customer-insert/customer-ins
 import { OrderDetailComponent } from './order/order-detail/order-detail.component';
 import { CartsComponent } from './carts/carts.component';
 import { CartsDetailComponent } from './carts/carts-detail/carts-detail.component';
+import { NgxWebcamComponent } from './global/ngx-webcam/ngx-webcam.component';
 
 const routes: Routes = [
   { path:"", component:HomeComponent, data: { active: "home" },  canActivate:[authGuard] },
@@ -32,6 +33,7 @@ const routes: Routes = [
   { path:"relogin", component:ReloginComponent},
   
   { path:"home", component:HomeComponent , data: { active: "home" },  canActivate:[authGuard]},
+  { path:"ngxWebcam", component:NgxWebcamComponent , data: { active: "Camera Webcam" },  canActivate:[authGuard]},
 
   { path:"scheduleAcivities", component:ScheduleActivitiesComponent , data: { active: "scheduleAcivities" },  canActivate:[authGuard]},
   

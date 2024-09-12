@@ -100,14 +100,14 @@ class Core extends Model
 
     function cam_to_img($data, $output_file, $filename = "")
     {
-        $data =  str_replace("data:image/png;base64,","",$data);
+        $data =  str_replace("data:image/jpeg;base64,","",$data);
 
         $data = base64_decode($data);
         $signname = strtolower($filename);
         $signname = str_replace(" ", "-", $signname);
 
-        file_put_contents($output_file . $signname . '.png', $data);
+        file_put_contents($output_file . $signname . '.jpeg', $data);
 
-        return $output_file . $signname . '.png';
+        return $output_file . $signname . '.jpeg';
     }
 }

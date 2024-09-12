@@ -9,25 +9,25 @@ declare var screen: any;
   template: '<router-outlet></router-outlet>',
 })
 export class AppComponent implements OnInit {
-  title = 'Bsf ng16';
+  title = 'Mannasol CRM  ng16';
   
   constructor()
   {
     console.log(environment);
   }
   ngOnInit() {
-    let onDeviceReady = () => {
-      screen.orientation.lock('portrait');
-      console.log("Cordova Ready! ver 1.0.1 Stable");
-      console.log('cordova ', device.cordova);
-      console.log('model ', device.model);
-      console.log('platform ', device.platform);
-      console.log('uuid ', device.uuid);
-      console.log('manufacturer ', device.manufacturer);
-      console.log('isVirtual ', device.isVirtual);
-      console.log('serial ', device.serial);
-    }; 
-    document.addEventListener('deviceready', onDeviceReady, false);
+    // let onDeviceReady = () => {
+    //   screen.orientation.lock('portrait');
+    //   console.log("Cordova Ready! ver 1.0.1 Stable");
+    //   console.log('cordova ', device.cordova);
+    //   console.log('model ', device.model);
+    //   console.log('platform ', device.platform);
+    //   console.log('uuid ', device.uuid);
+    //   console.log('manufacturer ', device.manufacturer);
+    //   console.log('isVirtual ', device.isVirtual);
+    //   console.log('serial ', device.serial);
+    // }; 
+    // document.addEventListener('deviceready', onDeviceReady, false);
  
   }
 
