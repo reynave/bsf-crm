@@ -72,6 +72,15 @@
                             </a>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <strong><small>Order Detail Note</small></strong>
+                            <textarea class="form-control  border" [(ngModel)]="header.x_note" name="x_note"
+                                (change)="updateHeader()"></textarea>
+
+                        </div>
+                    </div>
+
 
                     <div class="row g-1">
                         <div class="col-6 align-self-center">
@@ -94,7 +103,6 @@
 
                     <div class="row">
                         <div class="col-10">
-
                             <strong><small>Product name</small></strong>
                             <div>
                                 <h6>{{x.x_name}}</h6>
@@ -105,6 +113,12 @@
                         </div>
                     </div>
                     <div class="row g-1">
+                        <div class="col-12">
+                            <strong><small>Order Detail Note</small></strong>
+                            <input class="form-control  border" [(ngModel)]="x.x_note" name="x_note"
+                                (change)="updateQty(x)">
+
+                        </div>
                         <div class="col-4 align-self-center">
                             <strong><small>Price</small></strong>
                             <h4 class="lh-1">

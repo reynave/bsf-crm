@@ -59,7 +59,7 @@ class Carts extends BaseController
         $id = $this->request->getVar()['id'];
 
         $q1 = 'SELECT  p.id , p.x_customer, p.x_salesperson_id, p.x_is_magic_order, 
-        p.x_cabangutama, p.x_cabangpembantu, p.x_order_date,  
+        p.x_cabangutama, p.x_cabangpembantu, p.x_order_date,  p.x_note,
         sum(l.x_qty) as "qty", sum(  l.x_subtotal) as "totalAmount"
         FROM x_customer_po  as p
         left join x_customer_po_line as l on p.id = l.x_customer_po_line_id
@@ -68,9 +68,10 @@ class Carts extends BaseController
         group by p.id ';
         $header = $this->db->query($q1)->getResultArray();
 
-        $q2 = 'select * 
+        $q2 = "select * 
             from x_customer_po_line 
-            where x_customer_po_line_id = ' . $id;
+            where x_customer_po_line_id = '$id'
+            order by create_date ASC ";
         $x_customer_po_line = $this->db->query($q2)->getResultArray();
 
 
@@ -137,6 +138,7 @@ class Carts extends BaseController
         if ($post) {
             $x_unitprice = model("Core")->select("x_unitprice", "x_customer_po_line", "id=" . $post['item']['id']);
             $this->db->table("x_customer_po_line")->update([
+                "x_note" => $post['item']['x_note'],
                 "x_qty" => $post['item']['x_qty'],
                 "x_subtotal" => $post['item']['x_qty'] * $x_unitprice,
             ], " id = " . $post['item']['id']);
@@ -151,6 +153,26 @@ class Carts extends BaseController
         return $this->response->setJSON($data);
     }
 
+    function updateHeader()
+    {
+        $json = file_get_contents('php://input');
+        $post = json_decode($json, true);
+        $data = [
+            "error" => true,
+            "post" => $post,
+        ];
+        if ($post) { 
+            $this->db->table("x_customer_po")->update([
+                "x_note" => $post['header']['x_note'], 
+            ], " id = " . $post['header']['id']); 
+
+            $data = [
+                "error" => false,
+                "post" => $post,
+            ];
+        }
+        return $this->response->setJSON($data);
+    }
     function updateCustomer()
     {
         $json = file_get_contents('php://input');

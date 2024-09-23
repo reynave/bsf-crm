@@ -203,7 +203,14 @@ export class ActivityDetailComponent implements OnInit {
         if (self.item.x_activity_status == 'OPEN') {
           self.checkIn();
         } else {
-          self.triggerSnapshot();
+          
+          if(self.camError == false){
+            self.triggerSnapshot();
+          }else{ 
+            self.onUpload();
+          }
+         
+      
           //self.checkOut();
         }
 
@@ -304,10 +311,13 @@ export class ActivityDetailComponent implements OnInit {
 
 
   warning: string = '';
+  camError : boolean = false;
   public handleInitError(error: WebcamInitError): void {
     if (error.mediaStreamError && error.mediaStreamError.name === "NotAllowedError") {
-      this.warning = "Camera access was not allowed by user!";
+      this.warning = "Camera access was not allowed by user! Please upload photo manually..";
       console.warn(this.warning);
+      alert(this.warning);
+      this.camError = true;
 
     } else {
       this.warning = '';
@@ -387,4 +397,40 @@ export class ActivityDetailComponent implements OnInit {
       this.uploadMessage = 'Tidak ada gambar yang diambil!';
     }
   }
+
+  /**
+   * UPLOAD
+   */
+  selectedFile: File | null = null;
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.selectedFile = input.files[0];
+    }
+  }
+
+  onUpload(): void {
+    if (!this.selectedFile) {
+      console.error('No file selected.');
+      return;
+    }
+    const formData = new FormData();
+    formData.append('file', this.selectedFile, this.selectedFile.name);
+    formData.append('id', this.id);
+
+    this.http.post(this.api + this.configService.getAppCode() + 'FileUpload/upload', formData, {})
+      .subscribe(
+        (data) => {
+          console.log('Upload success', data);
+
+          this.httpCheckOut(data); 
+        },
+        (error) => {
+          console.error('Upload failed', error);
+        }
+      );
+  }
+
+
+
 }

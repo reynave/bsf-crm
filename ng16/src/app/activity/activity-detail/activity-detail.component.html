@@ -62,7 +62,7 @@
 
 
 
-<div class="container-fluid mb-3"  *ngIf="totalAR > 0">
+<div class="container-fluid mb-3" *ngIf="totalAR > 0">
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -71,20 +71,20 @@
                         <table class="table table-sm ">
                             <thead>
                                 <tr>
-                                    <th>Invoice No</th> 
+                                    <th>Invoice No</th>
                                     <th> Amount </th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr *ngFor="let x of ar">
                                     <td> {{x.name}} <br>{{x.invoice_date | date}}</td>
-                                  
+
                                     <td class="text-end">
                                         {{x.amount_total | number}}
                                     </td>
                                 </tr>
                             </tbody>
-                    
+
                         </table>
                     </div>
                 </div>
@@ -145,7 +145,7 @@
                         {{item.x_note}}
                     </div>
                     <div class="mb-2">
-                        
+
                         <img [src]="api+ item.x_photo_url_check_in" class="w-100 p-1 bg-white border"
                             *ngIf="api+item.x_photo_url_check_in">
                     </div>
@@ -226,8 +226,8 @@
 
     </div>
 </div> -->
- 
- 
+
+
 <footer class="bg-white border-top shadow-sm" *ngIf="item.x_activity_status  != 'CLOSE' ">
     <div class="container" *ngIf="item.x_is_visited != 'f'">
         <div class="row">
@@ -241,9 +241,9 @@
                         *ngIf="item.x_activity_status  == 'CHECKIN'">Check Out</button>
 
                 </div>
-                <div class="d-grid py-2" *ngIf="expired == true"> 
+                <div class="d-grid py-2" *ngIf="expired == true">
 
-                    <button class="btn btn-light rounded-pill" disabled >Expired</button>
+                    <button class="btn btn-light rounded-pill" disabled>Expired</button>
 
                 </div>
 
@@ -272,16 +272,19 @@
 
         <div class="mb-2">
             <div for="x_summary" class="form-label">Take Photo</div>
+            <div *ngIf="camError== false">
+                <div *ngIf="!webcamImage">
+                    <webcam (initError)="handleInitError($event)" [width]="355" [allowCameraSwitch]="true"
+                        [trigger]="triggerObservable" (imageCapture)="handleImage($event)"></webcam>
+                </div>
 
-            <div *ngIf="!webcamImage">
-                <webcam (initError)="handleInitError($event)" [width]="355" [allowCameraSwitch]="true" [trigger]="triggerObservable"
-                (imageCapture)="handleImage($event)"></webcam>
+                <div *ngIf="webcamImage">
+                    <img [src]="webcamImage.imageAsDataUrl" width="100%" class="border shadow-sm rounded" />
+                </div>
             </div>
-
-            <div *ngIf="webcamImage">
-                 <img [src]="webcamImage.imageAsDataUrl"  width="100%" class="border shadow-sm rounded"/>
+            <div *ngIf="camError == true">
+                <input type="file" class="form-control" (change)="onFileSelected($event)" />
             </div>
-           
 
         </div>
         <div class="md-2">
@@ -315,7 +318,7 @@
             <label for="x_note" class="form-label">Note</label>
             <textarea class="form-control" rows="5" [(ngModel)]="model.x_note" name="x_note" id="x_note"></textarea>
         </div>
-        
+
     </div>
     <div class="modal-footer d-grid">
 

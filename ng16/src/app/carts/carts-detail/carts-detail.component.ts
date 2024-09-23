@@ -15,7 +15,7 @@ export class CartsDetailComponent implements   OnInit{
   note: string = "";
   items : any = [];
   header : any = [];
-  
+  x_note : string = "";
   id : string = "";
 
   total : number = 0;
@@ -29,12 +29,13 @@ export class CartsDetailComponent implements   OnInit{
   ){ }
  
   ngOnInit(): void { 
+    this.loading = true;  
     this.id = this.activeRoute.snapshot.queryParams['id'];
     this.httpGet();
   }
 
   httpGet(){  
-    this.loading = true;  
+  
     this.http.get<any>(this.api + this.configService.getAppCode()+'carts/detail', {
       headers : this.configService.headers(),
       params : {
@@ -54,17 +55,33 @@ export class CartsDetailComponent implements   OnInit{
       },
     );
   }
- 
-  updateQty(x:any){
-    this.loading = true;  
+  updateHeader(){
+    const body = { 
+      header : this.header, 
+      
+    }
+    console.log(body)
+    this.http.post<any>(this.api +this.configService.getAppCode()+ 'carts/updateHeader', body, {
+      headers : this.configService.headers(),
+    }).subscribe(
+      data => { 
+        console.log(data);
+      },
+      e => {
+        console.log(e);
+        this.note = "Error Server!";
+      },
+    );
+  }
+
+  updateQty(x:any){ 
     const body = { 
       item : x, 
     }
     this.http.post<any>(this.api +this.configService.getAppCode()+ 'carts/updateQty', body, {
       headers : this.configService.headers(),
     }).subscribe(
-      data => {
-        this.loading = false;  
+      data => { 
         this.httpGet();
       },
       e => {
@@ -73,6 +90,7 @@ export class CartsDetailComponent implements   OnInit{
       },
     );
   }
+
   fnDeleteDetail(id : string){
     if(confirm("Delete this item ? ")){
       const body = {
@@ -92,6 +110,7 @@ export class CartsDetailComponent implements   OnInit{
       );
     }
   }
+
   back(){
     history.back();
   }
@@ -144,6 +163,7 @@ export class CartsDetailComponent implements   OnInit{
       );
     }
   }
+  
   onCloseCart(){
     const body = {  
       id : this.activeRoute.snapshot.queryParams['id'],
