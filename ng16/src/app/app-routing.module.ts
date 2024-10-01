@@ -51,7 +51,7 @@ const routes: Routes = [
   { path:"modal/customer", component:CustomerModalComponent , data: { active: "customer" },  canActivate:[authGuard]},
  
   { path:"customer", component:CustomerComponent , data: { active: "customer" },  canActivate:[authGuard]},
-  { path:"customer/detail/:id", component:CustomerDetailComponent , data: { active: "customer" },  canActivate:[authGuard]},
+  { path:"customer/detail", component:CustomerDetailComponent , data: { active: "customer" },  canActivate:[authGuard]},
   { path:"customer/insert", component:CustomerInsertComponent , data: { active: "customer" },  canActivate:[authGuard]},
 
   { path:"carts", component:CartsComponent , data: { active: "cart" },  canActivate:[authGuard]},

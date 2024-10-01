@@ -92,6 +92,8 @@ export class CustomerComponent implements OnInit {
           console.log(error);
         }
       )
+    }else{
+      this.router.navigate(['customer/detail'],{queryParams:{id:x.id}});
     }
   }
 

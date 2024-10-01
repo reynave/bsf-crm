@@ -17,6 +17,39 @@ class Res_partner extends BaseController
         return $this->response->setJSON($data);
     }
 
+
+    public function customerDetail()
+    {
+        $post = $this->request->getVar();
+        $accountId = model("Core")->accountId();  
+        if(model("Core")->x_employee_type() == ''  ){
+            //$where = " WHERE active = true AND customer_rank > 0  AND name like '%" . $name . "%'  "; 
+            $where = " WHERE active = true AND x_salesman = '$accountId'   AND id = " . $post['id'] . "  "; 
+            
+        }else{
+            $where = " WHERE x_ext_sales = '$accountId'   AND id = " . $post['id'] . "  "; 
+        } 
+        $q = "SELECT * FROM res_partner  $where  ";
+        
+        $item = $this->db->query($q);
+
+        
+        $query = $this->db->query("SELECT  partner_id, name, amount_residual_signed, payment_state, invoice_date, move_type , amount_total
+        FROM account_move   
+        WHERE partner_id = '" . $post['id'] . "' and payment_state = 'not_paid' AND move_type = 'out_invoice'  ");
+
+
+        $ar = $query->getResultArray();
+
+        $data = [
+            "error" => false,
+            "customer" =>  $item->getResultArray(),
+            "ar" => $ar,
+            "datetime" => date("Y-m-d H:i:s"),
+        ];
+        return $this->response->setJSON($data);
+    }
+
     function searchCustomer()
     {
         $post = $this->request->getVar();

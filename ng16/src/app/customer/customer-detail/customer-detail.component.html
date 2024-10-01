@@ -1,1 +1,96 @@
-<p>customer-detail works!</p>
+<nav class="fixed-top bg-white shadow-sm border-bottom py-2">
+    <div class="container-fluid">
+        <div class="row g-1">
+            <div class="col-1">
+                <a class="navbar-brand h2" (click)="back()"><i class="bi bi-arrow-left"></i></a>
+            </div>
+            <div class="col-10 align-self-center text-center  ">
+                <h5 class="p-0 m-0  ms-3"> Customer Detail</h5>
+            </div>
+            <div class="col-1">
+
+            </div>
+
+
+        </div>
+    </div>
+</nav>
+
+
+
+<div class="container-fluid mt-3">
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-3">
+                <div class="card-body ">
+                    <div>
+                        <label>Name</label>
+                        <div class="lh-sm mb-2">
+                            <strong>{{customer.name}}</strong>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label>Company Name</label>
+                        <div class="lh-sm mb-2">
+                            <strong>{{customer.commercial_company_name}}</strong>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label>Street</label>
+                        <div class="lh-sm mb-2">
+                            <strong>{{customer.street}}</strong><br>
+                            <strong>{{customer.street2}}</strong><br>
+                            <strong>{{customer.zip}}</strong><br>
+                            <strong>{{customer.city}}</strong><br>
+
+                        </div>
+                    </div>
+
+                    <div>
+                        <label>Alamat NPWP</label>
+                        <div class="lh-sm mb-2">
+                            <strong>{{customer.x_alamat_npwp}}</strong><br>
+                        </div>
+                    </div>
+
+
+
+                    <div class="mb-2">
+                        <div>
+                            Total AR : {{ar.length}}
+                        </div>
+                    </div>
+                </div> 
+            </div>
+            <div class="card  mb-3">
+               
+                <div class="card-body "> 
+                    <strong>AR List</strong>
+                    <div *ngFor="let x of ar" class="mb-3" [hidden]="!x.invoice_date ">
+                        <div class="row g-1">
+                            <div class="col-6">
+                                <b>{{x.name}}</b>
+                            </div> 
+                            <div class="col-6 text-end">
+                                {{x.payment_state}}
+                            </div>
+                        </div>
+                        <div class="row g-1">
+                           
+                            <div class="col-6">
+                                {{ x.invoice_date | date}}
+                                
+                            </div>
+                            <div class="col-6 text-end"> 
+                                {{x.amount_total | number}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
