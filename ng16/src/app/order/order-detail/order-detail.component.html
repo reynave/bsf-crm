@@ -1,39 +1,57 @@
 <div class=" bg-white p-2 shadow-md border">
     <div class="row">
-        <div class="col-12 text-end">
+        <div class="col-10">
+            <div> <strong>{{header.name}}</strong> </div>
+        </div>
+        <div class="col-2 text-end">
             <a (click)="back();">Close</a>
         </div>
-    </div>
-    <div class="row  border-bottom py-4"  [hidden]="loading" *ngFor="let x of detail">
         <div class="col-12">
-            <div>
-                <strong>{{x.x_name}}</strong>
-            </div> 
-        </div>
+            <div>Order Date : {{header.x_order_date}}</div>
+            <div>{{header.street}}</div>
 
-        <div class="col text-end">
-            <small>Unit Price</small>
-            <div><b>Rp {{x.x_unitprice | number}}</b></div>
         </div>
-        <div class="col text-end">
+    </div>
+    <div class="row  border-bottom py-1" [hidden]="loading" *ngFor="let x of detail">
+
+        <div class="col">
             <small>Qty</small>
             <div> <b>{{x.x_qty | number }}</b></div>
         </div>
-        <div class="col text-end" [hidden]="!x.x_discount">
+        <div class="col text-end">
+            <small>Unit Price</small>
+            <div><b> {{x.x_unitprice | number}}</b></div>
+        </div>
+
+        <div class="col text-end">
             <small>Discount</small>
-            <div> <b>Rp {{x.x_discount| number}}</b></div>
+            <div> <b> {{x.x_discount| number}}</b></div>
         </div>
         <div class="col text-end">
             <small>Subtotal</small>
-            <div> <b>Rp {{x.x_subtotal| number}}</b></div>
+            <div> <b> {{x.x_subtotal| number}}</b></div>
         </div>
+
+
+    </div>
+    <div class="row" *ngIf="header.x_bukti_bayar_url != '' ">
+        <div class="col-12 py-3"> 
+            <img [src]="api+'public/'+header.x_bukti_bayar_url" width="100%">
+            <small> {{api+header.x_bukti_bayar_url}}</small>
+        </div>
+        
+    </div>
+
+    <div class="row g-1 mb-1 py-2">
+        <div class="col-9"> <input type="file" class="form-control form-control-sm" (change)="onFileSelected($event)" />  </div>
+        <div class="col-3 d-grid"> <button class="btn btn-sm btn-light border" (click)="onUpload()">Upload</button>  </div>
     </div>
 
     <div class="row" [hidden]="!loading">
-        <div class="col-12" >
+        <div class="col-12">
             <div class="text-center my-5">
-              <img src="./assets/gif/icons8-loading.gif" width="50">
+                <img src="./assets/gif/icons8-loading.gif" width="50">
             </div>
-         </div>
+        </div>
     </div>
 </div>

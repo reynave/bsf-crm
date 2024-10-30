@@ -141,6 +141,27 @@
                     </div>
                 </div>
 
+                
+                <div class="bg-white px-3 py-2 border  mb-3">
+                    <div class="row" *ngIf="header.x_bukti_bayar_url != '' ">
+                        <div class="col-12 py-3"> 
+                            <img [src]="api+'public/'+header.x_bukti_bayar_url" width="100%">
+                            <small> {{api+header.x_bukti_bayar_url}}</small>
+                        </div>
+                        <div class="col-12 d-grid">
+                            <button type="button" class="btn btn-warning" (click)="deleteImg();">Delete Img</button>
+                        </div>
+                        
+                    </div>
+                    <div class="row">
+                        <div class="row g-1 mb-1 py-2">
+                            <div class="col-9"> <input type="file" class="form-control form-control-sm" (change)="onFileSelected($event)" />  </div>
+                            <div class="col-3 d-grid"> <button class="btn btn-sm btn-light border" (click)="onUpload()">Upload</button>  </div>
+                        </div>
+                    </div>
+                </div>
+
+
                 <div class="d-grid mb-2">
                     <a class="btn btn-lg btn-primary" [routerLink]="[ '/product',  ]"
                         [queryParams]="{cardId:header.id}">ADD ITEM</a>

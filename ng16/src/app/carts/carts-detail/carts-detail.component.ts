@@ -73,7 +73,24 @@ export class CartsDetailComponent implements   OnInit{
       },
     );
   }
-
+  deleteImg(){
+    if(confirm("Delete this img ? ")){
+      const body = { 
+        id : this.activeRoute.snapshot.queryParams['id'], 
+      }
+      this.http.post<any>(this.api +this.configService.getAppCode()+ 'carts/deleteImg', body, {
+        headers : this.configService.headers(),
+      }).subscribe(
+        data => { 
+          this.httpGet();
+        },
+        e => {
+          console.log(e);
+          this.note = "Error Server!";
+        },
+      );
+    }
+  }
   updateQty(x:any){ 
     const body = { 
       item : x, 
@@ -183,5 +200,33 @@ export class CartsDetailComponent implements   OnInit{
     );
   }
 
+
+  selectedFile: File | null = null;
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.selectedFile = input.files[0];
+    }
+  }
+
+  onUpload(): void {
+    if (!this.selectedFile) {
+      console.error('No file selected.');
+      return;
+    }
+    const formData = new FormData();
+    formData.append('file', this.selectedFile, this.selectedFile.name);
+    formData.append('id', this.activeRoute.snapshot.queryParams['id']); 
+    this.http.post(this.api + this.configService.getAppCode()+  'FileUpload/uploads_x_customer_po', formData, {})
+      .subscribe(
+        (data) => {
+          console.log('Upload success', data); 
+          this.httpGet();
+        },
+        (error) => {
+          console.error('Upload failed', error);
+        }
+      );
+  }
    
 }

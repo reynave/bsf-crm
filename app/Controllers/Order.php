@@ -73,6 +73,15 @@ class Order extends BaseController
     }
 
     function detail($id) {
+
+        $header = "SELECT cpo.* , p.name,  p.street
+        FROM x_customer_po as cpo
+        LEFT JOIN res_partner as p on p.id = cpo.x_customer_id
+        WHERE cpo.id = $id  order by cpo.write_date";
+        $header = $this->db->query($header);
+        $header= $header->getResultArray();
+
+
         $detail = "SELECT * 
         FROM x_customer_po_line  
         WHERE x_customer_po_line_id = ".$id; 
@@ -83,6 +92,7 @@ class Order extends BaseController
             "id" => $id,
             "error" => false,
             "datetime" => date("Y-m-d H:i:s"),
+            "header" => $header,  
             "detail" => $detail,  
         ];
 

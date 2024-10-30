@@ -60,7 +60,7 @@ class Carts extends BaseController
 
         $q1 = 'SELECT  p.id , p.x_customer, p.x_salesperson_id, p.x_is_magic_order, 
         p.x_cabangutama, p.x_cabangpembantu, p.x_order_date,  p.x_note,
-        sum(l.x_qty) as "qty", sum(  l.x_subtotal) as "totalAmount"
+        sum(l.x_qty) as "qty", sum(  l.x_subtotal) as "totalAmount", p.x_bukti_bayar_url
         FROM x_customer_po  as p
         left join x_customer_po_line as l on p.id = l.x_customer_po_line_id
         left join x_mastercabang as mcu on mcu.id = p.x_cabangutama
@@ -87,6 +87,26 @@ class Carts extends BaseController
 
         return $this->response->setJSON($data);
 
+    }
+
+    function deleteImg(){
+        $json = file_get_contents('php://input');
+        $post = json_decode($json, true);
+        $data = [
+            "error" => true,
+            "post" => $post,
+        ];
+        if ($post) {
+            $this->db->table("x_customer_po")->update([
+                "x_bukti_bayar_url" => '',
+            ], " id = ".$post['id']);
+
+            $data = [
+                "error" => false,
+                "post" => $post,
+            ];
+        }
+        return $this->response->setJSON($data);
     }
     function fnDeleteDetail()
     {
