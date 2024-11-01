@@ -63,6 +63,16 @@
                             </a>
                         </div>
                     </div>
+                    <div class="row" *ngIf="x.x_transaction_type != '' &&  x.x_transaction_type != null ">
+                        <div class="col-12"> 
+                            <a [routerLink]="[ '/carts/detail' ]" [queryParams]="{id:x.id}">
+                                <strong><small>Transaction Type</small></strong>
+                                <div>
+                                    <h6>{{x.x_transaction_type}} &nbsp;</h6>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
                     <div class="row g-1">
                         <div class="col-6 align-self-center">
                             <a [routerLink]="[ '/carts/detail' ]" [queryParams]="{id:x.id}">

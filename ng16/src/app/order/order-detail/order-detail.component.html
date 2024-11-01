@@ -8,10 +8,15 @@
         </div>
         <div class="col-12">
             <div>Order Date : {{header.x_order_date}}</div>
-            <div>{{header.street}}</div>
+            <div>{{header.street}}</div> 
+        </div>
 
+        <div class="col-12" *ngIf="header.x_transaction_type != null ">
+            <div>Transaction Type : {{header.x_transaction_type}}</div>
+            <div>{{header.x_transaction_type}}</div> 
         </div>
     </div>
+
     <div class="row  border-bottom py-1" [hidden]="loading" *ngFor="let x of detail">
 
         <div class="col">

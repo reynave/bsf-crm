@@ -18,7 +18,7 @@ class Carts extends BaseController
         // $x_customer_po_line = $this->db->query($q1)->getResultArray();    
 
         $q2 = 'SELECT  p.id , p.x_customer, p.x_salesperson_id, p.x_is_magic_order,x_cabangutama,x_cabangpembantu, x_order_date,
-            sum(l.x_qty) as "qty", sum(l.x_subtotal) as "totalAmount"
+            sum(l.x_qty) as "qty", sum(l.x_subtotal) as "totalAmount", p.x_transaction_type
             FROM x_customer_po  as p
             left join x_customer_po_line as l on p.id = l.x_customer_po_line_id
             where p.x_salesperson_id = ' . $accountId . ' and x_submit = 0
@@ -60,7 +60,7 @@ class Carts extends BaseController
 
         $q1 = 'SELECT  p.id , p.x_customer, p.x_salesperson_id, p.x_is_magic_order, 
         p.x_cabangutama, p.x_cabangpembantu, p.x_order_date,  p.x_note,
-        sum(l.x_qty) as "qty", sum(  l.x_subtotal) as "totalAmount", p.x_bukti_bayar_url
+        sum(l.x_qty) as "qty", sum(  l.x_subtotal) as "totalAmount", p.x_bukti_bayar_url, p.x_transaction_type
         FROM x_customer_po  as p
         left join x_customer_po_line as l on p.id = l.x_customer_po_line_id
         left join x_mastercabang as mcu on mcu.id = p.x_cabangutama
@@ -184,6 +184,8 @@ class Carts extends BaseController
         if ($post) { 
             $this->db->table("x_customer_po")->update([
                 "x_note" => $post['header']['x_note'], 
+                "x_transaction_type" => $post['header']['x_transaction_type'], 
+                
             ], " id = " . $post['header']['id']); 
 
             $data = [

@@ -62,7 +62,7 @@
                             </div>
                         </div>
                     </div> -->
-                    <div class="row">
+                    <div class="row mb-2">
                         <div class="col-12">
                             <strong><small>Customer Name</small></strong>
                             <a [routerLink]="[ '/customer' ]" [queryParams]="{cardId:header.id}">
@@ -72,7 +72,7 @@
                             </a>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row mb-2">
                         <div class="col-12">
                             <strong><small>Order Detail Note</small></strong>
                             <textarea class="form-control  border" [(ngModel)]="header.x_note" name="x_note"
@@ -80,9 +80,18 @@
 
                         </div>
                     </div>
+                    <div class="row mb-2">
+                        <div class="col-12">
+                            <strong><small>Transaction Type</small></strong>
+                            <select  class="form-control " [(ngModel)]="header.x_transaction_type" (change)="updateHeader()" name="x_transaction_type">
+                                <option [value]="'Normal Order'">Normal Order</option>
+                                <option [value]="'Canvassing'">Canvassing</option> 
+                            </select>
 
+                        </div>
+                    </div>
 
-                    <div class="row g-1">
+                    <div class="row g-1 mb-2">
                         <div class="col-6 align-self-center">
                             <strong><small>Grand Total</small></strong>
                             <h4 class="lh-1">
