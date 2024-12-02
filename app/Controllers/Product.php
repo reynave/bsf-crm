@@ -52,17 +52,16 @@ class Product extends BaseController
              WHERE p.active = 't' AND  s.location_id =  $locationId  AND      ";
 
             $qB = "SELECT a.id, sum(a.quantity) AS qty_Available , a.name , a.list_price, a.default_code, 
-                    a.reserved_quantity, a.location_id 
-                    from (
-
-                    SELECT  p.id,  s.x_product_name  as name,              
-                    s.x_sales_price as list_price, p.default_code, s.quantity, s.reserved_quantity, s.location_id       
-                    FROM product_product AS p             
-                    LEFT JOIN stock_quant AS s ON s.product_id = p.id   
-                    WHERE p.active = 't' AND  s.location_id =   $locationId  AND s.x_product_name 
-                    LIKE '%".strtoupper($search)."%' 
-                    ) a 
-                    GROUP BY a.id, a.name, a.list_price, a.default_code,   a.reserved_quantity, a.location_id   ";
+            a.reserved_quantity, a.location_id 
+            from (
+                SELECT  p.id,  s.x_product_name  as name,              
+                s.x_sales_price as list_price, p.default_code, s.quantity, s.reserved_quantity, s.location_id       
+                FROM product_product AS p             
+                LEFT JOIN stock_quant AS s ON s.product_id = p.id   
+                WHERE p.active = 't' AND  s.location_id =   $locationId  AND s.x_product_name 
+                LIKE '%".strtoupper($search)."%' 
+            ) a 
+            GROUP BY a.id, a.name, a.list_price, a.default_code,   a.reserved_quantity, a.location_id   ";
 
             $q = "SELECT  p.id, p.id as product_id,  s.x_product_name  as name,  
             s.x_sales_price as list_price, p.default_code,  
@@ -158,7 +157,25 @@ class Product extends BaseController
         LEFT JOIN stock_quant AS s ON s.product_id = p.id
         WHERE p.active = 't' AND  p.id = " . $get['id'] . " AND  s.location_id  =  " . $get['location_id'];
 
-        $query = $this->db->query($q);
+
+
+
+
+            $qB = "SELECT a.id, sum(a.quantity) AS qty_Available , a.name , a.list_price, a.default_code, 
+            a.reserved_quantity, a.location_id 
+            from (
+                SELECT  p.id,  s.x_product_name  as name,              
+                s.x_sales_price as list_price, p.default_code, s.quantity, s.reserved_quantity, s.location_id       
+                FROM product_product AS p             
+                LEFT JOIN stock_quant AS s ON s.product_id = p.id   
+                WHERE p.active = 't' AND   p.id = " . $get['id'] . "  AND  s.location_id  =  " . $get['location_id']."  
+            ) a 
+            GROUP BY a.id, a.name, a.list_price, a.default_code,   a.reserved_quantity, a.location_id   ";
+
+ 
+
+
+        $query = $this->db->query($qB);
         $item = $query->getResultArray();
 
         $accountId = model("Core")->accountId();   
@@ -170,6 +187,7 @@ class Product extends BaseController
             group by p.id ';
         $x_customer_po = $this->db->query($q2)->getResultArray();
 
+        if($item[0]['qty_available'] < 0) $item[0]['qty_available'] = 0;
 
         $data = [
             "error" => false,
