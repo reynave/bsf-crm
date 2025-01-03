@@ -83,7 +83,7 @@ class Res_partner extends BaseController
              
         
             if (isset($post['field']) && $post['field'] == 'contact') {
-                $where = " WHERE name like '%" . $name . "%' AND x_end_user is not NULL ";
+                $where = " WHERE name like '%" . $name . "%' AND   x_end_user = true  ";
             }
 
             $q = "SELECT 
