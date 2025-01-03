@@ -1,0 +1,185 @@
+<app-header></app-header>
+
+<div class="main1" >
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12   py-3">
+                <img src="./assets/img/logo.png" width="40%" >
+            </div>
+        </div>
+        <div class="row g-3 mb-3">
+            <div class="col-12 text-center">
+                <small><b>Clock In and Out</b></small>
+            </div>
+            <div class="col-6">
+                <div class=" bg-white rounded shadow-sm text-center" (click)="clockIn()" >
+                    <div class="lh-1 py-2">
+                        <h2 class="mb-0"><i class="bi bi-box-arrow-in-right"></i> </h2>
+                        <small>
+                            Clock In
+                        </small>
+                        <div class="mt-1"><code class="text-primary">{{clock['clickIn']}} &nbsp;</code> </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class=" bg-white rounded shadow-sm text-center" (click)="clockOut()" >
+                    <div class="lh-1 py-2">
+                        <h2 class="mb-0"> <i class="bi bi-box-arrow-right"></i> </h2>
+                        <small>
+                            Clock Out
+                        </small>
+                        <div class="mt-1"><code class="text-primary">{{clock['clickOut']}} &nbsp;</code> </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-3 mb-3">
+            <div class="col-12  text-center">
+                <small><b>Main Menu</b></small>
+            </div>
+            <div class="col-4">
+                <div class=" bg-white rounded shadow-sm text-center" [routerLink]="[ '/scheduleAcivities' ]">
+                    <div class="lh-1 py-2">
+                        <h1> <i class="bi bi-calendar3"></i></h1>
+                        <small>
+                            Schedule
+                        </small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class=" bg-white rounded shadow-sm text-center" [routerLink]="[ '/activity' ]">
+                    <div class="lh-1 py-2">
+                        <h1> <i class="bi bi-pin-map"></i> </h1>
+                        <small>Activty</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class=" bg-white rounded shadow-sm text-center" [routerLink]="[ '/product' ]">
+                    <div class="lh-1 py-2">
+                        <h1> <i class="bi bi-box2"></i> </h1>
+                        <small>
+                            Product
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row g-3 mb-5">
+            <div class="col-4">
+                <div class=" bg-white rounded shadow-sm text-center" [routerLink]="[ '/carts' ]">
+                    <div class="lh-1 py-2">
+                        <h1> <i class="bi bi-cart3"></i> </h1>
+                        <small>
+                            Order
+                        </small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class=" bg-white rounded shadow-sm text-center" [routerLink]="[ '/order' ]">
+                    <div class="lh-1 py-2">
+                        <h1> <i class="bi bi-archive"></i></h1>
+
+                        <small>
+                            History
+                        </small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-4">
+                <div class=" bg-white rounded shadow-sm text-center" [routerLink]="[ '/customer' ]">
+                    <div class="lh-1 py-2">
+                        <h1> <i class="bi bi-person-vcard"></i> </h1> 
+                        <small>
+                            Customer
+                        </small>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row g-3 ">
+            <div class="col-12  text-center">
+                <small>Check Device Only</small>
+            </div>
+        </div>
+
+        <div class="row g-2 mb-3">
+            <div class="col">
+                <div class=" bg-white rounded shadow-sm text-center" (click)="callApi()">
+                    <div class="lh-1 py-2">
+                        <h3> <i class="bi bi-database-up"></i> </h3>
+                        <small>
+                            <a >  Oddo Server</a>
+                        </small>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class=" bg-white rounded shadow-sm text-center"  (click)="cam()">
+                    <div class="lh-1 py-2">
+                        <h3> <i class="bi bi-camera2"></i> </h3>
+
+                        <small>
+                            <a >  Native Camera</a>
+                        </small>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class=" bg-white rounded shadow-sm text-center" (click)="ngxWebCame()">
+                    <div class="lh-1 py-2">
+                        <h3> <i class="bi bi-webcam"></i> </h3>
+                        <!-- <webcam (initError)="handleInitError($event)"></webcam> -->
+                        <small>
+                            <a >  HTML5 Camera</a>
+                        </small>
+                    </div>
+                </div>
+            </div>
+       
+            
+            <div class="col">
+                <div class=" bg-white rounded shadow-sm text-center" (click)="gps()">
+                    <div class="lh-1 py-2">
+                        <h3> <i class="bi bi-braces-asterisk"></i> </h3>
+
+                        <small>
+                            <a >  GPS Allowed</a>
+                        </small>
+                    </div>
+                </div>
+            </div>
+
+        </div>  
+
+        <div class="row">
+            <div class="col-12">  
+                <div class="bg-light rounded p-2">
+                   <div>
+                    {{note}} 
+                   </div>
+
+                    <code>
+                        {{gpsInfo | json}}
+                    </code>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" [hidden]="env.production == true">
+            <div class="col-12">
+                <div class="lh-1 my-3 alert bg-light">
+                    <code> {{env | json}}</code>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

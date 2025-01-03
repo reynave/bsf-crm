@@ -65,6 +65,7 @@ class Res_partner extends BaseController
             $status = true;
             $name = strtoupper(str_replace(["'", '"', "\'"], "", $post['name']));
         }
+       
 
         if ($status) {
             $accountId = model("Core")->accountId(); 
@@ -80,6 +81,10 @@ class Res_partner extends BaseController
                 $where = " WHERE name like '%" . $name . "%' AND x_ext_sales = '$accountId'  "; 
             }
              
+        
+            if (isset($post['field']) && $post['field'] == 'contact') {
+                $where = " WHERE name like '%" . $name . "%' AND x_end_user is not NULL ";
+            }
 
             $q = "SELECT 
                 id, name,  street, x_latitude, x_longitude, x_salesman

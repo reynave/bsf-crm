@@ -1,0 +1,47 @@
+<nav class="fixed-top  py-2">
+    <div class="container-fluid">
+        <div class="row g-1">
+            <div class="col-1">
+
+            </div>
+            <div class="col-10 align-self-center text-center  ">
+                 <strong> {{ver}} </strong>
+            </div>
+            <div class="col-1 align-self-center text-center ">
+                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasNavbarLight" aria-controls="offcanvasNavbarLight"
+                    aria-label="Toggle navigation">
+                    <i class="bi bi-list"></i> 
+                </button>
+            </div>
+
+        </div>
+
+
+    </div>
+</nav>
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbarLight"
+    aria-labelledby="offcanvasNavbarLightLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasNavbarLightLabel">Menu</h5>
+        <a class="" data-bs-dismiss="offcanvas" aria-label="Close">
+            <i class="bi bi-x-lg"></i>
+        </a>
+    </div>
+    <div class="offcanvas-body">
+        Hi, {{account['x_name']}}
+        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+            <!-- <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Profile</a>
+            </li> -->
+            <li class="nav-item">
+                <a class="nav-link" data-bs-dismiss="offcanvas" (click)="logout();"><b>Log Out</b></a>
+            </li>
+        </ul>
+
+    </div>
+</div>

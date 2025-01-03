@@ -17,7 +17,7 @@ export class CartsDetailComponent implements   OnInit{
   header : any = [];
   x_note : string = "";
   id : string = "";
-
+  contact : any = [];
   total : number = 0;
   customer : any = [];
   constructor(
@@ -46,6 +46,8 @@ export class CartsDetailComponent implements   OnInit{
         this.loading = false;
         this.items = data['items'];
         this.header = data['header'][0]; 
+        this.contact = data['contact'][0];
+        //this.header.x_aks = "";
         this.id = data['id'];
         console.log(data);  
       },

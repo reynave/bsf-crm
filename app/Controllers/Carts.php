@@ -58,7 +58,7 @@ class Carts extends BaseController
         //$accountId = model("Core")->accountId();
         $id = $this->request->getVar()['id'];
 
-        $q1 = 'SELECT  p.id , p.x_customer, p.x_salesperson_id, p.x_is_magic_order, 
+        $q1 = 'SELECT  p.id , p.x_customer, p.x_salesperson_id, p.x_is_magic_order, p.x_aks, p.x_end_user,
         p.x_cabangutama, p.x_cabangpembantu, p.x_order_date,  p.x_note,
         sum(l.x_qty) as "qty", sum(  l.x_subtotal) as "totalAmount", p.x_bukti_bayar_url, p.x_transaction_type
         FROM x_customer_po  as p
@@ -74,13 +74,30 @@ class Carts extends BaseController
             order by create_date ASC ";
         $x_customer_po_line = $this->db->query($q2)->getResultArray();
 
+        $contact = [];
+        $contact[] = array(
+            "id" => 0,
+            "name" => "",
+            "x_end_user" => '',
+        );
+        if($header[0]['x_end_user'] != '' ){
+            $contact = [];
+            $q1 = "SELECT 
+            id, name,   x_end_user
+            FROM res_partner 
+            WHERE  id =  ".$header[0]['x_end_user']."   "; 
+            $contact = $this->db->query($q1)->getResultArray();
+        }
+    
+
 
         $data = [
             "error" => false,
+          //  "q1" => $q1,
             "datetime" => date("Y-m-d H:i:s"),
             "items" => $x_customer_po_line,
             "header" => $header,
-
+            "contact" => $contact,
         ];
 
 
@@ -185,7 +202,7 @@ class Carts extends BaseController
             $this->db->table("x_customer_po")->update([
                 "x_note" => $post['header']['x_note'], 
                 "x_transaction_type" => $post['header']['x_transaction_type'], 
-                
+                "x_aks" => $post['header']['x_aks'] == 'true' ? true : false, 
             ], " id = " . $post['header']['id']); 
 
             $data = [
@@ -205,11 +222,21 @@ class Carts extends BaseController
         ];
         if ($post) {
 
-            $this->db->table("x_customer_po")->update([
-                "x_customer_id" => $post['item']['id'],
-                "x_customer" => $post['item']['name']
-            ], " id = " . $post['id']);
+            if (isset($post['field']) && $post['field'] == 'contact') {
+                $this->db->table("x_customer_po")->update([
+                    "x_end_user" => $post['item']['id'], 
+                ], " id = " . $post['id']);
+    
+            }else{
+                $this->db->table("x_customer_po")->update([
+                    "x_customer_id" => $post['item']['id'],
+                    "x_customer" => $post['item']['name']
+                ], " id = " . $post['id']);
+    
+            }
 
+
+          
 
 
             $data = [

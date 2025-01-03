@@ -88,11 +88,28 @@ class Order extends BaseController
         $detail = $this->db->query($detail);
         $detail= $detail->getResultArray();
      
-         $data = [
+
+        $contact = [];
+        $contact[] = array(
+            "id" => 0,
+            "name" => "",
+            "x_end_user" => '',
+        );
+        if($header[0]['x_end_user'] != '' ){
+            $contact = [];
+            $q1 = "SELECT 
+            id, name,   x_end_user
+            FROM res_partner 
+            WHERE  id =  ".$header[0]['x_end_user']."   "; 
+            $contact = $this->db->query($q1)->getResultArray();
+        }
+     
+        $data = [
             "id" => $id,
             "error" => false,
             "datetime" => date("Y-m-d H:i:s"),
             "header" => $header,  
+            "contact" => $contact,
             "detail" => $detail,  
         ];
 

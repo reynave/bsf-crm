@@ -63,8 +63,11 @@
                         </div>
                     </div> -->
                     <div class="row mb-2">
-                        <div class="col-12">
-                            <strong><small>Customer Name</small></strong>
+                        <div class="col-12"> 
+                            <strong><small>Customer Name</small></strong> 
+                            <label class="ms-4 me-2" for="aks"> <div>AKS ?</div></label> 
+                            <input id="aks" [(ngModel)]="header.x_aks" type="checkbox" (change)="updateHeader()"> 
+
                             <a [routerLink]="[ '/customer' ]" [queryParams]="{cardId:header.id}">
                                 <div class="form-control form-control-sm border">
                                     <h6> {{header.x_customer}} &nbsp;</h6>
@@ -72,6 +75,19 @@
                             </a>
                         </div>
                     </div>
+
+                    <div class="row mb-2">
+                        <div class="col-12"> 
+                           
+                            <strong><small>Contact Name</small></strong>  
+                            <a [routerLink]="[ '/customer' ]" [queryParams]="{cardId:header.id, field:'contact'}">
+                                <div class="form-control form-control-sm border">
+                                    <h6>  {{contact.name}} &nbsp; </h6> 
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
                     <div class="row mb-2">
                         <div class="col-12">
                             <strong><small>Order Detail Note</small></strong>
@@ -83,9 +99,10 @@
                     <div class="row mb-2">
                         <div class="col-12">
                             <strong><small>Transaction Type</small></strong>
-                            <select  class="form-control " [(ngModel)]="header.x_transaction_type" (change)="updateHeader()" name="x_transaction_type">
+                            <select class="form-control " [(ngModel)]="header.x_transaction_type"
+                                (change)="updateHeader()" name="x_transaction_type">
                                 <option [value]="'Normal Order'">Normal Order</option>
-                                <option [value]="'Canvassing'">Canvassing</option> 
+                                <option [value]="'Canvassing'">Canvassing</option>
                             </select>
 
                         </div>
@@ -150,22 +167,24 @@
                     </div>
                 </div>
 
-                
+
                 <div class="bg-white px-3 py-2 border  mb-3">
                     <div class="row" *ngIf="header.x_bukti_bayar_url != '' ">
-                        <div class="col-12 py-3"> 
+                        <div class="col-12 py-3">
                             <img [src]="api+'public/'+header.x_bukti_bayar_url" width="100%">
                             <small> {{api+header.x_bukti_bayar_url}}</small>
                         </div>
                         <div class="col-12 d-grid">
                             <button type="button" class="btn btn-warning" (click)="deleteImg();">Delete Img</button>
                         </div>
-                        
+
                     </div>
                     <div class="row">
                         <div class="row g-1 mb-1 py-2">
-                            <div class="col-9"> <input type="file" class="form-control form-control-sm" (change)="onFileSelected($event)" />  </div>
-                            <div class="col-3 d-grid"> <button class="btn btn-sm btn-light border" (click)="onUpload()">Upload</button>  </div>
+                            <div class="col-9"> <input type="file" class="form-control form-control-sm"
+                                    (change)="onFileSelected($event)" /> </div>
+                            <div class="col-3 d-grid"> <button class="btn btn-sm btn-light border"
+                                    (click)="onUpload()">Upload</button> </div>
                         </div>
                     </div>
                 </div>

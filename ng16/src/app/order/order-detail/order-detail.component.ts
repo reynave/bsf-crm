@@ -18,7 +18,7 @@ export class OrderDetailComponent implements OnInit {
   total: number = 0;
   detail: any = [];
   header: any = [];
-
+  contact : any = [];
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -39,6 +39,7 @@ export class OrderDetailComponent implements OnInit {
       data => {
         this.header = data['header'][0];
         this.loading = false;
+        this.contact = data['contact'][0];
         console.log(data);
         this.detail = data['detail']; 
       },

@@ -1,0 +1,140 @@
+<nav class="fixed-top bg-gray-100 py-2">
+    <div class="container-fluid">
+        <div class="row g-1">
+            <div class="col-1 align-self-center  ">
+                <a class="navbar-brand h2" (click)="back()"><i class="bi bi-arrow-left"></i></a>
+            </div>
+            <div class="col-8 align-self-center  ">
+                <h5 class="p-0 m-0  ms-3"> Activites</h5>
+            </div>
+            <div class="col-3 text-end  ">
+                  <a (click)="fnCancelActiviesSchedule();" class="btn btn-danger rounded-pill">Cancel</a>  
+            </div>
+        </div>
+    </div>
+</nav>
+
+<main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+    <div class="container-fluid py-4">
+        <div class="row">
+            
+            <div class="col-12" *ngIf="loading">
+               <div class="text-center my-5">
+                <img src="./assets/gif/loadingIntro.gif" width="80%">
+               </div>
+            </div>
+            <div class="col-12" *ngIf="!loading">
+
+                <div class="card mb-3  border-{{x.x_activity_status == 'OPEN' ? 'success border-3' : '' }} border-{{x.x_activity_status == 'CHECKIN' ? 'info border-3' : '' }}" 
+                *ngFor="let x of items" >
+                    <div class="card-body">
+                         
+                        <div class="row g-0" [routerLink]="[ '/activity/detail/',x.id ]"> 
+                            <div class="col-9" >
+                                <strong>{{x.x_customer_name}}</strong> 
+                            </div>
+                            <div class="col-3 text-end"> 
+                                <small *ngIf="!fnCheckExp(x.x_schedule_date)" class="badge bg-{{x.x_activity_status != 'CLOSE'? 'secondary':'info'}} mx-1">{{x.x_activity_status}}</small> 
+                            
+                                <small *ngIf="fnCheckExp(x.x_schedule_date)" class="badge bg-light mx-1">Expired</small> 
+                           
+                            </div>
+                           
+                        </div>
+
+                        <!-- <div class="row">
+                            {{x.x_schedule_date}} {{today}}
+                        </div> -->
+                         
+                        <div class="lh-sm mb-2" [routerLink]="[ '/activity/detail/',x.id ]">
+                            <small>{{x.x_route_name}}</small>
+                        </div>
+                       
+                        <div class="row mb-2" [routerLink]="[ '/activity/detail/',x.id ]">
+                            <div class="col">
+                                <div class="lh-sm">
+                                    <small>Schdule Date </small>
+                                </div> 
+                                <div class="lh-sm">
+                                    <label>{{x.x_schedule_date | date:'d MMM y'}}</label>
+                                </div> 
+                            </div>
+                            <div class="col">
+                                <div class="lh-sm">
+                                    <small>Created Date</small>
+                                </div> 
+                                <div class="lh-sm">
+                                    <label>{{x.create_date | date:'medium'}}</label>
+                                </div> 
+                            </div>
+                        </div>
+
+                        <!-- <div class="row" *ngIf="x.x_activity_status == 'OPEN' ">
+                            <div class="col-12 text-end">
+                                 <span (click)="fnRemove(x);" class="badge bg-danger "><i class="bi bi-trash3"></i> REMOVE </span>
+                            </div>
+                        </div> -->
+                        
+                    </div>
+                </div>
+
+
+
+                <div class="card mb-3 disabled  border-{{x.x_activity_status == 'OPEN' ? 'success border-3' : '' }} border-{{x.x_activity_status == 'CHECKIN' ? 'info border-3' : '' }}" 
+                *ngFor="let x of itemsLock" >
+                    <div class="card-body">
+                         
+                        <div class="row g-0"  > 
+                            <div class="col-9" >
+                                <strong>{{x.x_customer_name}}</strong> 
+                            </div>
+                            <div class="col-3 text-end"> 
+                                <small class="badge bg-{{x.x_activity_status != 'CLOSE'? 'secondary':'info'}} mx-1">{{x.x_activity_status}}</small> 
+                            </div>
+                           
+                        </div>
+                         
+                        <div class="lh-sm mb-2"  >
+                            <small>{{x.x_route_name}}</small>
+                        </div>
+                       
+                        <div class="row mb-2"  >
+                            <div class="col">
+                                <div class="lh-sm">
+                                    <small>Schdule Date </small>
+                                </div> 
+                                <div class="lh-sm">
+                                    <label>{{x.x_schedule_date | date:'d MMM y'}}</label>
+                                </div> 
+                            </div>
+                            <div class="col">
+                                <div class="lh-sm">
+                                    <small>Created Date</small>
+                                </div> 
+                                <div class="lh-sm">
+                                    <label>{{x.create_date | date:'medium'}}</label>
+                                </div> 
+                            </div>
+                        </div>
+
+                        <!-- <div class="row" *ngIf="x.x_activity_status == 'OPEN' ">
+                            <div class="col-12 text-end">
+                                 <span (click)="fnRemove(x);" class="badge bg-danger "><i class="bi bi-trash3"></i> REMOVE </span>
+                            </div>
+                        </div> -->
+                        
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<div class="floating_footer" *ngIf="id">
+  
+    <a [routerLink]="[ '/activity/insert' ]" [queryParams]="{activityScheduleId : id}" class="display-1">
+        <i class="bi bi-plus-circle-fill text-info"></i>
+    </a>
+</div>

@@ -7,32 +7,41 @@
             <a (click)="back();">Close</a>
         </div>
         <div class="col-12">
-            <div>Order Date : {{header.x_order_date}}</div>
+            <div>Order Date : <strong> {{header.x_order_date}}</strong></div>
             <div>{{header.street}}</div> 
         </div>
 
         <div class="col-12" *ngIf="header.x_transaction_type != null ">
-            <div>Transaction Type : {{header.x_transaction_type}}</div>
-            <div>{{header.x_transaction_type}}</div> 
+            <div>Transaction Type : <strong>{{header.x_transaction_type}}</strong></div>
+            
         </div>
+
+        <div class="col-12" >
+            <div>AKS : <strong>{{header.x_aks == 't' ? 'YES':''}}</strong></div> 
+        </div>
+
+        <div class="col-12" *ngIf="contact.name != null ">
+            <div>CONTACT : <strong>{{contact.name}}</strong></div> 
+        </div>
+
     </div>
 
-    <div class="row  border-bottom py-1" [hidden]="loading" *ngFor="let x of detail">
+    <div class="row g-1 border-bottom py-1" [hidden]="loading" *ngFor="let x of detail">
 
-        <div class="col">
-            <small>Qty</small>
-            <div> <b>{{x.x_qty | number }}</b></div>
+        <div class="col-6">
+            <small>Item Name</small>
+            <div> <b>{{x.x_qty | number }}</b> x <b>{{x.x_name}}</b>  </div>
         </div>
-        <div class="col text-end">
+        <div class="col-2 text-end">
             <small>Unit Price</small>
             <div><b> {{x.x_unitprice | number}}</b></div>
         </div>
 
-        <div class="col text-end">
+        <div class="col-2 text-end">
             <small>Discount</small>
             <div> <b> {{x.x_discount| number}}</b></div>
         </div>
-        <div class="col text-end">
+        <div class="col-2 text-end">
             <small>Subtotal</small>
             <div> <b> {{x.x_subtotal| number}}</b></div>
         </div>

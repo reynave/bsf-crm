@@ -1,0 +1,93 @@
+<nav class="fixed-top py-2 bg-white shadow-sm">
+    <div class="container-fluid">
+        <div class="row g-1">
+            <div class="col-1 align-self-center  ">
+                <a class="navbar-brand h2 " (click)="back()"><i class="bi bi-arrow-left"></i></a>
+            </div>
+            <div class="col-10 align-self-center text-center">
+                <b>CART</b>
+            </div>
+        </div>
+    </div>
+</nav>
+
+
+<div style="margin-bottom: 100px;">
+
+    <div class="row"  *ngIf="item.length == 0 ">
+        <div class="col-12" >
+            <div class="alert alert-warning text-center my-5">
+                <h4 class="text-white"> CART EMPTY</h4>
+            </div>
+        </div>
+    </div>
+    <div class="row g-1" *ngIf="item.length != 0 ">
+ 
+        <div class="col-12 my-4">
+            <label>Select Customer</label> 
+            <a class="form-control" [routerLink]="[ '/modal/customer' ]" [queryParams]="{id:id, requestFrom : 'cart'}">
+               <div><b>{{customer.name}}</b></div>
+               <div>{{customer.street}}</div>
+               
+            </a>
+        </div>
+
+
+        <div class="col-12 " *ngFor="let x of item">
+            <label>Cart </label>
+            <div class="bg-white p-4 border-bottom">
+                <div>
+                    {{x.x_name}}
+                </div>
+                <div class="mb-3">
+                    <strong>Rp {{x.x_unitprice | number}} </strong>
+                </div>
+
+                <div class="row">
+                    <div class="col-6 align-self-center">
+                        <label>Subtotal</label>
+                        <h4 class="lh-1">
+                            Rp {{x.x_subtotal | number}}
+                        </h4>
+                    </div>
+                    <div class="col-6 align-self-center">
+                        <div class="d-flex justify-content-end">
+                            <div class="mx-1 align-self-center">
+                                <a (click)="removeCart(x);"> <i class="bi bi-trash3"></i></a>
+                            </div>
+                            <div class="mx-1 align-self-center">
+                                <input type="number" class="form-control form-control-lg py-1 text-center"
+                                    style="width: 80px;" [(ngModel)]="x.x_qty" name="x_qty" (change)="updateQty(x)">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+
+<footer class="bg-white border-top shadow-sm" *ngIf="item.length != 0 ">
+    <div class="container py-2">
+        <div class="row">
+            <div class="col-6 align-self-center lh-1">
+
+                <label class="lh-1">Total</label>
+                <h4 class="lh-1">
+
+                    <span *ngIf="!loading">Rp {{total | number}}</span>
+                    <span *ngIf="loading">Loading...</span>
+                </h4>
+
+            </div>
+            <div class="col-6 align-self-center">
+                <div class="d-grid py-2">
+                    <button class="btn btn-info rounded-pill" [disabled]="customer.id == 0" (click)="onCloseCart();">ORDER</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>

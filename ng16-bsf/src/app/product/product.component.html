@@ -1,0 +1,33 @@
+<nav class="fixed-top bg-white py-2 shadow-sm border">
+    <div class="container-fluid">
+        <div class="row g-1">
+            <div class="col-1 align-self-center  ">
+                <a class="navbar-brand h2" (click)="back()"><i class="bi bi-arrow-left"></i></a>
+            </div>
+            <div class="col-10  align-self-center text-center  ">
+                <h5 class="p-0 m-0  ms-3"> Product</h5>
+            </div> 
+        </div>
+    </div>
+</nav>
+
+<main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+    <div class="container-fluid py-4">
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group">
+                    <div class="mb-2"><b>Search Product base on NAME </b></div>
+                    <input type="text" class="form-control form-control-lg mb-2" [(ngModel)]="search" (keyup.enter)="onSearch()" placeholder="min 3 char">
+                    <div class="mb-2" *ngIf="this.search.length<3">
+                        <small>Min 3 character</small>
+                    </div>
+                    <div class="d-grid my-4">
+                        <button type="button" (click)="onSearch()" [disabled]="this.search.length<3" class="btn btn-lg btn-success">SEARCH <i class="bi bi-arrow-right"></i></button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</main>

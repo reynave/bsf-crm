@@ -51,12 +51,14 @@ export class CustomerComponent implements OnInit {
   onSearch() {
     this.show_res_partner = true;
     const body = {
-      name: this.searchCustomer
+      name: this.searchCustomer, 
     }
+    const queryParams = 
     this.http.get<any>(this.api + this.configService.getAppCode()+ 'Res_partner/searchCustomer', {
       headers: this.configService.headers(),
       params: {
-        name: this.searchCustomer
+        name: this.searchCustomer,
+        field : this.activeRoute.snapshot.queryParams['field']
       }
     }).subscribe(
       data => {
@@ -79,6 +81,7 @@ export class CustomerComponent implements OnInit {
     if(this.activeRoute.snapshot.queryParams['cardId']){
       const body = {
         id : this.activeRoute.snapshot.queryParams['cardId'],
+        field :  this.activeRoute.snapshot.queryParams['field'], 
         item: x,
       }
       this.http.post<any>(this.api +this.configService.getAppCode()+"carts/updateCustomer",body,{

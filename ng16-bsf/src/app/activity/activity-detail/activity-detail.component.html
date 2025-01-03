@@ -1,0 +1,351 @@
+<nav class="fixed-top bg-white shadow-sm border-bottom py-2">
+    <div class="container-fluid">
+        <div class="row g-1">
+            <div class="col-4">
+                <a class="navbar-brand h2" (click)="back()"><i class="bi bi-arrow-left"></i></a>
+            </div>
+            <div class="col-4 align-self-center text-center  ">
+                <img [hidden]="!loading" src="./assets/gif/icons8-loading.gif">
+            </div>
+            <div class="col-4 align-self-center   text-end " *ngIf="item.x_activity_status  != 'CLOSE'">
+                <button class="btn btn-danger btn-sm px-2" *ngIf="item.x_is_visited != 'f'" type="button"
+                    (click)="openFullscreen(contentNotVisit)">
+                    Not Visit
+                </button>
+            </div>
+
+        </div>
+    </div>
+</nav>
+
+
+
+<div class="container-fluid mt-3">
+    <div class="row">
+        <div class="col-12 mb-2 d-grid" *ngIf="item.x_customer_id != null ">
+            <button class="btn btn-primary " (click)="takeOrder();">Take Order</button>
+        </div>
+        <div class="col-12">
+            <div class="card mb-3">
+
+                <div class="card-body ">
+                    <div class="mb-2">
+                        <small>Customer Information</small>
+                    </div>
+                    <strong>{{item.x_customer_name}}</strong>
+                    <div class="lh-sm mb-2">
+                        <small>{{item.x_route_name}}</small>
+                    </div>
+                    <div class="mb-2">
+                        <label>Schedule Date :</label>
+                        <div class="lh-1">
+                            <small>{{item.x_schedule_date | date:'d MMM y'}}</small>
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+                        <label> AR Info</label>
+                        <div>
+                            <strong>Total AR : {{totalAR | number}} </strong>
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+<div class="container-fluid mb-3" *ngIf="totalAR > 0">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="bg-white">
+                        <table class="table table-sm ">
+                            <thead>
+                                <tr>
+                                    <th>Invoice No</th>
+                                    <th> Amount </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let x of ar">
+                                    <td> {{x.name}} <br>{{x.invoice_date | date}}</td>
+
+                                    <td class="text-end">
+                                        {{x.amount_total | number}}
+                                    </td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--  
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-3 py-3">
+
+                <div class="row g-1">
+
+                    <div class="col text-center">
+                        <div><strong><i class="bi bi-check-circle"></i> CHECK IN</strong> </div>
+                        <div>
+                            <label>{{item.x_check_in_date | date}}, {{item.x_check_in_time}}</label>
+                        </div>
+                    </div>
+
+                    <div class="col text-center">
+                        <div><strong> CHECK OUT</strong> </div>
+                        <div>
+                            <label>{{item.x_check_out_date | date}}, {{item.x_check_out_time}}</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+
+<div class="container-fluid mb-3" *ngIf="item.x_check_in_date">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row g-1 mb-2">
+                        <div class="col-5">
+                            <strong><i class="bi bi-check-circle"></i> CHECK IN</strong>
+                        </div>
+                        <div class="col-7 text-end">
+                            <span>{{item.x_check_in_date | date}}, {{item.x_check_in_time}}</span>
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+                        <div><label>x_visit_reason</label></div>
+                        {{item.x_visit_reason}}
+                    </div>
+                    <div class="mb-2">
+                        <div><label>x_note</label></div>
+                        {{item.x_note}}
+                    </div>
+                    <div class="mb-2">
+
+                        <img [src]="api+ item.x_photo_url_check_in" class="w-100 p-1 bg-white border"
+                            *ngIf="api+item.x_photo_url_check_in">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid mb-3" *ngIf="item.x_check_out_date">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row g-1 mb-2">
+                        <div class="col-5">
+                            <strong><i class="bi bi-check-circle"></i> CHECK OUT</strong>
+                        </div>
+                        <div class="col-7 text-end">
+                            <span>{{item.x_check_out_date | date}}, {{item.x_check_out_time}}</span>
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+                        <div><label>x_summary</label></div>
+                        {{item.x_summary}}
+                    </div>
+
+                    <div class="mb-2">
+                        <small>{{api+'public/'+item.x_photo_url_check_out}}</small>
+                        <img [src]="api+'public/'+item.x_photo_url_check_out" class="w-100 p-1 bg-white border"
+                            *ngIf="api+'public/'+item.x_photo_url_check_out">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid mb-3" *ngIf="item.x_is_visited == 'f'">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row g-1 mb-2">
+                        <div class="col-5">
+                            <strong class="text-danger">NOT VISIT</strong>
+                        </div>
+
+                    </div>
+
+                    <div class="mb-2">
+                        <div><label>x_not_visit_reason</label></div>
+                        {{item.x_not_visit_reason}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 
+<div class="container-fluid mb-6">
+    <div class="row">
+        <div class="col-12 ">
+
+            <div class="mb-2 d-grid">
+                <div>
+                    <label for="x_summary" class="form-label">Photo</label>
+                </div>
+                <img [src]="item.x_photo_url" class="w-100 p-1 bg-white border" *ngIf="item.x_photo_url">
+                <button type="button" class="btn btn-warning rounded-pill" (click)="takePhoto()"><strong
+                        class="bi bi-camera-fill mx-1"></strong> Take Photo</button>
+
+            </div>
+ 
+        </div>
+
+    </div>
+</div> -->
+
+
+<footer class="bg-white border-top shadow-sm" *ngIf="item.x_activity_status  != 'CLOSE' ">
+    <div class="container" *ngIf="item.x_is_visited != 'f'">
+        <div class="row">
+            <div class="col-12">
+                <div class="d-grid py-2" *ngIf="expired == false">
+
+                    <button class="btn btn-success rounded-pill" (click)="openFullscreen(contentCheckIn)"
+                        *ngIf="item.x_activity_status  == 'OPEN'">Check In</button>
+
+                    <button class="btn btn-info rounded-pill" (click)="openFullscreenCam(contentCheckOut)"
+                        *ngIf="item.x_activity_status  == 'CHECKIN'">Check Out</button>
+
+                </div>
+                <div class="d-grid py-2" *ngIf="expired == true">
+
+                    <button class="btn btn-light rounded-pill" disabled>Expired</button>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<ng-template #contentCheckOut let-modal>
+    <div class="modal-header">
+        <strong class="modal-title">Check Out</strong>
+        <a (click)="modal.dismiss('Cross click')"><i class="bi bi-x-lg"></i></a>
+    </div>
+    <div class="modal-body">
+        <div class="mb-2">
+            <label for="x_customer_name" class="form-label">Customer</label>
+            <div class="form-control">
+                {{item.x_customer_name}}
+            </div>
+        </div>
+        <div class="mb-2">
+            <label for="x_summary" class="form-label">Summary</label>
+            <textarea class="form-control" rows="5" [(ngModel)]="model.x_summary" name="x_summary"
+                id="x_summary"></textarea>
+        </div>
+
+        <div class="mb-2">
+            <div for="x_summary" class="form-label">Take Photo</div>
+            <div *ngIf="camError== false">
+                <div *ngIf="!webcamImage">
+                    <webcam (initError)="handleInitError($event)" [width]="355" [allowCameraSwitch]="true"
+                        [trigger]="triggerObservable" (imageCapture)="handleImage($event)"></webcam>
+                </div>
+
+                <div *ngIf="webcamImage">
+                    <img [src]="webcamImage.imageAsDataUrl" width="100%" class="border shadow-sm rounded" />
+                </div>
+            </div>
+            <div *ngIf="camError == true">
+                <input type="file" class="form-control" (change)="onFileSelected($event)" />
+            </div>
+
+        </div>
+        <div class="md-2">
+            <textarea class="form-control" readonly rows="10">{{ uploadMessage }}</textarea>
+        </div>
+    </div>
+    <div class="modal-footer d-grid">
+
+        <button type="button" class="btn btn-success" (click)="getGeo()">NEXT</button>
+    </div>
+</ng-template>
+
+<ng-template #contentCheckIn let-modal>
+    <div class="modal-header">
+        <strong class="modal-title">Check In</strong>
+        <a (click)="modal.dismiss('Cross click')"><i class="bi bi-x-lg"></i></a>
+    </div>
+    <div class="modal-body">
+        <div class="mb-2">
+            <label for="x_customer_name" class="form-label">Customer</label>
+            <div class="form-control">
+                {{item.x_customer_name}}
+            </div>
+        </div>
+        <div class="mb-2">
+            <label for="x_visit_reason" class="form-label">Visit Reason</label>
+            <textarea class="form-control" rows="5" [(ngModel)]="model.x_visit_reason" name="x_visit_reason"
+                id="x_visit_reason"></textarea>
+        </div>
+        <div class="mb-2">
+            <label for="x_note" class="form-label">Note</label>
+            <textarea class="form-control" rows="5" [(ngModel)]="model.x_note" name="x_note" id="x_note"></textarea>
+        </div>
+
+    </div>
+    <div class="modal-footer d-grid">
+
+        <button type="button" class="btn btn-primary" (click)="getGeo()">NEXT</button>
+    </div>
+</ng-template>
+
+<ng-template #contentNotVisit let-modal>
+    <div class="modal-header">
+        <strong class="modal-title">Not Visit </strong>
+        <a (click)="modal.dismiss('Cross click')"><i class="bi bi-x-lg"></i></a>
+    </div>
+    <div class="modal-body">
+        <div class="mb-2">
+            <label for="x_customer_name" class="form-label">Customer</label>
+            <div class="form-control">
+                {{item.x_customer_name}}
+            </div>
+        </div>
+        <div class="mb-2">
+            <label for="x_not_visit_reason" class="form-label">x_not_visit_reason</label>
+            <textarea class="form-control" rows="5" [(ngModel)]="model.x_not_visit_reason" name="x_not_visit_reason"
+                id="x_not_visit_reason"></textarea>
+        </div>
+
+    </div>
+    <div class="modal-footer d-grid">
+        <button type="button" class="btn btn-danger" (click)="remove()">Submit</button>
+    </div>
+</ng-template>

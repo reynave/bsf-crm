@@ -1,0 +1,106 @@
+<nav class="fixed-top py-2 bg-white shadow-sm">
+    <div class="container-fluid">
+        <div class="row g-1">
+            <div class="col-1 align-self-center  ">
+                <a class="navbar-brand" (click)="back()"><i class="bi bi-arrow-left"></i></a>
+            </div>
+            <div class="col-10 align-self-center text-center">
+                <b>ORDERS</b>
+            </div>
+        </div>
+    </div>
+</nav>
+
+
+<main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-12 mb-3" *ngIf="loading">
+                <div class="text-center my-5">
+                    <img src="./assets/gif/loadingIntro.gif" width="80%">
+                </div>
+            </div>
+
+
+            <div class="col-12 ">
+                <label>Carts </label>
+                <div class="bg-white px-3 py-2 border  mb-3" *ngFor="let x of items">
+                    <div class="row g-2">
+                        
+                        <div class="col-6">
+                            <a [routerLink]="[ '/carts/detail' ]" [queryParams]="{id:x.id}">
+                                <strong><small>Date</small></strong>
+                                <div>
+                                    <h6>{{x.x_order_date | date:'medium'}}</h6>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-3 text-end">
+                            <a [routerLink]="[ '/carts/detail' ]" [queryParams]="{id:x.id}">
+                                <strong><small>Order ID</small></strong>
+                                <div>
+                                    <h6>{{x.id}}</h6>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-3 text-end">
+                            <a [routerLink]="[ '/carts/detail' ]" [queryParams]="{id:x.id}">
+                                <strong><small> Magic Order</small></strong>
+                                <div>
+                                    <h6>  {{x.x_is_magic_order == 't' ? "TRUE":"FALSE"}}</h6>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12"> 
+                            <a [routerLink]="[ '/carts/detail' ]" [queryParams]="{id:x.id}">
+                                <strong><small>Customer Name</small></strong>
+                                <div>
+                                    <h6>{{x.x_customer}} &nbsp;</h6>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="x.x_transaction_type != '' &&  x.x_transaction_type != null ">
+                        <div class="col-12"> 
+                            <a [routerLink]="[ '/carts/detail' ]" [queryParams]="{id:x.id}">
+                                <strong><small>Transaction Type</small></strong>
+                                <div>
+                                    <h6>{{x.x_transaction_type}} &nbsp;</h6>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row g-1">
+                        <div class="col-6 align-self-center">
+                            <a [routerLink]="[ '/carts/detail' ]" [queryParams]="{id:x.id}">
+                                <strong><small>Grand Total</small></strong>
+                                <h4 class="lh-1">
+                                    Rp {{x.totalAmount | number}}
+                                </h4>
+                            </a>
+                        </div>
+                        <div class="col-4 align-self-center text-center">
+                            <strong><small>Num. Of Items</small></strong>
+                            <h4 class="lh-1 ">
+                                {{x.qty}}
+                            </h4>
+                        </div>
+                        <div class="col-2 align-self-center text-end">
+                            <a class="btn btn-danger" (click)="removeCart(x);"> <i class="bi bi-trash3"></i></a>
+                        </div>
+                    </div>
+                </div> 
+            </div>
+
+            <div class="col-12">
+                <div class="d-grid">
+                    <button type="button" class="btn btn-success" (click)="newOrder();" >New Order</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</main>
