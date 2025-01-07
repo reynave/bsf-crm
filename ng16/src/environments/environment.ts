@@ -9,5 +9,6 @@ export const environment = {
     serialNumber: false,
     cam: true,
     tokenName: 'bsfJwtToken01',
-    appSelect: appSelect 
+    appSelect: appSelect,
+    hour : -1,
 };

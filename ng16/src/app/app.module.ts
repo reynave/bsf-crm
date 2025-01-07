@@ -36,6 +36,7 @@ import { CartsComponent } from './carts/carts.component';
 import { CartsDetailComponent } from './carts/carts-detail/carts-detail.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { NgxWebcamComponent } from './global/ngx-webcam/ngx-webcam.component';
+import { AddHoursPipe } from './pipe/add-hours.pipe';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { NgxWebcamComponent } from './global/ngx-webcam/ngx-webcam.component';
     ProductComponent,
     ProductDetailComponent,
     ProductListComponent, 
+    AddHoursPipe,
     ScheduleActivitiesComponent, ActivityInsertComponent, CartComponent, OrderComponent, CustomerModalComponent, CustomerComponent, CustomerDetailComponent, SqlQueryComponent, CustomerInsertComponent, OrderDetailComponent, CartsComponent, CartsDetailComponent, NgxWebcamComponent
   ],
   imports: [

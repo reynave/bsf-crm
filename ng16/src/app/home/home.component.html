@@ -19,7 +19,7 @@
                         <small>
                             Clock In
                         </small>
-                        <div class="mt-1"><code class="text-primary">{{clock['clickIn']}} &nbsp;</code> </div>
+                        <div class="mt-1">&nbsp;<code class="text-primary" *ngIf="clock['clickIn']">{{clock['clickIn'] | addHours}} &nbsp;</code> </div>
                     </div>
                 </div>
             </div>
@@ -30,7 +30,7 @@
                         <small>
                             Clock Out
                         </small>
-                        <div class="mt-1"><code class="text-primary">{{clock['clickOut']}} &nbsp;</code> </div>
+                        <div class="mt-1">&nbsp;<code class="text-primary" *ngIf="clock['clickOut']">{{clock['clickOut'] | addHours}} &nbsp;</code> </div>
                     </div>
                 </div>
             </div>
@@ -80,13 +80,13 @@
                     </div>
                 </div>
             </div>
+          
             <div class="col-4">
-                <div class=" bg-white rounded shadow-sm text-center" [routerLink]="[ '/order' ]">
+                <div class=" bg-white rounded shadow-sm text-center" [routerLink]="[ '/customer' ]" [queryParams]="{field:'contact'}">
                     <div class="lh-1 py-2">
-                        <h1> <i class="bi bi-archive"></i></h1>
-
+                        <h1> <i class="bi bi-person-badge"></i></h1> 
                         <small>
-                            History
+                            Contact
                         </small>
                     </div>
                 </div>
@@ -102,11 +102,12 @@
                 </div>
             </div>
             <div class="col-4">
-                <div class=" bg-white rounded shadow-sm text-center" [routerLink]="[ '/customer' ]" [queryParams]="{field:'contact'}">
+                <div class=" bg-white rounded shadow-sm text-center" [routerLink]="[ '/order' ]">
                     <div class="lh-1 py-2">
-                        <h1> <i class="bi bi-person-badge"></i></h1> 
+                        <h1> <i class="bi bi-archive"></i></h1>
+
                         <small>
-                            Contact
+                            History
                         </small>
                     </div>
                 </div>

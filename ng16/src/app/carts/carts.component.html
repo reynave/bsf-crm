@@ -32,7 +32,7 @@
                             <a [routerLink]="[ '/carts/detail' ]" [queryParams]="{id:x.id}">
                                 <strong><small>Date</small></strong>
                                 <div>
-                                    <h6>{{x.x_order_date | date:'medium'}}</h6>
+                                    <h6>{{x.x_order_date | addHours}}</h6>
                                 </div>
                             </a>
                         </div>

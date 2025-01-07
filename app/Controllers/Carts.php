@@ -27,16 +27,16 @@ class Carts extends BaseController
         $i = 0;
 
 
-        foreach ($x_customer_po as $row) {
-            // Buat objek DateTime dari string
-            $datetime = new DateTime($x_customer_po[$i]['x_order_date']);
+        // foreach ($x_customer_po as $row) {
+        //     // Buat objek DateTime dari string
+        //     $datetime = new DateTime($x_customer_po[$i]['x_order_date']);
 
-            // Tambahkan 7 jam
-            $datetime->add(new DateInterval('PT7H'));
+        //     // Tambahkan 7 jam
+        //     $datetime->add(new DateInterval('PT7H'));
 
-            $x_customer_po[$i]['x_order_date'] = $datetime->format('Y-m-d H:i:s');
-            $i++;
-        }
+        //     $x_customer_po[$i]['x_order_date'] = $datetime->format('Y-m-d H:i:s');
+        //     $i++;
+        // }
 
 
         $data = [

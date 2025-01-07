@@ -47,11 +47,11 @@ class Order extends BaseController
             $totalAmount = $this->db->query($totalAmount);
             $totalAmount= $totalAmount->getResultArray();
 
-            $datetime = new DateTime($row['x_order_date'] );
+           // $datetime = new DateTime($row['x_order_date'] );
             // Tambahkan 7 jam
-            $datetime->add(new DateInterval('PT7H'));  
+          //  $datetime->add(new DateInterval('PT7H'));  
 
-            $row[$i]['x_order_date']  = $datetime->format('Y-m-d H:i:s');
+          //  $row[$i]['x_order_date']  = $datetime->format('Y-m-d H:i:s');
 
             $temp = [ 
                 "totalItem" =>  (int)$x_qty[0]['total'],

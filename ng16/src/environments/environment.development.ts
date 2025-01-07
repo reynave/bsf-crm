@@ -9,7 +9,8 @@ export const environment = {
     serialNumber: false,
     cam: true,
     tokenName: 'bsfJwtToken01',
-    appSelect: appSelect
+    appSelect: appSelect,
+    hour : -1,
 
 
     // api:"https://api-bee.a-morphosys.cloud/",

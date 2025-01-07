@@ -7,7 +7,7 @@
             <a (click)="back();">Close</a>
         </div>
         <div class="col-12">
-            <div>Order Date : <strong> {{header.x_order_date}}</strong></div>
+            <div>Order Date : <strong> {{header.x_order_date | addHours }}</strong></div>
             <div>{{header.street}}</div> 
         </div>
 

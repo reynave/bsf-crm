@@ -102,11 +102,11 @@ class Attendance extends BaseController
         $item = isset($this->db->query($q)->getResultArray()[0]) ?  $this->db->query($q)->getResultArray()[0] : [];
         $origin = isset($this->db->query($q)->getResultArray()[0]) ?  $this->db->query($q)->getResultArray()[0] : [];
 
-        if(isset($this->db->query($q)->getResultArray()[0]) ){
-            $item['x_clock_in'] =  $item['x_clock_in']!= "" ?  date('Y-m-d H:i:s', strtotime($item['x_clock_in'] . ' +7 hours')) : '';
-            $item['x_clock_out'] =  $item['x_clock_out']!= "" ?  date('Y-m-d H:i:s', strtotime($item['x_clock_out'] . ' +7 hours'))  : '';
+        // if(isset($this->db->query($q)->getResultArray()[0]) ){
+        //     $item['x_clock_in'] =  $item['x_clock_in']!= "" ?  date('Y-m-d H:i:s', strtotime($item['x_clock_in'] . ' +7 hours')) : '';
+        //     $item['x_clock_out'] =  $item['x_clock_out']!= "" ?  date('Y-m-d H:i:s', strtotime($item['x_clock_out'] . ' +7 hours'))  : '';
 
-        } 
+        // } 
 
         $data = [
             "error" => false,
