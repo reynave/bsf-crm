@@ -273,9 +273,9 @@ WHERE partner_id = '" . $results['x_customer_id'] . "' and payment_state = 'not_
 
             $this->db->table("x_sales_activity")->insert([
                 //  "create_uid" => $id,
-                "create_date" => $this->db->query("SELECT NOW()")->getRowArray()['now'],
+                "create_date" => date("Y-m-d H:i:s") . ".0000",
                 // "write_uid" => $id,
-                "write_date" => $this->db->query("SELECT NOW()")->getRowArray()['now'],
+                "write_date" => date("Y-m-d H:i:s") . ".0000",
                 "x_customer_id" => $post['customer']['id'],
                 "x_customer_name" => $post['customer']['name'],
                 //"x_customer_no" => $row['x_customer_no'],
@@ -336,7 +336,7 @@ WHERE partner_id = '" . $results['x_customer_id'] . "' and payment_state = 'not_
                     "x_summary" => $post['model']['x_summary'],
                     "x_visited_longitude" => $post['geoData']['long'],
                     "x_visited_latitude" => $post['geoData']['lat'],
-                    "x_check_in_date" => $this->db->query("SELECT NOW()")->getRowArray()['now'],
+                    "x_check_in_date" => date("Y-m-d H:i:s") . ".0000",
                     "x_check_in_time" => date("H:i:s"),
 
                     //  "x_is_visited" => true,

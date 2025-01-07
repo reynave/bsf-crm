@@ -41,7 +41,7 @@ class Carts extends BaseController
 
         $data = [
             "error" => false,
-            "datetime" => date("Y-m-d H:i:s"),
+            "datetime" =>$this->db->query("SELECT NOW()")->getRowArray()['now'],
             //   "x_customer_po_line" => $x_customer_po_line,
             "x_customer_po" => $x_customer_po,
             "x_salesperson_id" => $accountId,
@@ -94,7 +94,7 @@ class Carts extends BaseController
         $data = [
             "error" => false,
           //  "q1" => $q1,
-            "datetime" => date("Y-m-d H:i:s"),
+            "datetime" => $this->db->query("SELECT NOW()")->getRowArray()['now'],
             "items" => $x_customer_po_line,
             "header" => $header,
             "contact" => $contact,
@@ -262,9 +262,8 @@ class Carts extends BaseController
                 "x_submit" => 1,
                 "x_ext_sales_id" => $x_mobile_users['id'],
                 "x_ext_salesperson_id" => $x_mobile_users['x_ext_salesperson_id'],
-                "create_date" => date("Y-m-d H:i:s"),
-                "write_date" => date("Y-m-d H:i:s"),
-                "x_order_date" => date("Y-m-d H:i:s"),
+                "create_date" => $this->db->query("SELECT NOW()")->getRowArray()['now'],
+                "write_date" => $this->db->query("SELECT NOW()")->getRowArray()['now'], 
 
             ], " x_submit = 0 and  id = " . $post['id']);
 
