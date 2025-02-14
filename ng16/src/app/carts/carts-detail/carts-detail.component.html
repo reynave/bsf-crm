@@ -169,7 +169,8 @@
 
 
                 <div class="bg-white px-3 py-2 border  mb-3">
-                    <div class="row" *ngIf="header.x_bukti_bayar_url != '' ">
+                   
+                    <div class="row" *ngIf="header.x_bukti_bayar_url != null">
                         <div class="col-12 py-3">
                             <img [src]="api+'public/'+header.x_bukti_bayar_url" width="100%">
                             <small> {{api+header.x_bukti_bayar_url}}</small>

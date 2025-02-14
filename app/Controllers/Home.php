@@ -8,8 +8,11 @@ class Home extends BaseController
     {
         $data = [
             "error" => false,
-            "datetime" => date("Y-m-d H:i:s"),
+            "datetime_php" => date("Y-m-d H:i:s"),
+            "time()" =>date('Y-m-d H:i:s T', time()),
             "posgreSQL" => $this->db->query("SELECT NOW()")->getRowArray(),
+             "posgreSQLPluss" => $this->db->query("SELECT NOW() AT TIME ZONE '+00:00'")->getRowArray(),
+            
             "CURDATE" => $this->db->query("SELECT CURRENT_DATE")->getRowArray(),
             
             

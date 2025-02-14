@@ -142,7 +142,7 @@ WHERE partner_id = '" . $results['x_customer_id'] . "' and payment_state = 'not_
 
 
             $this->db->table("x_customer_po")->insert([
-                "x_order_date" => $this->db->query("SELECT NOW()")->getRowArray()['now'],
+                "x_order_date" => $this->db->query("SELECT NOW() AT TIME ZONE '+00:00'")->getRowArray(),
                 "x_customer_id" => $post['item']['x_customer_id'],
                 "x_customer" => $post['item']['x_customer_name'],
                 "x_cabangutama" => $x_cabangutama,
@@ -203,9 +203,9 @@ WHERE partner_id = '" . $results['x_customer_id'] . "' and payment_state = 'not_
 
             $this->db->table("x_sales_activity_schedule")->insert([
                 // "create_uid" => $id,
-                "create_date" => $this->db->query("SELECT NOW()")->getRowArray()['now'],
+                "create_date" => $this->db->query("SELECT NOW() AT TIME ZONE '+00:00'")->getRowArray(),
                 //"write_uid" => $id,
-                "write_date" => $this->db->query("SELECT NOW()")->getRowArray()['now'],
+                "write_date" => $this->db->query("SELECT NOW() AT TIME ZONE '+00:00'")->getRowArray(),
                 "x_schedule_date" => $post['model']['x_schedule_date'],
                 "x_salesperson_id" => $post['model']['x_salesperson_id'],
                 "x_salesperson" => model("Core")->select("x_name", "x_mobile_users", "x_employee_id = '" . $post['model']['x_salesperson_id'] . "' "),
@@ -221,9 +221,9 @@ WHERE partner_id = '" . $results['x_customer_id'] . "' and payment_state = 'not_
 
                     $this->db->table("x_sales_activity")->insert([
                         //  "create_uid" => $id,
-                        "create_date" => $this->db->query("SELECT NOW()")->getRowArray()['now'],
+                        "create_date" => $this->db->query("SELECT NOW() AT TIME ZONE '+00:00'")->getRowArray(),
                         // "write_uid" => $id,
-                        "write_date" => $this->db->query("SELECT NOW()")->getRowArray()['now'],
+                        "write_date" => $this->db->query("SELECT NOW() AT TIME ZONE '+00:00'")->getRowArray(),
                         "x_customer_id" => $row['x_partner_id'],
                         "x_customer_name" => $row['x_customer_name'],
                         "x_customer_no" => $row['x_customer_no'],
@@ -273,9 +273,9 @@ WHERE partner_id = '" . $results['x_customer_id'] . "' and payment_state = 'not_
 
             $this->db->table("x_sales_activity")->insert([
                 //  "create_uid" => $id,
-                "create_date" => $this->db->query("SELECT NOW()")->getRowArray()['now'],
+                "create_date" => $this->db->query("SELECT NOW() AT TIME ZONE '+00:00'")->getRowArray(),
                 // "write_uid" => $id,
-                "write_date" => $this->db->query("SELECT NOW()")->getRowArray()['now'],
+                "write_date" => $this->db->query("SELECT NOW() AT TIME ZONE '+00:00'")->getRowArray(),
                 "x_customer_id" => $post['customer']['id'],
                 "x_customer_name" => $post['customer']['name'],
                 //"x_customer_no" => $row['x_customer_no'],
@@ -336,7 +336,7 @@ WHERE partner_id = '" . $results['x_customer_id'] . "' and payment_state = 'not_
                     "x_summary" => $post['model']['x_summary'],
                     "x_visited_longitude" => $post['geoData']['long'],
                     "x_visited_latitude" => $post['geoData']['lat'],
-                    "x_check_in_date" => $this->db->query("SELECT NOW()")->getRowArray()['now'],
+                    "x_check_in_date" => $this->db->query("SELECT NOW() AT TIME ZONE '+00:00'")->getRowArray(),
                     "x_check_in_time" => date("H:i:s"),
 
                     //  "x_is_visited" => true,

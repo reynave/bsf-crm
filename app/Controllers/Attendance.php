@@ -19,7 +19,7 @@ class Attendance extends BaseController
         return $this->response->setJSON($data);
 
     }
-
+    
     function clockIn()
     {
         $json = file_get_contents('php://input');
@@ -34,10 +34,9 @@ class Attendance extends BaseController
             $x_clock_in = model("Core")->select("x_clock_in","x_attendance","x_employee_id = $x_employee_id and x_date = CURRENT_DATE ");
             if(!$x_clock_in){
                 $this->db->table("x_attendance")->insert([
-                    "create_date" => $this->db->query("SELECT NOW()")->getRowArray(),
-                    "write_date" => $this->db->query("SELECT NOW()")->getRowArray(),
-                    "x_clock_in" => $this->db->query("SELECT NOW()")->getRowArray(),
-
+                    "create_date" => $this->db->query("SELECT NOW() AT TIME ZONE '+00:00'")->getRowArray(),
+                    "write_date" => $this->db->query("SELECT NOW() AT TIME ZONE '+00:00'")->getRowArray(),
+                    "x_clock_in" => $this->db->query("SELECT NOW() AT TIME ZONE '+00:00'")->getRowArray(), 
                     "x_employee_id" =>  $x_employee_id,
                     "x_date" => $this->db->query("SELECT CURRENT_DATE")->getRowArray(),
                 ]);
@@ -76,8 +75,8 @@ class Attendance extends BaseController
             if($x_clock_in &&  !$x_clock_out ){
 
                 $this->db->table("x_attendance")->update([
-                    "write_date" => $this->db->query("SELECT NOW()")->getRowArray(),
-                    "x_clock_out" => $this->db->query("SELECT NOW()")->getRowArray(),
+                    "write_date" => $this->db->query("SELECT NOW() AT TIME ZONE '+00:00'")->getRowArray(),
+                    "x_clock_out" => $this->db->query("SELECT NOW() AT TIME ZONE '+00:00'")->getRowArray(),
 
                 ]," x_employee_id = '$x_employee_id' and x_date = CURRENT_DATE ");
 
@@ -92,6 +91,18 @@ class Attendance extends BaseController
         return $this->response->setJSON($data);
     }
 
+    function removeToday(){
+   
+        $this->db->table("x_attendance")->delete(" x_employee_id = 57 and x_date = CURRENT_DATE ");
+
+
+        $data = [
+            "error" => false, 
+        ];
+
+        return $this->response->setJSON($data);
+    }
+
     function today(){
         $accountId = model("Core")->accountId();
         $q = "SELECT  *
@@ -102,11 +113,7 @@ class Attendance extends BaseController
         $item = isset($this->db->query($q)->getResultArray()[0]) ?  $this->db->query($q)->getResultArray()[0] : [];
         $origin = isset($this->db->query($q)->getResultArray()[0]) ?  $this->db->query($q)->getResultArray()[0] : [];
 
-        // if(isset($this->db->query($q)->getResultArray()[0]) ){
-        //     $item['x_clock_in'] =  $item['x_clock_in']!= "" ?  date('Y-m-d H:i:s', strtotime($item['x_clock_in'] . ' +7 hours')) : '';
-        //     $item['x_clock_out'] =  $item['x_clock_out']!= "" ?  date('Y-m-d H:i:s', strtotime($item['x_clock_out'] . ' +7 hours'))  : '';
-
-        // } 
+       
 
         $data = [
             "error" => false,

@@ -41,7 +41,7 @@ class Carts extends BaseController
 
         $data = [
             "error" => false,
-            "datetime" =>$this->db->query("SELECT NOW()")->getRowArray()['now'],
+            "datetime" =>$this->db->query("SELECT NOW() AT TIME ZONE '+00:00'")->getRowArray(),
             //   "x_customer_po_line" => $x_customer_po_line,
             "x_customer_po" => $x_customer_po,
             "x_salesperson_id" => $accountId,
@@ -94,7 +94,7 @@ class Carts extends BaseController
         $data = [
             "error" => false,
           //  "q1" => $q1,
-            "datetime" => $this->db->query("SELECT NOW()")->getRowArray()['now'],
+            "datetime" => $this->db->query("SELECT NOW() AT TIME ZONE '+00:00'")->getRowArray(),
             "items" => $x_customer_po_line,
             "header" => $header,
             "contact" => $contact,
@@ -262,8 +262,8 @@ class Carts extends BaseController
                 "x_submit" => 1,
                 "x_ext_sales_id" => $x_mobile_users['id'],
                 "x_ext_salesperson_id" => $x_mobile_users['x_ext_salesperson_id'],
-                "create_date" => $this->db->query("SELECT NOW()")->getRowArray()['now'],
-                "write_date" => $this->db->query("SELECT NOW()")->getRowArray()['now'], 
+                "create_date" => $this->db->query("SELECT NOW() AT TIME ZONE '+00:00'")->getRowArray(),
+                "write_date" => $this->db->query("SELECT NOW() AT TIME ZONE '+00:00'")->getRowArray(), 
 
             ], " x_submit = 0 and  id = " . $post['id']);
 
@@ -295,7 +295,7 @@ class Carts extends BaseController
 
 
             $this->db->table("x_customer_po")->insert([
-                "x_order_date" => $this->db->query("SELECT NOW()")->getRowArray()['now'],
+                "x_order_date" => $this->db->query("SELECT NOW() AT TIME ZONE '+00:00'")->getRowArray(),
                 "x_cabangutama" => $x_cabangutama,
                 "x_cabangpembantu" => $x_cabangpembantu,
                 "x_is_magic_order" => true,

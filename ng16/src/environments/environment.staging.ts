@@ -9,5 +9,5 @@ export const environment = {
     cam: true,
     tokenName: 'bsfJwtToken01',
     appSelect: appSelect ,
-    hour : -1,
+    hour : +7,
 };
