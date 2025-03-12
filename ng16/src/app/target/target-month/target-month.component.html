@@ -1,0 +1,91 @@
+<nav class="fixed-top py-2 bg-white shadow-sm">
+    <div class="container-fluid">
+        <div class="row g-1">
+            <div class="col-1 align-self-center  ">
+                <a class="navbar-brand" (click)="back()"><i class="bi bi-arrow-left"></i></a>
+            </div>
+            <div class="col-10 align-self-center text-center">
+                <b>Report Target vs Realisasi Bulanan</b>
+            </div>
+        </div>
+    </div>
+</nav>
+
+
+<main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+    <div class="container-fluid">
+        <div class="row g-2 mb-2">
+            <div class="col-8 ">
+                <select class="form-control form-control-lg" [(ngModel)]="x_bulan">
+                    <option *ngFor="let x of monthNames; let i = index" [value]="x.id"> {{x.name}}</option>
+                </select>
+
+            </div>
+            <div class="col-4">
+               <input type="number" [(ngModel)]="x_tahun" class="form-control form-control-lg">
+            </div>
+        </div>
+        <div class="row g-2 mb-2">
+            <div class="col-6 ">
+                <select class="form-control form-control-lg" [(ngModel)]="x_name">
+                    <option *ngFor="let x of selectName" [value]="x.x_name">{{x.x_name}}</option>
+                </select>
+
+            </div>
+            <div class="col-6">
+                <select class="form-control form-control-lg"  [(ngModel)]="x_cabang">
+                    <option *ngFor="let x of selectCabang" [value]="x.id">{{x.x_name}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="d-grid">
+                <button class="btn btn-lg btn-dark" (click)="onFilter()" [disabled]="x_cabang == '' || selectName == '' ">Generate</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-12 my-3" *ngIf="loading">
+        <div class="text-center my-5">
+            <img src="./assets/gif/loadingIntro.gif" width="80%">
+        </div>
+    </div>
+
+    <hr>
+    <div style="overflow: auto; width: 100%;"  class="bg-white" *ngIf="!loading" >
+        <div class="row">
+            
+            <div class="col-12">
+          
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th> Total <br>Target</th>
+                                <th> Actual Sales <br> by Invoice</th>
+                                <th> Ratio <br> by Invoice</th> 
+                            </tr>
+                        </thead>
+                        <tbody >
+                            <tr *ngFor="let x of items">
+                                <td class="text-center">{{x.x_total_target | number}}</td>
+                                <td class="text-center">{{x.x_actual_sales_by_invoice | number}}</td>
+                                <td class="text-center">{{x.x_ratio_by_invoice | number}}</td>
+
+                            </tr>
+                            <tr *ngIf="items.length ==  0">
+                                <td colspan="3" class="text-center">
+                                    <p>
+                                        Total {{items.length}} 
+
+                                    </p>
+                                    <p>
+                                        No data
+                                    </p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table> 
+            </div>
+        </div>
+    </div>
+</main>

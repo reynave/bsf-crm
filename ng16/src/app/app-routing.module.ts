@@ -26,6 +26,10 @@ import { OrderDetailComponent } from './order/order-detail/order-detail.componen
 import { CartsComponent } from './carts/carts.component';
 import { CartsDetailComponent } from './carts/carts-detail/carts-detail.component';
 import { NgxWebcamComponent } from './global/ngx-webcam/ngx-webcam.component';
+import { TargetComponent } from './target/target.component';
+import { TargetYearComponent } from './target/target-year/target-year.component';
+import { TargetMonthComponent } from './target/target-month/target-month.component';
+import { KomisiComponent } from './komisi/komisi.component';
 
 const routes: Routes = [
   { path:"", component:HomeComponent, data: { active: "home" },  canActivate:[authGuard] },
@@ -63,6 +67,14 @@ const routes: Routes = [
   
   { path:"order", component:OrderComponent , data: { active: "order" },  canActivate:[authGuard]},
   { path:"order/detail", component:OrderDetailComponent , data: { active: "order" },  canActivate:[authGuard]},
+
+  { path:"target", component:TargetComponent , data: { active: "target" },  canActivate:[authGuard]},
+  { path:"target/yearly", component:TargetYearComponent , data: { active: "target" },  canActivate:[authGuard]},
+  { path:"target/montly", component:TargetMonthComponent , data: { active: "target" },  canActivate:[authGuard]},
+  
+  { path:"komisi", component:KomisiComponent , data: { active: "komisi" },  canActivate:[authGuard]},
+
+
 
   { path:"sql", component:SqlQueryComponent , data: { active: "sql" },  canActivate:[authGuard]},
 

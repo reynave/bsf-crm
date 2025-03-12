@@ -37,6 +37,10 @@ import { CartsDetailComponent } from './carts/carts-detail/carts-detail.componen
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { NgxWebcamComponent } from './global/ngx-webcam/ngx-webcam.component';
 import { AddHoursPipe } from './pipe/add-hours.pipe';
+import { TargetComponent } from './target/target.component';
+import { KomisiComponent } from './komisi/komisi.component';
+import { TargetMonthComponent } from './target/target-month/target-month.component';
+import { TargetYearComponent } from './target/target-year/target-year.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +60,7 @@ import { AddHoursPipe } from './pipe/add-hours.pipe';
     ProductDetailComponent,
     ProductListComponent, 
     AddHoursPipe,
-    ScheduleActivitiesComponent, ActivityInsertComponent, CartComponent, OrderComponent, CustomerModalComponent, CustomerComponent, CustomerDetailComponent, SqlQueryComponent, CustomerInsertComponent, OrderDetailComponent, CartsComponent, CartsDetailComponent, NgxWebcamComponent
+    ScheduleActivitiesComponent, ActivityInsertComponent, CartComponent, OrderComponent, CustomerModalComponent, CustomerComponent, CustomerDetailComponent, SqlQueryComponent, CustomerInsertComponent, OrderDetailComponent, CartsComponent, CartsDetailComponent, NgxWebcamComponent, TargetComponent, KomisiComponent, TargetMonthComponent, TargetYearComponent
   ],
   imports: [
     BrowserModule,

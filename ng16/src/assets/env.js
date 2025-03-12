@@ -25,5 +25,5 @@ var appSelect = [
         label:'UAT', 
     }
 ];
-
-var api = "https://api-bee.a-morphosys.cloud/crm1/";
+var api = "http://localhost/app/bsf-crm/";
+//var api = "https://api-bee.a-morphosys.cloud/crm1/";

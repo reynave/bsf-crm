@@ -1,12 +1,8 @@
 <?php 
-// define('HOSTNAME', '185.111.159.143'); 
-// define('USERNAME', 'root');
-// define('PASSWORD', '7x4pD1R*Jr6o');
-// define('DATABASE', 'BEE-DEV'); 
 define('HOSTNAME', '185.111.159.143'); 
 define('USERNAME', 'root');
 define('PASSWORD', '7x4pD1R*Jr6o');
-define('DATABASE', 'BEE-LIVE'); 
+define('DATABASE', 'BEE-DEV'); 
 
 // Check PHP version.
 $minPhpVersion = '7.4'; // If you update this, don't forget to update `spark`.
