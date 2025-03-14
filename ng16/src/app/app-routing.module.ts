@@ -31,6 +31,7 @@ import { TargetYearComponent } from './target/target-year/target-year.component'
 import { TargetMonthComponent } from './target/target-month/target-month.component';
 import { KomisiComponent } from './komisi/komisi.component';
 import { ReportCustomerComponent } from './report-customer/report-customer.component';
+import { ApprovalComponent } from './approval/approval.component';
 
 const routes: Routes = [
   { path:"", component:HomeComponent, data: { active: "home" },  canActivate:[authGuard] },
@@ -77,6 +78,13 @@ const routes: Routes = [
 
   { path:"reportCustomer", component:ReportCustomerComponent , data: { active: "reportCustomer" },  canActivate:[authGuard]},
 
+  { path:"approval", component:ApprovalComponent , data: { active: "approval" },  canActivate:[authGuard]},
+
+  /*{ path:"approval", component:ApprovalComponent , data: { active: "approval" },  canActivate:[authGuard]},
+  { path:"approval", component:ApprovalComponent , data: { active: "approval" },  canActivate:[authGuard]},
+  { path:"approval", component:ApprovalComponent , data: { active: "approval" },  canActivate:[authGuard]},
+  { path:"approval", component:ApprovalComponent , data: { active: "approval" },  canActivate:[authGuard]},
+*/
 
 
   { path:"sql", component:SqlQueryComponent , data: { active: "sql" },  canActivate:[authGuard]},

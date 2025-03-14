@@ -42,6 +42,11 @@ import { KomisiComponent } from './komisi/komisi.component';
 import { TargetMonthComponent } from './target/target-month/target-month.component';
 import { TargetYearComponent } from './target/target-year/target-year.component';
 import { ReportCustomerComponent } from './report-customer/report-customer.component';
+import { ApprovalArDueComponent } from './approval/approval-ar-due/approval-ar-due.component';
+import { ApprovalCreditLimitComponent } from './approval/approval-credit-limit/approval-credit-limit.component';
+import { ApprovalDiscountComponent } from './approval/approval-discount/approval-discount.component';
+import { ApprovalTopComponent } from './approval/approval-top/approval-top.component';
+import { ApprovalComponent } from './approval/approval.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +66,7 @@ import { ReportCustomerComponent } from './report-customer/report-customer.compo
     ProductDetailComponent,
     ProductListComponent, 
     AddHoursPipe,
-    ScheduleActivitiesComponent, ActivityInsertComponent, CartComponent, OrderComponent, CustomerModalComponent, CustomerComponent, CustomerDetailComponent, SqlQueryComponent, CustomerInsertComponent, OrderDetailComponent, CartsComponent, CartsDetailComponent, NgxWebcamComponent, TargetComponent, KomisiComponent, TargetMonthComponent, TargetYearComponent, ReportCustomerComponent
+    ScheduleActivitiesComponent, ActivityInsertComponent, CartComponent, OrderComponent, CustomerModalComponent, CustomerComponent, CustomerDetailComponent, SqlQueryComponent, CustomerInsertComponent, OrderDetailComponent, CartsComponent, CartsDetailComponent, NgxWebcamComponent, TargetComponent, KomisiComponent, TargetMonthComponent, TargetYearComponent, ReportCustomerComponent, ApprovalArDueComponent, ApprovalCreditLimitComponent, ApprovalDiscountComponent, ApprovalTopComponent, ApprovalComponent
   ],
   imports: [
     BrowserModule,
