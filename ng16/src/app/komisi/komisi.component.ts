@@ -30,6 +30,7 @@ export class KomisiComponent  implements OnInit {
 
   ngOnInit(): void {
     this.monthlySelect();
+    this.onFilter();
   }
   monthlySelect() {
     this.http.get<any>(environment.api + this.configService.getAppCode() + "Komisi/monthlySelect", {

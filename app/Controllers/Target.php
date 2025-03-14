@@ -34,11 +34,18 @@ class Target extends BaseController
     {
         $post = $this->request->getVar();
         $accountId = model("Core")->accountId();
-        $q2 = "select * from x_sales_target_line where 
+        $q1 = "select * from x_sales_target_line where 
         x_bulan = " . $post['x_bulan'] . " and  
         x_cabang = " . $post['x_cabang'] . " and 
         x_name = '" . $post['x_name'] . "' and  
         x_tahun = '" . $post['x_tahun'] . "' 
+        
+        ";
+
+        $q2 = "SELECT s.*, m.x_name as cabang
+        from x_sales_target_line  as s
+        left join x_mastercabang as m on m.id = s.x_cabang
+        where s.x_name != ''
         
         ";
         $items = $this->db->query($q2)->getResultArray();

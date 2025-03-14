@@ -4,12 +4,11 @@ import { ConfigService } from 'src/app/service/config.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-target-month',
-  templateUrl: './target-month.component.html',
-  styleUrls: ['./target-month.component.css']
+  selector: 'app-report-customer',
+  templateUrl: './report-customer.component.html',
+  styleUrls: ['./report-customer.component.css']
 })
-export class TargetMonthComponent implements OnInit {
-
+export class ReportCustomerComponent   implements OnInit {
   items: any = [];
   loading: boolean = false;
   monthNames: any = Array.from({ length: 12 }, (_, i) => ({
@@ -34,7 +33,7 @@ export class TargetMonthComponent implements OnInit {
     this.onFilter();
   }
   monthlySelect() {
-    this.http.get<any>(environment.api + this.configService.getAppCode() + "Target/monthlySelect", {
+    this.http.get<any>(environment.api + this.configService.getAppCode() + "ReportCustomer/index", {
       headers: this.configService.headers(),
       params: {}
     }).subscribe(
@@ -51,7 +50,7 @@ export class TargetMonthComponent implements OnInit {
 
   onFilter() {
     this.loading = true;
-    this.http.get<any>(environment.api + this.configService.getAppCode() + "Target/monthly", {
+    this.http.get<any>(environment.api + this.configService.getAppCode() + "ReportCustomer/detail", {
       headers: this.configService.headers(),
       params: {
         x_bulan: this.x_bulan,
@@ -70,7 +69,7 @@ export class TargetMonthComponent implements OnInit {
       }
     )
   }
-  
+
   back() {
     history.back();
   }

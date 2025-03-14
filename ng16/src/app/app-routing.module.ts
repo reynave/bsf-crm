@@ -30,6 +30,7 @@ import { TargetComponent } from './target/target.component';
 import { TargetYearComponent } from './target/target-year/target-year.component';
 import { TargetMonthComponent } from './target/target-month/target-month.component';
 import { KomisiComponent } from './komisi/komisi.component';
+import { ReportCustomerComponent } from './report-customer/report-customer.component';
 
 const routes: Routes = [
   { path:"", component:HomeComponent, data: { active: "home" },  canActivate:[authGuard] },
@@ -73,6 +74,8 @@ const routes: Routes = [
   { path:"target/montly", component:TargetMonthComponent , data: { active: "target" },  canActivate:[authGuard]},
   
   { path:"komisi", component:KomisiComponent , data: { active: "komisi" },  canActivate:[authGuard]},
+
+  { path:"reportCustomer", component:ReportCustomerComponent , data: { active: "reportCustomer" },  canActivate:[authGuard]},
 
 
 

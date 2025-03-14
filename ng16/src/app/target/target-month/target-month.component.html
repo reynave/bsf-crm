@@ -60,6 +60,9 @@
                     <table class="table">
                         <thead>
                             <tr>
+                                <th> Name</th>
+                                <th> Bulan & Tahun</th>
+                                <th> Cabang</th>
                                 <th> Total <br>Target</th>
                                 <th> Actual Sales <br> by Invoice</th>
                                 <th> Ratio <br> by Invoice</th> 
@@ -67,13 +70,16 @@
                         </thead>
                         <tbody >
                             <tr *ngFor="let x of items">
-                                <td class="text-center">{{x.x_total_target | number}}</td>
+                                <td class="text-center">{{x.x_name}}</td> 
+                                <td class="text-center">{{  monthNames[x.x_bulan-1]['name']   }} - {{x.x_tahun}} </td> 
+                                <td class="text-center">{{x.cabang}}</td> 
+                                <td class="text-center">{{x.x_total_target | number}}</td> 
                                 <td class="text-center">{{x.x_actual_sales_by_invoice | number}}</td>
-                                <td class="text-center">{{x.x_ratio_by_invoice | number}}</td>
-
+                                <td class="text-center">{{x.x_ratio_by_invoice | number}}</td> 
+                            
                             </tr>
                             <tr *ngIf="items.length ==  0">
-                                <td colspan="3" class="text-center">
+                                <td colspan="5" class="text-center">
                                     <p>
                                         Total {{items.length}} 
 

@@ -41,6 +41,7 @@ import { TargetComponent } from './target/target.component';
 import { KomisiComponent } from './komisi/komisi.component';
 import { TargetMonthComponent } from './target/target-month/target-month.component';
 import { TargetYearComponent } from './target/target-year/target-year.component';
+import { ReportCustomerComponent } from './report-customer/report-customer.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,7 @@ import { TargetYearComponent } from './target/target-year/target-year.component'
     ProductDetailComponent,
     ProductListComponent, 
     AddHoursPipe,
-    ScheduleActivitiesComponent, ActivityInsertComponent, CartComponent, OrderComponent, CustomerModalComponent, CustomerComponent, CustomerDetailComponent, SqlQueryComponent, CustomerInsertComponent, OrderDetailComponent, CartsComponent, CartsDetailComponent, NgxWebcamComponent, TargetComponent, KomisiComponent, TargetMonthComponent, TargetYearComponent
+    ScheduleActivitiesComponent, ActivityInsertComponent, CartComponent, OrderComponent, CustomerModalComponent, CustomerComponent, CustomerDetailComponent, SqlQueryComponent, CustomerInsertComponent, OrderDetailComponent, CartsComponent, CartsDetailComponent, NgxWebcamComponent, TargetComponent, KomisiComponent, TargetMonthComponent, TargetYearComponent, ReportCustomerComponent
   ],
   imports: [
     BrowserModule,

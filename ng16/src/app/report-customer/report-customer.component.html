@@ -1,0 +1,105 @@
+<nav class="fixed-top py-2 bg-white shadow-sm">
+    <div class="container-fluid">
+        <div class="row g-1">
+            <div class="col-1 align-self-center  ">
+                <a class="navbar-brand" (click)="back()"><i class="bi bi-arrow-left"></i></a>
+            </div>
+            <div class="col-10 align-self-center text-center">
+                <b>Report Set by Customer</b>
+            </div>
+        </div>
+    </div>
+</nav>
+
+
+<main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+    <div class="container-fluid">
+        <div class="row g-2 mb-2">
+            <div class="col-8 ">
+                <select class="form-control form-control-lg" [(ngModel)]="x_bulan">
+                    <option *ngFor="let x of monthNames; let i = index" [value]="x.id"> {{x.name}}</option>
+                </select>
+
+            </div>
+            <div class="col-4">
+                <input type="number" [(ngModel)]="x_tahun" class="form-control form-control-lg">
+            </div>
+        </div>
+      
+        <div class="row">
+            <div class="d-grid">
+                <button class="btn btn-lg btn-dark" (click)="onFilter()"
+                    [disabled]="x_cabang == '' || selectName == '' ">Filter</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 my-3" *ngIf="loading">
+        <div class="text-center my-5">
+            <img src="./assets/gif/loadingIntro.gif" width="80%">
+        </div>
+    </div>
+
+    <hr>
+    <div   *ngIf="!loading">
+        <div class="row">
+
+            <div class="col-12">
+
+                <div class="card rounded mb-2" *ngFor="let x of items"> 
+                    <div class="card-body ">
+                       <div class="row">
+                        <div class="col-6">
+                            <small>Customer Name </small>
+                            <div class="mb-1">
+                                <strong>{{x.x_customer_name }} ({{x.x_customer_id}})</strong>
+                            </div>
+                            
+                        </div>
+                        <div class="col-6 text-end">
+                            {{ x.x_month  }} ({{x.x_year}})
+                        </div>
+                       </div>
+                        <div class="row g-1 mb-1">
+                            <div class="col-6">
+                                <small>   Number of SO </small>
+                                <div class="lh-sm">
+                                    <strong>{{x.x_number_of_so | number }} &nbsp;</strong>
+                                </div>
+                            </div>
+
+                            <div class="col-6">
+                                <small> Total SO </small>
+                                <div class="lh-sm">
+                                    <strong>{{x.x_total_so | number}} &nbsp;</strong>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row g-1">
+                            <div class="col-6">
+                                <small>Number of Invoice </small>
+                                <div class="lh-sm">
+                                    <strong>{{x.x_number_of_invoice | number}} &nbsp;</strong>
+                                </div>
+                            </div>
+
+                            <div class="col-6">
+                                <small>Total Invoice</small>
+                                <div class="lh-sm">
+                                    <strong>{{x.x_total_invoice | number}} &nbsp;</strong>
+                                </div>
+                            </div>
+
+                        </div> 
+                        
+                        
+ 	
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

@@ -5,15 +5,15 @@ namespace App\Controllers;
 use CodeIgniter\Controller;
 use DateTime;
 use DateInterval;
-class Komisi extends BaseController
+class ReportCustomer extends BaseController
 {
-    function monthlySelect()
+    function index()
     {
         // $q2 = "select  id, name from hr_employee where name != '' ";
         // $hr_employee = $this->db->query($q2)->getResultArray();
 
-         $q2 =  "select x_name from x_incentives  where x_name != '' group by x_name ";
-         $selectName = $this->db->query($q2)->getResultArray();
+         $q2 =  "select x_year  from  x_report_set_by_customer_per_month_header group by x_year;";
+         $selectYear = $this->db->query($q2)->getResultArray();
 
 
         $q3 = "select id, x_name  from x_mastercabang where x_name != '' ";
@@ -21,7 +21,7 @@ class Komisi extends BaseController
 
         $data = [
             "datetime" => $this->db->query("SELECT NOW() AT TIME ZONE '+00:00'")->getRowArray(),
-            "selectName" => $selectName,
+            "selectYear" => $selectYear,
             "x_mastercabang" => $x_mastercabang,
         ];
 
@@ -30,26 +30,20 @@ class Komisi extends BaseController
 
     }
 
-    function monthly()
+    function detail()
     {
         $post = $this->request->getVar();
         $accountId = model("Core")->accountId();
-        $q3 = "select * from x_incentives where 
-        x_bulan = '" . $post['x_bulan'] . "' and  
-        x_cabang_utama = '" . $post['x_cabang'] . "' and 
-        x_name = '" . $post['x_name'] . "' and  
-        x_tahun = '" . $post['x_tahun'] . "'  
-        ";
-
-        $q2 = "SELECT * FROM x_incentives";
-        $items = $this->db->query($q2)->getResultArray();
+        $q = "select * from  x_report_set_by_customer_per_month ";
+ 
+        $items = $this->db->query($q)->getResultArray();
 
         $data = [
             "error" => false,
             "datetime" => $this->db->query("SELECT NOW() AT TIME ZONE '+00:00'")->getRowArray(),
             "items" => $items,
             "x_salesperson_id" => $accountId,
-            "q" => $q2,
+            "q" => $q,
         ];
         return $this->response->setJSON($data);
 
