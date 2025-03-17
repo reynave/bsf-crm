@@ -32,6 +32,11 @@ import { TargetMonthComponent } from './target/target-month/target-month.compone
 import { KomisiComponent } from './komisi/komisi.component';
 import { ReportCustomerComponent } from './report-customer/report-customer.component';
 import { ApprovalComponent } from './approval/approval.component';
+import { ApprovalArDueComponent } from './approval/approval-ar-due/approval-ar-due.component';
+import { ApprovalCreditLimitComponent } from './approval/approval-credit-limit/approval-credit-limit.component';
+import { ApprovalDiscountComponent } from './approval/approval-discount/approval-discount.component';
+import { ApprovalTopComponent } from './approval/approval-top/approval-top.component';
+import { ApprovalArDueDetailComponent } from './approval/approval-ar-due/approval-ar-due-detail/approval-ar-due-detail.component';
 
 const routes: Routes = [
   { path:"", component:HomeComponent, data: { active: "home" },  canActivate:[authGuard] },
@@ -80,11 +85,13 @@ const routes: Routes = [
 
   { path:"approval", component:ApprovalComponent , data: { active: "approval" },  canActivate:[authGuard]},
 
-  /*{ path:"approval", component:ApprovalComponent , data: { active: "approval" },  canActivate:[authGuard]},
-  { path:"approval", component:ApprovalComponent , data: { active: "approval" },  canActivate:[authGuard]},
-  { path:"approval", component:ApprovalComponent , data: { active: "approval" },  canActivate:[authGuard]},
-  { path:"approval", component:ApprovalComponent , data: { active: "approval" },  canActivate:[authGuard]},
-*/
+  { path:"approval/arDue", component:ApprovalArDueComponent , data: { active: "approval" },  canActivate:[authGuard]},
+  { path:"approval/creditLimit", component:ApprovalCreditLimitComponent , data: { active: "approval" },  canActivate:[authGuard]},
+  { path:"approval/discount", component:ApprovalDiscountComponent , data: { active: "approval" },  canActivate:[authGuard]},
+  { path:"approval/top", component:ApprovalTopComponent , data: { active: "approval" },  canActivate:[authGuard]},
+
+  { path:"approval/arDue/detail", component:ApprovalArDueDetailComponent , data: { active: "approval" },  canActivate:[authGuard]},
+ 
 
 
   { path:"sql", component:SqlQueryComponent , data: { active: "sql" },  canActivate:[authGuard]},

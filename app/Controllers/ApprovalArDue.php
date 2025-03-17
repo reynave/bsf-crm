@@ -3,27 +3,60 @@
 namespace App\Controllers;
 
 use CodeIgniter\Controller;
-use DateTime; 
+use DateTime;
 use DateInterval;
 class ApprovalArDue extends BaseController
 {
+
+    static $table = 'x_log_approval_ar_due';
     function index()
     {
-        $accountId = model("Core")->accountId();
-       
+        $q = "select *  from  " . self::$table . " where x_request_status = 'open'";
+        $items = $this->db->query($q)->getResultArray();
 
-        $q2 = 'SELECT  * from x_log_approval_ar_due ';
-        $item = $this->db->query($q2)->getResultArray();
-        $i = 0;
- 
+
         $data = [
-            "error" => false,
-            "datetime" =>$this->db->query("SELECT NOW() AT TIME ZONE '+00:00'")->getRowArray(), 
-            "item" => $item, 
+            "datetime" => $this->db->query("SELECT NOW() AT TIME ZONE '+00:00'")->getRowArray(),
+            "items" => $items,
         ];
- 
+
+
         return $this->response->setJSON($data);
 
     }
- 
+
+    function detail()
+    {
+        $id = $this->request->getVar()['id'];
+        $q = "select *  from  " . self::$table . " where id = $id ";
+        $item = $this->db->query($q)->getResultArray()[0];
+
+        $data = [
+            "datetime" => $this->db->query("SELECT NOW() AT TIME ZONE '+00:00'")->getRowArray(),
+            "items" => $item,
+        ];
+
+
+        return $this->response->setJSON($data);
+
+    }
+
+    function onApproved()
+    {
+      
+        $json = file_get_contents('php://input');
+        $post = json_decode($json, true);
+        $id = $post['id'];
+
+        $data = [
+            "datetime" => $this->db->query("SELECT NOW() AT TIME ZONE '+00:00'")->getRowArray(),
+            "post" => $post,
+        ];  
+
+
+        return $this->response->setJSON($data);
+
+    }
+
+
 }

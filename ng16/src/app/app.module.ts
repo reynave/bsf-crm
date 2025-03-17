@@ -47,6 +47,7 @@ import { ApprovalCreditLimitComponent } from './approval/approval-credit-limit/a
 import { ApprovalDiscountComponent } from './approval/approval-discount/approval-discount.component';
 import { ApprovalTopComponent } from './approval/approval-top/approval-top.component';
 import { ApprovalComponent } from './approval/approval.component';
+import { ApprovalArDueDetailComponent } from './approval/approval-ar-due/approval-ar-due-detail/approval-ar-due-detail.component';
 
 @NgModule({
   declarations: [
@@ -66,7 +67,7 @@ import { ApprovalComponent } from './approval/approval.component';
     ProductDetailComponent,
     ProductListComponent, 
     AddHoursPipe,
-    ScheduleActivitiesComponent, ActivityInsertComponent, CartComponent, OrderComponent, CustomerModalComponent, CustomerComponent, CustomerDetailComponent, SqlQueryComponent, CustomerInsertComponent, OrderDetailComponent, CartsComponent, CartsDetailComponent, NgxWebcamComponent, TargetComponent, KomisiComponent, TargetMonthComponent, TargetYearComponent, ReportCustomerComponent, ApprovalArDueComponent, ApprovalCreditLimitComponent, ApprovalDiscountComponent, ApprovalTopComponent, ApprovalComponent
+    ScheduleActivitiesComponent, ActivityInsertComponent, CartComponent, OrderComponent, CustomerModalComponent, CustomerComponent, CustomerDetailComponent, SqlQueryComponent, CustomerInsertComponent, OrderDetailComponent, CartsComponent, CartsDetailComponent, NgxWebcamComponent, TargetComponent, KomisiComponent, TargetMonthComponent, TargetYearComponent, ReportCustomerComponent, ApprovalArDueComponent, ApprovalCreditLimitComponent, ApprovalDiscountComponent, ApprovalTopComponent, ApprovalComponent, ApprovalArDueDetailComponent
   ],
   imports: [
     BrowserModule,
