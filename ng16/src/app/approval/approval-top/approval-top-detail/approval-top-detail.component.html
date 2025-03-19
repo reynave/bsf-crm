@@ -1,0 +1,130 @@
+<nav class="fixed-top py-2 bg-white shadow-sm">
+    <div class="container-fluid">
+        <div class="row g-1">
+            <div class="col-1 align-self-center  ">
+                <a class="navbar-brand" (click)="back()"><i class="bi bi-arrow-left"></i></a>
+            </div>
+            <div class="col-10 align-self-center text-center">
+                <b>Approval ToP Detail</b>
+            </div>
+        </div>
+    </div>
+</nav>
+
+
+<main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+
+
+    <div class="col-12 my-3" *ngIf="loading">
+        <div class="text-center my-5">
+            <img src="./assets/gif/loadingIntro.gif" width="100">
+        </div>
+    </div>
+
+    <hr>
+    <div *ngIf="!loading">
+        <div class="row">
+            <div class="col-12">
+                <div class="card rounded mb-2">
+
+                    <div class="card-body ">
+                        <div class="row">
+                            <div class="col-12">
+                                <small>Requested Date </small>
+                                <div class="mb-1">
+                                    <strong>{{item.x_request_date | addHours }}</strong> &nbsp;
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-12">
+                                <table class="table table-sm">
+                                    <!-- <tbody>
+                                        <tr *ngFor="let entry of item | keyvalue">
+                                            <td>{{ entry.key }}</td>
+                                            <td> <strong>{{ entry.value }}</strong>&nbsp;</td>
+                                        </tr>
+                                    </tbody> -->
+
+                                    <tbody>
+                                        <tr>
+                                            <td> ID </td>
+                                            <td width="10px">:</td>
+                                            <td> <strong> {{item.id}} </strong> </td>
+                                        </tr>
+                                        <tr>
+                                            <td> Sales Order </td>
+                                            <td>:</td>
+                                            <td> <strong>{{item.x_sales_order_no}} </strong> </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td> Requester </td>
+                                            <td>:</td>
+                                            <td> <strong> {{item.x_requester_name}} </strong></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>Request Date </td>
+                                            <td>:</td>
+                                            <td> <strong>{{item.x_request_date | addHours}} </strong> </td>
+                                        </tr>
+
+
+                                        <tr>
+                                            <td>Current Top </td>
+                                            <td>:</td>
+                                            <td> <strong>{{item.x_current_top}} </strong> </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>New Top </td>
+                                            <td>:</td>
+                                            <td> <strong>{{item.x_new_top}} </strong> </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>Reason Top</td>
+                                            <td>:</td>
+                                            <td> <strong>{{item.x_reason_top}} </strong> </td>
+                                        </tr>
+
+
+                                        <tr>
+                                            <td>Current Due Date </td>
+                                            <td>:</td>
+                                            <td> <strong>{{item.x_current_due_date}} </strong> </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>New Due Date </td>
+                                            <td>:</td>
+                                            <td> <strong>{{item.x_new_due_date}} </strong> </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td> Approval Status </td>
+                                            <td>:</td>
+                                            <td> <strong> {{item.x_request_status}} </strong> </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="col-12 mt-2">
+                                <div class="d-grid">
+                                    <button type="button" class="btn btn-dark" (click)="onApproved();">IS
+                                        APPROVED</button>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

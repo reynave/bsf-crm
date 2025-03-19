@@ -5,7 +5,7 @@
             <a class="navbar-brand" (click)="back()"><i class="bi bi-arrow-left"></i></a>
          </div>
          <div class="col-10 align-self-center text-center">
-            <b>Approval AR Due Detail</b>
+            <b>Approval Discount Detail</b>
          </div>
       </div>
    </div>
@@ -28,70 +28,79 @@
             <div class="card rounded mb-2">
 
                <div class="card-body ">
-                  
+                  <div class="row">
+                     <div class="col-12">
+                        <small>Requested Date </small>
+                        <div class="mb-1">
+                           <strong>{{item.x_request_date | addHours }}</strong> &nbsp;
+                        </div>
+                     </div>
+                  </div>
 
 
                   <div class="row">
                      <div class="col-12">
                         <table class="table table-sm">
-                           <!-- <tbody>
+                           <tbody>
                               <tr *ngFor="let entry of item | keyvalue">
                                  <td>{{ entry.key }}</td>
                                  <td> <strong>{{ entry.value }}</strong>&nbsp;</td>
                               </tr>
-                           </tbody> -->
+                           </tbody>
 
-                           <tbody>
+
+                           <!-- <tbody>
                               <tr>
                                  <td> ID </td>
                                  <td width="10px">:</td>
-                                 <td> <strong> {{item.id}}  </strong> </td>
+                                 <td> <strong> {{item.id}} </strong> </td>
                               </tr>
                               <tr>
                                  <td> Sales Order </td>
-                                 <td >:</td>
-                                 <td>  <strong>{{item.x_sales_order_no}}  </strong> </td>
+                                 <td>:</td>
+                                 <td> <strong>{{item.x_sales_order_no}} </strong> </td>
                               </tr>
 
                               <tr>
                                  <td> Requester </td>
-                                 <td >:</td>
-                                 <td>   <strong> {{item.x_requester_name}}  </strong></td>
+                                 <td>:</td>
+                                 <td> <strong> {{item.x_requester_name}} </strong></td>
                               </tr>
 
                               <tr>
                                  <td> Request date </td>
-                                 <td >:</td>
-                                 <td>  <strong>{{item.x_request_date | addHours}} </strong> </td>
+                                 <td>:</td>
+                                 <td> <strong>{{item.x_request_date | addHours}} </strong> </td>
                               </tr>
 
                               <tr>
                                  <td> AR Due Reason </td>
-                                 <td >:</td>
-                                 <td>  <strong>{{item.x_reason_ar_due}} </strong>  </td>
+                                 <td>:</td>
+                                 <td> <strong>{{item.x_reason_ar_due}} </strong> </td>
                               </tr>
 
-                           
 
-                              <tr>
-                                 <td>  Current SO Amount  </td>
-                                 <td >:</td>
-                                 <td>  <strong> {{item.x_current_so_amount}} </strong>  </td>
-                              </tr>
 
                               <tr>
-                                 <td>  Approval Status  </td>
-                                 <td >:</td>
-                                 <td>  <strong> {{item.x_request_status}}  </strong> </td>
+                                 <td> Current SO Amount </td>
+                                 <td>:</td>
+                                 <td> <strong> {{item.x_current_so_amount}} </strong> </td>
                               </tr>
-                           </tbody>
+
+                              <tr>
+                                 <td> Approval Status </td>
+                                 <td>:</td>
+                                 <td> <strong> {{item.x_request_status}} </strong> </td>
+                              </tr>
+                           </tbody> -->
 
                         </table>
                      </div>
 
                      <div class="col-12 mt-2">
                         <div class="d-grid">
-                           <button type="button" class="btn btn-dark" (click)="onApproved();">IS APPROVED</button>
+                           <button type="button" class="btn btn-dark" (click)="onApproved();">IS
+                              APPROVED</button>
                         </div>
 
                      </div>

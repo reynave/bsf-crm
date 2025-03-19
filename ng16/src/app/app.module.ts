@@ -48,6 +48,9 @@ import { ApprovalDiscountComponent } from './approval/approval-discount/approval
 import { ApprovalTopComponent } from './approval/approval-top/approval-top.component';
 import { ApprovalComponent } from './approval/approval.component';
 import { ApprovalArDueDetailComponent } from './approval/approval-ar-due/approval-ar-due-detail/approval-ar-due-detail.component';
+import { ApprovalTopDetailComponent } from './approval/approval-top/approval-top-detail/approval-top-detail.component';
+import { ApprovalDiscountDetailComponent } from './approval/approval-discount/approval-discount-detail/approval-discount-detail.component';
+import { ApprovalCreditLimitDetailComponent } from './approval/approval-credit-limit/approval-credit-limit-detail/approval-credit-limit-detail.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +70,7 @@ import { ApprovalArDueDetailComponent } from './approval/approval-ar-due/approva
     ProductDetailComponent,
     ProductListComponent, 
     AddHoursPipe,
-    ScheduleActivitiesComponent, ActivityInsertComponent, CartComponent, OrderComponent, CustomerModalComponent, CustomerComponent, CustomerDetailComponent, SqlQueryComponent, CustomerInsertComponent, OrderDetailComponent, CartsComponent, CartsDetailComponent, NgxWebcamComponent, TargetComponent, KomisiComponent, TargetMonthComponent, TargetYearComponent, ReportCustomerComponent, ApprovalArDueComponent, ApprovalCreditLimitComponent, ApprovalDiscountComponent, ApprovalTopComponent, ApprovalComponent, ApprovalArDueDetailComponent
+    ScheduleActivitiesComponent, ActivityInsertComponent, CartComponent, OrderComponent, CustomerModalComponent, CustomerComponent, CustomerDetailComponent, SqlQueryComponent, CustomerInsertComponent, OrderDetailComponent, CartsComponent, CartsDetailComponent, NgxWebcamComponent, TargetComponent, KomisiComponent, TargetMonthComponent, TargetYearComponent, ReportCustomerComponent, ApprovalArDueComponent, ApprovalCreditLimitComponent, ApprovalDiscountComponent, ApprovalTopComponent, ApprovalComponent, ApprovalArDueDetailComponent, ApprovalTopDetailComponent, ApprovalDiscountDetailComponent, ApprovalCreditLimitDetailComponent
   ],
   imports: [
     BrowserModule,

@@ -13,14 +13,12 @@ class ApprovalArDue extends BaseController
     {
         $q = "select *  from  " . self::$table . " where x_request_status = 'open'";
         $items = $this->db->query($q)->getResultArray();
-
-
+ 
         $data = [
             "datetime" => $this->db->query("SELECT NOW() AT TIME ZONE '+00:00'")->getRowArray(),
             "items" => $items,
         ];
-
-
+ 
         return $this->response->setJSON($data);
 
     }
@@ -46,14 +44,20 @@ class ApprovalArDue extends BaseController
       
         $json = file_get_contents('php://input');
         $post = json_decode($json, true);
-        $id = $post['id'];
+        $id = $post['id']; 
 
+        $this->db->table( self::$table )->update([
+            "x_approval_status" => "approved",
+            "x_request_status" => "closed",
+            "x_is_approved" =>  'true',
+            
+        ], "   id = " . $post['id']);
+
+ 
         $data = [
             "datetime" => $this->db->query("SELECT NOW() AT TIME ZONE '+00:00'")->getRowArray(),
             "post" => $post,
-        ];  
-
-
+        ];   
         return $this->response->setJSON($data);
 
     }

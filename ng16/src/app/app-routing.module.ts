@@ -37,6 +37,9 @@ import { ApprovalCreditLimitComponent } from './approval/approval-credit-limit/a
 import { ApprovalDiscountComponent } from './approval/approval-discount/approval-discount.component';
 import { ApprovalTopComponent } from './approval/approval-top/approval-top.component';
 import { ApprovalArDueDetailComponent } from './approval/approval-ar-due/approval-ar-due-detail/approval-ar-due-detail.component';
+import { ApprovalTopDetailComponent } from './approval/approval-top/approval-top-detail/approval-top-detail.component';
+import { ApprovalDiscountDetailComponent } from './approval/approval-discount/approval-discount-detail/approval-discount-detail.component';
+import { ApprovalCreditLimitDetailComponent } from './approval/approval-credit-limit/approval-credit-limit-detail/approval-credit-limit-detail.component';
 
 const routes: Routes = [
   { path:"", component:HomeComponent, data: { active: "home" },  canActivate:[authGuard] },
@@ -91,8 +94,10 @@ const routes: Routes = [
   { path:"approval/top", component:ApprovalTopComponent , data: { active: "approval" },  canActivate:[authGuard]},
 
   { path:"approval/arDue/detail", component:ApprovalArDueDetailComponent , data: { active: "approval" },  canActivate:[authGuard]},
+  { path:"approval/creditLimit/detail", component:ApprovalCreditLimitDetailComponent , data: { active: "approval" },  canActivate:[authGuard]},
+  { path:"approval/discount/detail", component:ApprovalDiscountDetailComponent , data: { active: "approval" },  canActivate:[authGuard]},
+  { path:"approval/top/detail", component:ApprovalTopDetailComponent , data: { active: "approval" },  canActivate:[authGuard]},
  
-
 
   { path:"sql", component:SqlQueryComponent , data: { active: "sql" },  canActivate:[authGuard]},
 
