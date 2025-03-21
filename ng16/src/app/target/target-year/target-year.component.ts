@@ -26,6 +26,7 @@ export class TargetYearComponent implements OnInit {
 
   ngOnInit(): void {
     this.monthlySelect();
+    this.onFilter();
   }
   monthlySelect() {
     this.http.get<any>(environment.api + this.configService.getAppCode() + "Target/yearSelect", {

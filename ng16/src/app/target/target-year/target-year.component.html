@@ -15,31 +15,33 @@
 <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
     <div class="container-fluid">
         <div class="row g-2 mb-2">
-            
+
             <div class="col-12">
-               <input type="number" [(ngModel)]="x_tahun" class="form-control form-control-lg">
+                <input type="number" [(ngModel)]="x_tahun" class="form-control form-control-lg">
             </div>
         </div>
         <div class="row g-2 mb-2">
             <div class="col-6 ">
                 <select class="form-control form-control-lg" [(ngModel)]="x_name">
+                    <option [value]="''">All</option>
                     <option *ngFor="let x of selectName" [value]="x.x_name">{{x.x_name}}</option>
                 </select>
 
             </div>
             <div class="col-6">
-                <select class="form-control form-control-lg"  [(ngModel)]="x_cabang">
+                <select class="form-control form-control-lg" [(ngModel)]="x_cabang">
+                    <option [value]="''">All</option>
                     <option *ngFor="let x of selectCabang" [value]="x.id">{{x.x_name}}</option>
                 </select>
             </div>
         </div>
         <div class="row">
             <div class="d-grid">
-                <button class="btn btn-lg btn-dark" (click)="onFilter()" [disabled]="x_cabang == '' || selectName == '' ">Generate</button>
+                <button class="btn btn-lg btn-dark" (click)="onFilter()">Generate</button>
             </div>
         </div>
     </div>
-    
+
     <div class="col-12 my-3" *ngIf="loading">
         <div class="text-center my-5">
             <img src="./assets/gif/loadingIntro.gif" width="80%">
@@ -47,57 +49,32 @@
     </div>
 
     <hr>
-    <div  class="bg-white" *ngIf="!loading" >
+    <div style="overflow: auto; width: 100%;"  class="bg-white" *ngIf="!loading" >
         <div class="row">
-            
+
             <div class="col-12">
-          
-                    <table class="table">
-                       
-                        <tbody  *ngFor="let x of items">
-                            <tr>
-                                <td>total_target</td>
-                                <td >{{x.x_total_target | number }}</td>
-                            </tr>
 
-                            <tr>
-                                <td>total_actual_by_so</td>
-                                <td >{{x.x_total_actual_by_so | number }}</td>
-                            </tr>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>total_target</th>
+                            <th>name</th>
+                            <th>Total Target</th>
+                            <th>Actual Sales by Invoice</th>
+                            <th>Ratio by Invoice</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngFor="let x of items">
+                        <tr>
+                            <td>{{x.cabang }}</td>
+                            <td>{{x.x_name }}</td>
+                            <td class="text-end">{{x.x_total_target | number }}</td>
+                            <td  class="text-end">{{x.x_total_actual_by_invoice  | number }}</td>
+                            <td  class="text-end">{{(x.x_total_actual_by_invoice / x.x_total_target) * 100   | number}}%</td>
+                        </tr>
 
-                            <tr>
-                                <td>total_actual_by_invoice</td>
-                                <td >{{x.x_total_actual_by_invoice | number}}</td>
-                            </tr>
-
-                            <tr>
-                                <td>total_ratio_by_so</td>
-                                <td >{{x.x_total_ratio_by_so  | number }}</td>
-                            </tr>
-
-                            <tr>
-                                <td>total_ratio_by_invoice</td>
-                                <td >{{x.x_total_ratio_by_invoice | number }}</td>
-                            </tr>
-
-                            <tr>
-                                <td>employee_name</td>
-                                <td >{{x.x_employee_name }}</td>
-                            </tr>
-                            <tr>
-                                <td>kepala_cabang</td>
-                                <td >{{x.x_kepala_cabang }}</td>
-                            </tr>
-                            <tr>
-                                <td>supervisor</td>
-                                <td >{{x.x_supervisor }}</td>
-                            </tr>
-                            <tr>
-                                <td>jabatan</td>
-                                <td >{{x.x_jabatan }}</td>
-                            </tr>
-                        </tbody>
-                    </table> 
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

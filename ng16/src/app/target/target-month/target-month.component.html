@@ -28,19 +28,21 @@
         <div class="row g-2 mb-2">
             <div class="col-6 ">
                 <select class="form-control form-control-lg" [(ngModel)]="x_name">
+                    <option [value]="''">All</option>
                     <option *ngFor="let x of selectName" [value]="x.x_name">{{x.x_name}}</option>
                 </select>
 
             </div>
             <div class="col-6">
                 <select class="form-control form-control-lg"  [(ngModel)]="x_cabang">
+                    <option [value]="''">All</option>
                     <option *ngFor="let x of selectCabang" [value]="x.id">{{x.x_name}}</option>
                 </select>
             </div>
         </div>
         <div class="row">
             <div class="d-grid">
-                <button class="btn btn-lg btn-dark" (click)="onFilter()" [disabled]="x_cabang == '' || selectName == '' ">Generate</button>
+                <button class="btn btn-lg btn-dark" (click)="onFilter()" >Generate</button>
             </div>
         </div>
     </div>
