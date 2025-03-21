@@ -52,6 +52,14 @@
                                  <td >:</td>
                                  <td>  <strong>{{item.x_sales_order_no}}  </strong> </td>
                               </tr>
+                              
+                              <tr>
+                                 <td>Customer Name</td>
+                                 <td>:</td>
+                                 <td> <strong> {{item.x_customer_name   }}</strong> </td>
+                             </tr>
+                            
+ 
 
                               <tr>
                                  <td> Requester </td>
@@ -64,22 +72,22 @@
                                  <td >:</td>
                                  <td>  <strong>{{item.x_request_date | addHours}} </strong> </td>
                               </tr>
- 
+
 
                               <tr>
-                                 <td>  Disc 1 new  </td>
+                                 <td>  Disc 1 requested </td>
                                  <td >:</td>
-                                 <td>  <strong> {{item.x_disc1_new | number}} </strong>  </td>
+                                 <td> <strong>{{item.x_disc1 | number}}</strong>  <span class="mx-3"><i class="bi bi-arrow-right"></i></span>   <strong> {{item.x_disc1_new | number}} </strong>  </td>
                               </tr>
                               <tr>
-                                 <td> Disc 2 new  </td>
+                                 <td> Disc 2 requested  </td>
                                  <td >:</td>
-                                 <td>  <strong> {{item.x_disc2_new | number}} </strong>  </td>
+                                 <td>  <strong>{{item.x_disc2 | number}} </strong> <span class="mx-3"><i class="bi bi-arrow-right"></i></span>   <strong> {{item.x_disc2_new | number}} </strong>  </td>
                               </tr>
                               <tr>
-                                 <td>  Disc 3 new  </td>
+                                 <td>  Disc 3 requested </td>
                                  <td >:</td>
-                                 <td>  <strong> {{item.x_disc3_new | number}} </strong>  </td>
+                                 <td>  <strong>{{item.x_disc3 | number}} </strong> <span class="mx-3"><i class="bi bi-arrow-right"></i></span>  <strong> {{item.x_disc3_new | number}} </strong>  </td>
                               </tr>
 
 
