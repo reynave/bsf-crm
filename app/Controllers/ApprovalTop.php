@@ -11,10 +11,9 @@ class ApprovalTop extends BaseController
    
     function index()
     {
-        $q = "select *  from  " . self::$table . " where x_request_status = 'open'";
+        $q = "select *  from  " . self::$table . " where x_request_status = 'open' ORDER BY x_request_date DESC";
         $items = $this->db->query($q)->getResultArray();
-
-
+ 
         $data = [
             "datetime" => $this->db->query("SELECT NOW() AT TIME ZONE '+00:00'")->getRowArray(),
             "items" => $items,
@@ -47,11 +46,12 @@ class ApprovalTop extends BaseController
         $json = file_get_contents('php://input');
         $post = json_decode($json, true);
         $id = $post['id']; 
-
+ 
+    
         $this->db->table( self::$table )->update([
-            "x_approval_status" => "approved",
+            "x_approval_status" =>  $post['status'] == 1 ? "approved" : "rejected",
             "x_request_status" => "closed",
-            "x_is_approved" =>  'true',
+            "x_is_approved" => $post['status'] == 1 ? "true" : "false",
             
         ], "   id = " . $post['id']);
 

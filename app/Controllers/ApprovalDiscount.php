@@ -11,7 +11,7 @@ class ApprovalDiscount extends BaseController
    
     function index()
     {
-        $q = "select *  from  " . self::$table . " where x_request_status = 'open'";
+        $q = "select *  from  " . self::$table . " where x_request_status = 'open' ORDER BY x_request_date DESC";
         $items = $this->db->query($q)->getResultArray();
 
 
@@ -49,9 +49,8 @@ class ApprovalDiscount extends BaseController
         $id = $post['id']; 
 
         $this->db->table( self::$table )->update([
-            "x_approval_status" => "approved",
-            "x_request_status" => "closed",
-            "x_is_approved" =>  'true',
+            "x_approve_discount" =>  $post['status'] == 1 ? "t" : "f",
+            "x_request_status" => "closed", 
             
         ], "   id = " . $post['id']);
 

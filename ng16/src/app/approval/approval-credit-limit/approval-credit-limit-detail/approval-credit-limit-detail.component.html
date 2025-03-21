@@ -68,7 +68,7 @@
                               <tr>
                                  <td>Total Credit Limit </td>
                                  <td>:</td>
-                                 <td> <strong>{{item.x_total_credit_limit}} </strong> </td>
+                                 <td > <strong>{{item.x_total_credit_limit | number}} </strong> </td>
                               </tr>
 
                               <tr>
@@ -97,16 +97,36 @@
                                  <td>:</td>
                                  <td> <strong> {{item.x_request_status}} </strong> </td>
                               </tr>
+
+
+                              <tr>
+                                 <td> Status </td>
+                                 <td>:</td>
+                                 <td> <strong> {{item.x_approval_status}} </strong> </td>
+                              </tr>
                            </tbody>
                         </table>
                      </div>
 
-                     <div class="col-12 mt-2">
+
+                  </div>
+
+                  <div class="row g-1" *ngIf="item.x_request_status == 'open' ">
+                     <div class="col-6 mt-2">
                         <div class="d-grid">
-                           <button type="button" class="btn btn-dark" (click)="onApproved();">IS APPROVED</button>
+                           <button type="button" class="btn btn-danger" (click)="onApproved(0);">
+                              REJECT</button>
                         </div>
 
                      </div>
+                     <div class="col-6 mt-2">
+                        <div class="d-grid">
+                           <button type="button" class="btn btn-dark" (click)="onApproved();">
+                              APPROVED</button>
+                        </div>
+
+                     </div>
+
                   </div>
 
                </div>

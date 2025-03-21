@@ -47,11 +47,12 @@ export class ApprovalCreditLimitDetailComponent   implements OnInit {
     )
   }
 
-  onApproved() {
-    if(confirm("Approve this item ?")){
+  onApproved( status : number = 1) {
+    if(confirm( (status== 1 ? 'Approve':'Reject')+" this item ?")){
       this.loading = true;
       const body = {
         id: this.id, 
+        status  : status,
       }
       this.http.post<any>(environment.api + this.configService.getAppCode() + "ApprovalCreditLimit/onApproved",body, {
         headers: this.configService.headers(),
