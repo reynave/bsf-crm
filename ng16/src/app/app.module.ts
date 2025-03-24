@@ -51,6 +51,7 @@ import { ApprovalArDueDetailComponent } from './approval/approval-ar-due/approva
 import { ApprovalTopDetailComponent } from './approval/approval-top/approval-top-detail/approval-top-detail.component';
 import { ApprovalDiscountDetailComponent } from './approval/approval-discount/approval-discount-detail/approval-discount-detail.component';
 import { ApprovalCreditLimitDetailComponent } from './approval/approval-credit-limit/approval-credit-limit-detail/approval-credit-limit-detail.component';
+import { MessageComponent } from './message/message.component';
 
 @NgModule({
   declarations: [
@@ -70,7 +71,7 @@ import { ApprovalCreditLimitDetailComponent } from './approval/approval-credit-l
     ProductDetailComponent,
     ProductListComponent, 
     AddHoursPipe,
-    ScheduleActivitiesComponent, ActivityInsertComponent, CartComponent, OrderComponent, CustomerModalComponent, CustomerComponent, CustomerDetailComponent, SqlQueryComponent, CustomerInsertComponent, OrderDetailComponent, CartsComponent, CartsDetailComponent, NgxWebcamComponent, TargetComponent, KomisiComponent, TargetMonthComponent, TargetYearComponent, ReportCustomerComponent, ApprovalArDueComponent, ApprovalCreditLimitComponent, ApprovalDiscountComponent, ApprovalTopComponent, ApprovalComponent, ApprovalArDueDetailComponent, ApprovalTopDetailComponent, ApprovalDiscountDetailComponent, ApprovalCreditLimitDetailComponent
+    ScheduleActivitiesComponent, ActivityInsertComponent, CartComponent, OrderComponent, CustomerModalComponent, CustomerComponent, CustomerDetailComponent, SqlQueryComponent, CustomerInsertComponent, OrderDetailComponent, CartsComponent, CartsDetailComponent, NgxWebcamComponent, TargetComponent, KomisiComponent, TargetMonthComponent, TargetYearComponent, ReportCustomerComponent, ApprovalArDueComponent, ApprovalCreditLimitComponent, ApprovalDiscountComponent, ApprovalTopComponent, ApprovalComponent, ApprovalArDueDetailComponent, ApprovalTopDetailComponent, ApprovalDiscountDetailComponent, ApprovalCreditLimitDetailComponent, MessageComponent
   ],
   imports: [
     BrowserModule,

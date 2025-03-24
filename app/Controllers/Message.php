@@ -5,24 +5,18 @@ namespace App\Controllers;
 use CodeIgniter\Controller;
 use DateTime;
 use DateInterval;
-class Komisi extends BaseController
+class Message extends BaseController
 {
-    function monthlySelect()
+    function index()
     {
-        // $q2 = "select  id, name from hr_employee where name != '' ";
-        // $hr_employee = $this->db->query($q2)->getResultArray();
-
-         $q2 =  "SELECT x_name from x_incentives  where x_name != '' group by x_name ";
-         $selectName = $this->db->query($q2)->getResultArray();
-
-
-        $q3 = "SELECT id, x_name  from x_mastercabang where x_name != ''  ORDER BY x_name ASC";
-        $x_mastercabang = $this->db->query($q3)->getResultArray();
+        
+         
+        $q3 = "SELECT *  FROM x_mobile_message where x_end_date >= Now() and x_start_date >= Now() and x_status='active'";
+        $items = $this->db->query($q3)->getResultArray();
 
         $data = [
             "datetime" => $this->db->query("SELECT NOW() AT TIME ZONE '+00:00'")->getRowArray(),
-            "selectName" => $selectName,
-            "x_mastercabang" => $x_mastercabang,
+            "items" => $items, 
         ];
 
 

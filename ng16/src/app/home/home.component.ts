@@ -16,7 +16,7 @@ declare let Camera: any;
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit, OnDestroy {
-
+  itemsMessage : any = [];
   env: any = environment;
   gpsInfo: any = [];
   note: string = "";
@@ -41,8 +41,23 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.timer = setInterval(() => {
       this.getClockDate();
     }, 1000 * 60 * 60);
+
+    this.httpMessage()
   }
 
+  httpMessage(){ 
+    this.http.get<any>(this.api + this.config.getAppCode() + "Message/index", {
+      headers: this.config.headers(),
+    }).subscribe(
+      data => {
+       this.itemsMessage = data['items'];
+        console.log(data);
+      },
+      error => {
+        console.log(error);
+      }
+    )
+  }
   ngOnDestroy() {
     clearInterval(this.timer);
   }

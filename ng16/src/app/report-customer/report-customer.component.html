@@ -15,21 +15,36 @@
 <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
     <div class="container-fluid">
         <div class="row g-2 mb-2">
-            <div class="col-8 ">
+            <div class="col-6 ">
                 <select class="form-control form-control-lg" [(ngModel)]="x_bulan">
                     <option *ngFor="let x of monthNames; let i = index" [value]="x.id"> {{x.name}}</option>
                 </select>
 
             </div>
-            <div class="col-4">
+            <div class="col-6">
                 <input type="number" [(ngModel)]="x_tahun" class="form-control form-control-lg">
+            </div> 
+        </div>
+
+        <div class="row g-2 mb-2">
+            <div class="col-6 ">
+                <select class="form-control form-control-lg" [(ngModel)]="x_name">
+                    <option [value]="''">All</option>
+                    <option *ngFor="let x of selectName" [value]="x.x_customer_name">{{x.x_customer_name}}</option>
+                </select>
+
             </div>
+            <!-- <div class="col-6">
+                <select class="form-control form-control-lg"  [(ngModel)]="x_cabang">
+                    <option [value]="''">All</option>
+                    <option *ngFor="let x of selectCabang" [value]="x.id">{{x.x_name}}</option>
+                </select>
+            </div> -->
         </div>
       
         <div class="row">
             <div class="d-grid">
-                <button class="btn btn-lg btn-dark" (click)="onFilter()"
-                    [disabled]="x_cabang == '' || selectName == '' ">Filter</button>
+                <button class="btn btn-lg btn-dark" (click)="onFilter()">Filter</button>
             </div>
         </div>
     </div>
