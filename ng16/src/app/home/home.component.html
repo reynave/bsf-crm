@@ -38,11 +38,15 @@
             <div class="col-12" *ngIf="itemsMessage.length > 0">
                 <div><strong>Info update</strong></div>
                 <div class="form-control">
-                    <div *ngFor="let x of itemsMessage">
-                        <pre>{{x.x_subject}} [{{x.x_type}}]</pre>
-                        <pre>{{x.x_body_message }}</pre>
+                    <div *ngFor="let x of itemsMessage" class="mb-2">
+                        <code>{{x.x_start_date}}</code>
+                        <div><strong>{{x.x_subject}} [{{x.x_type}}]</strong></div>
+                        <div [innerHTML]="x.x_body_message"></div>
                     </div>
                     
+                </div>
+                <div class="text-center">
+                    <a href="javascript:;" class="text-primary" [routerLink]="['/message']"  > <i class="bi bi-clock-history"></i> See History Info</a>
                 </div>
             </div>
         </div>

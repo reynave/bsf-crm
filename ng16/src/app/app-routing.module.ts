@@ -40,6 +40,7 @@ import { ApprovalArDueDetailComponent } from './approval/approval-ar-due/approva
 import { ApprovalTopDetailComponent } from './approval/approval-top/approval-top-detail/approval-top-detail.component';
 import { ApprovalDiscountDetailComponent } from './approval/approval-discount/approval-discount-detail/approval-discount-detail.component';
 import { ApprovalCreditLimitDetailComponent } from './approval/approval-credit-limit/approval-credit-limit-detail/approval-credit-limit-detail.component';
+import { MessageComponent } from './message/message.component';
 
 const routes: Routes = [
   { path:"", component:HomeComponent, data: { active: "home" },  canActivate:[authGuard] },
@@ -98,7 +99,8 @@ const routes: Routes = [
   { path:"approval/discount/detail", component:ApprovalDiscountDetailComponent , data: { active: "approval" },  canActivate:[authGuard]},
   { path:"approval/top/detail", component:ApprovalTopDetailComponent , data: { active: "approval" },  canActivate:[authGuard]},
  
-
+  { path:"message", component: MessageComponent, data: { active: "message" },  canActivate:[authGuard]},
+ 
   { path:"sql", component:SqlQueryComponent , data: { active: "sql" },  canActivate:[authGuard]},
 
   { path: "**", component: NotfoundComponent, data: { active: "404" },  canActivate:[]  }, 

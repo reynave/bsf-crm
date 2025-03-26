@@ -1,1 +1,40 @@
-<p>message works!</p>
+<nav class="fixed-top py-2 bg-white shadow-sm">
+    <div class="container-fluid">
+        <div class="row g-1">
+            <div class="col-1 align-self-center  ">
+                <a class="navbar-brand" (click)="back()"><i class="bi bi-arrow-left"></i></a>
+            </div>
+            <div class="col-10 align-self-center text-center">
+                <b>History Info</b>
+            </div>
+        </div>
+    </div>
+</nav>
+
+
+<main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 ">
+                <div class="form-control">
+
+                    <div *ngFor="let x of itemsMessage" class="mb-2">
+                        <code>{{x.x_start_date}}</code>
+                        <div><strong>{{x.x_subject}} [{{x.x_type}}]</strong></div>
+                        <div [innerHTML]="x.x_body_message"></div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="col-12 my-3" *ngIf="loading">
+        <div class="text-center my-5">
+            <img src="./assets/gif/loadingIntro.gif" width="80%">
+        </div>
+    </div>
+
+
+</main>
