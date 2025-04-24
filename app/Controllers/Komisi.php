@@ -41,7 +41,16 @@ class Komisi extends BaseController
         x_tahun = '" . $post['x_tahun'] . "'  
         ";
 
-        $q2 = "SELECT * FROM x_incentives";
+        $q2 = "SELECT x_jobgroup as x_job, sum(x_on_time_total_amount) as x_on_time_total_amount,
+sum(x_late_total_amount) as x_late_total_amount, 
+sum(x_unpaid_total_amount) as x_unpaid_total_amount, 
+sum(x_commission_total_amount_2) as x_commission_total_amount_2
+from x_incentives 
+where 
+        x_bulan = '" . $post['x_bulan'] . "' and   
+        x_name = '" . $post['x_name'] . "' and  
+        x_tahun = '" . $post['x_tahun'] . "' 
+group by x_jobgroup";
         $items = $this->db->query($q2)->getResultArray();
 
         $data = [
