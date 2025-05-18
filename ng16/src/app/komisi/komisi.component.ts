@@ -1,14 +1,18 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ConfigService } from 'src/app/service/config.service';
 import { environment } from 'src/environments/environment';
+
+declare let moduleKomisi: boolean;
+
 
 @Component({
   selector: 'app-komisi',
   templateUrl: './komisi.component.html',
   styleUrls: ['./komisi.component.css']
 })
-export class KomisiComponent  implements OnInit {
+export class KomisiComponent implements OnInit {
   items: any = [];
   loading: boolean = false;
   monthNames: any = Array.from({ length: 12 }, (_, i) => ({
@@ -25,12 +29,18 @@ export class KomisiComponent  implements OnInit {
   constructor(
     private http: HttpClient,
     private configService: ConfigService,
+    private router: Router,
+    
   ) {
   }
 
   ngOnInit(): void {
-    this.monthlySelect();
-    this.onFilter();
+    if (moduleKomisi == true) { 
+      this.monthlySelect();
+      this.onFilter();
+    }else{
+      this.router.navigate(['error']);
+    }
   }
   monthlySelect() {
     this.http.get<any>(environment.api + this.configService.getAppCode() + "Komisi/monthlySelect", {

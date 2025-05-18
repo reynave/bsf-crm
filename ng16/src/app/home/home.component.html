@@ -54,6 +54,7 @@
         <div class="row g-3 mb-3">
             <div class="col-12  text-center">
                 <small><b>Main Menu</b></small>
+               
             </div>
             <div class="col-4">
                 <div class=" bg-white rounded shadow-sm text-center" [routerLink]="[ '/scheduleAcivities' ]">
@@ -128,7 +129,7 @@
                 </div>
             </div>
 
-            <div class="col-4"  >
+            <div class="col-4"  *ngIf="moduleTarget">
                 <div class=" bg-white rounded shadow-sm text-center" [routerLink]="[ '/target' ]">
                     <div class="lh-1 py-2">
                         <h1> <i class="bi bi-graph-up-arrow"></i> </h1>
@@ -140,7 +141,7 @@
                 </div>
             </div>
 
-            <div class="col-4"  >
+            <div class="col-4"   *ngIf="moduleKomisi">
                 <div class=" bg-white rounded shadow-sm text-center" [routerLink]="[ '/komisi' ]">
                     <div class="lh-1 py-2">
                         <h1> <i class="bi bi-cash-stack"></i> </h1>
@@ -152,7 +153,7 @@
                 </div>
             </div>
 
-            <div class="col-4"  >
+            <div class="col-4"   *ngIf="moduleReportCustomer">
                 <div class=" bg-white rounded shadow-sm text-center" [routerLink]="[ '/reportCustomer' ]">
                     <div class="lh-1 py-2">
                         <h1> <i class="bi bi-person-rolodex"></i> </h1>
@@ -164,7 +165,7 @@
                 </div>
             </div>
 
-            <div class="col-4"  >
+            <div class="col-4"  *ngIf="moduleApproval" >
                 <div class=" bg-white rounded shadow-sm text-center" [routerLink]="[ '/approval' ]">
                     <div class="lh-1 py-2">
                         <h1> <i class="bi bi-check2-circle"></i></h1>

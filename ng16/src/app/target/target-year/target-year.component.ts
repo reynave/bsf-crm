@@ -1,7 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ConfigService } from 'src/app/service/config.service';
 import { environment } from 'src/environments/environment';
+declare let moduleTarget: boolean;
 
 @Component({
   selector: 'app-target-year',
@@ -11,7 +13,7 @@ import { environment } from 'src/environments/environment';
 export class TargetYearComponent implements OnInit {
   items: any = [];
   loading: boolean = false;
- 
+
   x_tahun: number = 2025;
   x_cabang: string = "";
   x_name: string = "";
@@ -21,12 +23,17 @@ export class TargetYearComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private configService: ConfigService,
+        private router: Router,
   ) {
   }
 
   ngOnInit(): void {
-    this.monthlySelect();
-    this.onFilter();
+    if (moduleTarget == true) { 
+      this.monthlySelect();
+      this.onFilter();
+    } else {
+      this.router.navigate(['error']);
+    }
   }
   monthlySelect() {
     this.http.get<any>(environment.api + this.configService.getAppCode() + "Target/yearSelect", {
@@ -48,7 +55,7 @@ export class TargetYearComponent implements OnInit {
     this.loading = true;
     this.http.get<any>(environment.api + this.configService.getAppCode() + "Target/yearly", {
       headers: this.configService.headers(),
-      params: { 
+      params: {
         x_tahun: this.x_tahun,
         x_name: this.x_name,
         x_cabang: this.x_cabang

@@ -1,7 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ConfigService } from 'src/app/service/config.service';
 import { environment } from 'src/environments/environment';
+declare let moduleTarget: boolean;
 
 @Component({
   selector: 'app-target-month',
@@ -26,12 +28,17 @@ export class TargetMonthComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private configService: ConfigService,
+            private router: Router,
   ) {
   }
 
   ngOnInit(): void {
-    this.monthlySelect();
-    this.onFilter();
+  if (moduleTarget == true) { 
+      this.monthlySelect();
+      this.onFilter();
+    } else {
+      this.router.navigate(['error']);
+    }
   }
   monthlySelect() {
     this.http.get<any>(environment.api + this.configService.getAppCode() + "Target/monthlySelect", {

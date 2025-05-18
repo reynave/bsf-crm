@@ -8,6 +8,10 @@ import { NgZone } from '@angular/core';
 
 declare let navigator: any;
 declare let Camera: any;
+declare let moduleTarget : boolean;
+declare let  moduleKomisi  : boolean;
+declare let  moduleReportCustomer  : boolean;
+declare let  moduleApproval  : boolean;
 
 
 @Component({
@@ -26,6 +30,12 @@ export class HomeComponent implements OnInit, OnDestroy {
     clickOut: "loading...",
   }
   timer: any;
+  
+moduleTarget : boolean = moduleTarget;
+moduleKomisi : boolean = moduleKomisi;
+moduleReportCustomer : boolean = moduleReportCustomer;
+moduleApproval : boolean = moduleApproval;
+  
   constructor(
     private http: HttpClient,
     private config: ConfigService,

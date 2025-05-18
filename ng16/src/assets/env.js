@@ -26,4 +26,9 @@ var appSelect = [
     }
 ];
 var api = "http://localhost/app/bsf-crm/";
+var moduleTarget = false;
+var moduleKomisi = false;
+var moduleReportCustomer = false;
+var moduleApproval = false;
+
 //var api = "https://api-bee.a-morphosys.cloud/crm1/";

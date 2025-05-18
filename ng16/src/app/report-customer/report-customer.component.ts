@@ -1,7 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ConfigService } from 'src/app/service/config.service';
 import { environment } from 'src/environments/environment';
+declare let moduleReportCustomer: boolean;
+
 
 @Component({
   selector: 'app-report-customer',
@@ -25,10 +28,17 @@ export class ReportCustomerComponent   implements OnInit {
   constructor(
     private http: HttpClient,
     private configService: ConfigService,
+      private router: Router,
   ) {
   }
 
   ngOnInit(): void {
+     if (moduleReportCustomer == true) { 
+      this.monthlySelect();
+      this.onFilter();
+    }else{
+      this.router.navigate(['error']);
+    }
     this.monthlySelect();
     this.onFilter();
   }
