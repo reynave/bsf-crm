@@ -27,7 +27,7 @@ class Order extends BaseController
         $q = "SELECT cpo.* , p.name,  p.street
             FROM x_customer_po as cpo
             LEFT JOIN res_partner as p on p.id = cpo.x_customer_id
-            WHERE  $where   order by cpo.write_date";
+            WHERE  $where   order by cpo.write_date DESC LIMIT 30";
 
         $db = $this->db->query($q);
         $db = $db->getResultArray();
@@ -77,7 +77,7 @@ class Order extends BaseController
         $header = "SELECT cpo.* , p.name,  p.street
         FROM x_customer_po as cpo
         LEFT JOIN res_partner as p on p.id = cpo.x_customer_id
-        WHERE cpo.id = $id  order by cpo.write_date";
+        WHERE cpo.id = $id  order by cpo.write_date DESC LIMIT 30";
         $header = $this->db->query($header);
         $header= $header->getResultArray();
 
