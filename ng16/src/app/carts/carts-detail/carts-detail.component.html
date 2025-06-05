@@ -66,9 +66,9 @@
                         <div class="col-12"> 
                             <strong><small>Customer Name</small></strong> 
                             <label class="ms-4 me-2" for="aks"> <div>AKS ?</div></label> 
-                            <input id="aks" [(ngModel)]="header.x_aks" type="checkbox" (change)="updateHeader()"> 
+                            <input id="aks" [(ngModel)]="header.x_aks" type="checkbox" (change)="updateHeader()">
 
-                            <a [routerLink]="[ '/customer' ]" [queryParams]="{cardId:header.id}">
+                            <a [routerLink]="[ '/customer' ]" [queryParams]="{cardId:header.id,aks:header.x_aks}">
                                 <div class="form-control form-control-sm border">
                                     <h6> {{header.x_customer}} &nbsp;</h6>
                                 </div>

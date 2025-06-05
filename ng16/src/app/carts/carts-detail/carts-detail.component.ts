@@ -47,7 +47,7 @@ export class CartsDetailComponent implements   OnInit{
         this.items = data['items'];
         this.header = data['header'][0]; 
         this.contact = data['contact'][0];
-        //this.header.x_aks = "";
+        this.header.x_aks = (this.header.x_aks == 't') ? true : false;
         this.id = data['id'];
         console.log(data);  
       },

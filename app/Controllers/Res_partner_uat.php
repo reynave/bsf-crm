@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-class Res_partner extends BaseController
+class Res_partner_uat extends BaseController
 {
     public function index()
     {
@@ -98,7 +98,7 @@ class Res_partner extends BaseController
             }
 
             $q = "SELECT 
-                id, name,  street, x_latitude, x_longitude, x_salesman, x_cabangutama
+                id, name,  street, x_latitude, x_longitude, x_salesman
             FROM res_partner  $where  ";
 
             //  $q = "SELECT  *

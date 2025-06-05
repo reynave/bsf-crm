@@ -58,7 +58,9 @@ export class CustomerComponent implements OnInit {
       headers: this.configService.headers(),
       params: {
         name: this.searchCustomer,
-        field : this.activeRoute.snapshot.queryParams['field']
+        field : this.activeRoute.snapshot.queryParams['field'],
+		aks : this.activeRoute.snapshot.queryParams['aks'],
+		salesId : this.configService.account()['account']['id']
       }
     }).subscribe(
       data => {

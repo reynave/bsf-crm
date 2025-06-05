@@ -18,7 +18,7 @@ export class OrderComponent implements OnInit {
   id: string = "";
   total: number = 0;
   detail: any = [];
- 
+ searchValue : string = '';
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -35,6 +35,9 @@ export class OrderComponent implements OnInit {
     this.loading = true;
     this.http.get<any>(this.api + this.configService.getAppCode()+ 'order', {
       headers: this.configService.headers(),
+      params : {
+        search : this.searchValue,
+      }
     }).subscribe(
       data => {
         this.loading = false;
@@ -73,5 +76,10 @@ export class OrderComponent implements OnInit {
 
   goToDetail(item : any){
     this.router.navigate(['./order/detail'],{queryParams:{id:item['id']}});
+  }
+
+  onSearch(){
+    console.log(this.searchValue);
+    this.httpGet();
   }
 }

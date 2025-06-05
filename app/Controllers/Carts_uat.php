@@ -5,13 +5,14 @@ namespace App\Controllers;
 use CodeIgniter\Controller;
 use DateTime; 
 use DateInterval;
-class Carts extends BaseController
+class Carts_uat extends BaseController
 {
     function index()
     {
         $accountId = model("Core")->accountId();
         //$accountId = '52';
-        
+
+
         // $q1 = "SELECT  * 
         // FROM x_customer_po_line";
         // $x_customer_po_line = $this->db->query($q1)->getResultArray();    
@@ -43,7 +44,7 @@ class Carts extends BaseController
             "datetime" =>$this->db->query("SELECT NOW() AT TIME ZONE '+00:00'")->getRowArray(),
             //   "x_customer_po_line" => $x_customer_po_line,
             "x_customer_po" => $x_customer_po,
-            "x_salesperson_id" => $accountId, 
+            "x_salesperson_id" => $accountId,
         ];
 
 
@@ -224,15 +225,12 @@ class Carts extends BaseController
             if (isset($post['field']) && $post['field'] == 'contact') {
                 $this->db->table("x_customer_po")->update([
                     "x_end_user" => $post['item']['id'], 
-                    "x_cabangutama" => $post['item']['x_cabangutama'], 
-                    
                 ], " id = " . $post['id']);
     
             }else{
                 $this->db->table("x_customer_po")->update([
                     "x_customer_id" => $post['item']['id'],
-                    "x_customer" => $post['item']['name'],
-                    "x_cabangutama" => $post['item']['x_cabangutama'], 
+                    "x_customer" => $post['item']['name']
                 ], " id = " . $post['id']);
     
             }

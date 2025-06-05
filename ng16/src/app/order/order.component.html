@@ -5,7 +5,11 @@
                 <a class="navbar-brand h2 " (click)="back()"><i class="bi bi-arrow-left"></i></a>
             </div>
             <div class="col-10 align-self-center text-center">
-                <b>History</b>
+                <input type="text" class="form-control form-control-lg" 
+                placeholder="History, Search by ID or Customer Name" [(ngModel)]="searchValue"  (keyup.enter)="onSearch()">
+            </div>
+            <div class="col-1">
+                 <a class="navbar-brand h2 " (click)="onSearch()"> <i class="bi bi-arrow-right-square-fill"></i> </a>
             </div>
 
         </div>
@@ -19,7 +23,8 @@
             <div class="border bg-white shadow p-3 " *ngFor="let x of item" (click)="goToDetail(x)">
                 <div class="row g-0  mb-2">
                     <div class="col-9">
-                        <small> Order Date : {{x.x_order_date | addHours}}</small>
+                        <small> Order Date : {{x.x_order_date | addHours}}</small><br>
+                        <small> Order ID : {{x.id}}</small> 
                     </div>
                     <div class="col-3 text-end">
                         <span class="badge bg-secondary">{{x.x_submit}}</span>
