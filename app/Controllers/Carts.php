@@ -176,6 +176,8 @@ class Carts extends BaseController
             $this->db->table("x_customer_po_line")->update([
                 "x_note" => $post['item']['x_note'],
                 "x_qty" => $post['item']['x_qty'],
+                  "x_discount" => $post['item']['x_discount'],
+                
                 "x_subtotal" => $post['item']['x_qty'] * $x_unitprice,
             ], " id = " . $post['item']['id']);
 
